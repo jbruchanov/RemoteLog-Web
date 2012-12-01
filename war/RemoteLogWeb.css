@@ -32,3 +32,48 @@ h1 {
 #closeButton {
   margin: 15px 6px 6px;
 }
+
+.mainmenu-item
+{
+	margin-left:-5px;
+	margin-right:-2px;
+	margin-top:-2px;
+	margin-bottom:-2px;
+	padding:7px;
+	font-size: 14px;
+	font-weight: bold;
+	color: #000;	
+	text-decoration: none;
+}
+
+.mainmenu-selecteditem
+{
+	margin-left:-5px;
+	margin-right:-2px;
+	margin-top:-2px;
+	margin-bottom:-2px;
+	padding:7px;
+	font-size: 14px;
+	font-weight: bold;
+	color: #000;	
+	background-color: #E9E9FF;
+	
+}
+
+.mainmenu-item a,
+.mainmenu-selecteditem a
+{
+	text-decoration: none;
+}
+
+
+.gwt-StackLayoutPanelContent .mainmenu-item:HOVER, 
+.gwt-StackLayoutPanelContent .mainmenu-selecteditem:HOVER 
+{
+	cursor:pointer;
+	margin-left:-5px;	
+	background-color: #C9C9FF;
+}
+
+a
+{ target-new: tab ! important }

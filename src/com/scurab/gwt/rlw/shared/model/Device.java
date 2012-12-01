@@ -2,6 +2,10 @@ package com.scurab.gwt.rlw.shared.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 public class Device implements Serializable {
 
     /**
@@ -9,23 +13,43 @@ public class Device implements Serializable {
      */
     private static final long serialVersionUID = -5526599861310748107L;
 
+    @Id
+    @GeneratedValue
+    @Column(name = "ID")
     private int mId;
-    
+
+    @Column(name = "Brand")
     private String mBrand;
     
+    @Column(nullable = false, name = "Platform")
     private String mPlatform;
     
+    @Column(name = "Version")
     private String mVersion;
     
+    @Column(name = "Detail")
     private String mDetail;
     
+    @Column(name = "Resolution")
     private String mResolution;
     
+    @Column(name = "Owner")
     private String mOwner;
     
+    @Column(name = "OSDescription")
+    private String mOsDescription;
+
+    @Column(name = "Description")
     private String mDescription;
     
+    @Column(name = "PushID")
     private String mPushId;
+
+    @Column(name = "DevUUID", nullable = false)
+    private String mDevUUID;
+
+    @Column(name = "Model")
+    private String mModel;
 
     public int getId() {
         return mId;
@@ -97,5 +121,21 @@ public class Device implements Serializable {
 
     public void setPushId(String pushId) {
         mPushId = pushId;
+    }
+
+    public String getDevUUID() {
+        return mDevUUID;
+    }
+
+    public void setDevUUID(String devUUID) {
+        mDevUUID = devUUID;
+    }
+
+    public String getModel() {
+        return mModel;
+    }
+
+    public void setModel(String model) {
+        mModel = model;
     }
 }

@@ -11,5 +11,7 @@ import com.scurab.gwt.rlw.shared.model.Device;
 public interface DataServiceAsync {
     void getDevices(AsyncCallback<List<Device>> data);
 
-    void getDevice(int id, AsyncCallback<Device> callback);    
+    void getDevice(int id, AsyncCallback<Device> callback);
+
+    void getApplications(AsyncCallback<List<String>> callback);
 }

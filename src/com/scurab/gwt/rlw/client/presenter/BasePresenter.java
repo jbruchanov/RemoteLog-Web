@@ -10,16 +10,16 @@ public abstract class BasePresenter implements IsWidget {
     protected DataServiceAsync mDataService;
     protected HandlerManager mEventBus;
     private IsWidget mDisplay;
-    
+
     public BasePresenter(DataServiceAsync dataService, HandlerManager eventBus, IsWidget display) {
-	mDataService = dataService;
-	mEventBus = eventBus;
-	mDisplay = display;
+        mDataService = dataService;
+        mEventBus = eventBus;
+        mDisplay = display;
     }
-    
+
     @Override
     public Widget asWidget() {
-	return mDisplay.asWidget();
+        return mDisplay.asWidget();
     }
-    
+
 }

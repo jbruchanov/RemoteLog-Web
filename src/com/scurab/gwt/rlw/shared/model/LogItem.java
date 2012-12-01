@@ -12,6 +12,12 @@ public class LogItem implements Serializable {
 
     private int mId;
     
+    private String mApplication;
+
+    private String mAppVersion;
+
+    private String mAppBuild;
+
     private String mDeviceId;
     
     private Date mDate;
@@ -88,5 +94,13 @@ public class LogItem implements Serializable {
 
     public void setBlob(byte[] blob) {
         mBlob = blob;
+    }
+
+    public String getApplication() {
+        return mApplication;
+    }
+
+    public void setApplication(String application) {
+        mApplication = application;
     }
 }

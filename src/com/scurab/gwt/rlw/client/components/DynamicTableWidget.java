@@ -1,6 +1,7 @@
 package com.scurab.gwt.rlw.client.components;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -11,7 +12,6 @@ import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.Cell.Context;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.i18n.client.Dictionary;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.cellview.client.CellTable;
@@ -26,52 +26,55 @@ import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionModel;
 
 /**
- * Dynamic table widget setData must be called before is widget attechd into
- * element
+ * Dynamic table widget setData must be called before is widget attechd into element
  * 
  * @author Joe Scurab
  * 
  */
 public class DynamicTableWidget extends Composite {
-    private CellTable<HashMap<String, Object>> mCellTable = null;
-    private ListDataProvider<HashMap<String, Object>> mListDataProvider = null;
-    private SimplePager pager;
+
     private List<HashMap<String, Object>> mData = null;
+
+    private CellTable<HashMap<String, Object>> mCellTable = null;
+
+    private ListDataProvider<HashMap<String, Object>> mListDataProvider = null;
+
+    private SimplePager pager;
+
     private DynamicTableWidgetOverrider mOverrider = null;
+
     private boolean mSuccesfullSortByUnderscore = false;
 
     public interface DynamicTableWidgetOverrider {
-	/**
-	 * PageSize is overrided only if value > 0
-	 * 
-	 * @return
-	 */
-	int getPageSize();
+        /**
+         * PageSize is overrided only if value > 0
+         * 
+         * @return
+         */
+        int getPageSize();
 
-	String getColumnName(String key);
+        String getColumnName(String key);
 
-	List<String> getColumnsOrder(List<HashMap<String, Object>> mData);
+        List<String> getColumnsOrder(List<HashMap<String, Object>> mData);
 
-	void overrideColumn(Column<HashMap<String, Object>, String> c);
+        void overrideColumn(Column<HashMap<String, Object>, String> c);
 
-	/**
-	 * If returned value is null, used default implementation
-	 * 
-	 * @param key
-	 * @param dataExample
-	 * @return if render was overrided
-	 */
-	boolean columnRender(String name,
-		Column<HashMap<String, Object>, String> column,
-		Context context, HashMap<String, Object> object,
-		SafeHtmlBuilder sb);
+        /**
+         * If returned value is null, used default implementation
+         * 
+         * @param key
+         * @param dataExample
+         * @return if render was overrided
+         */
+        boolean onColumnRender(String name, Column<HashMap<String, Object>, String> column, Context context,
+                HashMap<String, Object> object, SafeHtmlBuilder sb);
     }
 
     public DynamicTableWidget() {
     }
 
     public DynamicTableWidget(List<HashMap<String, Object>> data) {
-	setData(data);
+        setData(data);
     }
 
     /**
@@ -80,48 +83,47 @@ public class DynamicTableWidget extends Composite {
      * @param data
      */
     public void setData(List<HashMap<String, Object>> data) {
-	mData = data;
-	if (mData != null && mData.size() != 0)
-	    init(mData);
-	else
-	    initWidget(new Label("No data"));
+        mData = data;
+        if (mData != null && mData.size() != 0) {
+            init(mData);
+        } else {
+            initWidget(new Label("No data"));
+        }
     }
 
     public List<HashMap<String, Object>> getData() {
-	return mData;
+        return mData;
     }
 
     public void setOverrirder(DynamicTableWidgetOverrider overrider) {
-	mOverrider = overrider;
+        mOverrider = overrider;
     }
 
     private void init(List<HashMap<String, Object>> data) {
-	mListDataProvider = new ListDataProvider<HashMap<String, Object>>(data);
-	mCellTable = new CellTable<HashMap<String, Object>>();
-	mCellTable.setPageSize(getPageSize());
-	mCellTable.setSelectionModel(getSelectionModel());
+        mListDataProvider = new ListDataProvider<HashMap<String, Object>>(data);
+        mCellTable = new CellTable<HashMap<String, Object>>();
+        mCellTable.setPageSize(getPageSize());
+        mCellTable.setSelectionModel(getSelectionModel());
 
-	// Create a Pager to control the table.
-	SimplePager.Resources pagerResources = GWT
-		.create(SimplePager.Resources.class);
-	pager = new SimplePager(TextLocation.CENTER, pagerResources, false, 0,
-		true);
-	pager.setDisplay(mCellTable);
-	pager.setPageSize(getPageSize());
+        // Create a Pager to control the table.
+        SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
+        pager = new SimplePager(TextLocation.CENTER, pagerResources, false, 0, true);
+        pager.setDisplay(mCellTable);
+        pager.setPageSize(getPageSize());
 
-	// init columns
-	ListHandler<HashMap<String, Object>> sortHandler = new ListHandler<HashMap<String, Object>>(
-		mListDataProvider.getList());
-	initTableColumns(data, mCellTable, sortHandler);
-	mCellTable.addColumnSortHandler(sortHandler);
-	mListDataProvider.addDataDisplay(mCellTable);
+        // init columns
+        ListHandler<HashMap<String, Object>> sortHandler = new ListHandler<HashMap<String, Object>>(
+                mListDataProvider.getList());
+        initTableColumns(data, mCellTable, sortHandler);
+        mCellTable.addColumnSortHandler(sortHandler);
+        mListDataProvider.addDataDisplay(mCellTable);
 
-	VerticalPanel vp = new VerticalPanel();
-	vp.setWidth("100%");
-	vp.add(pager);
-	vp.add(mCellTable);
-	initWidget(vp);
-	mSuccesfullSortByUnderscore = false;
+        VerticalPanel vp = new VerticalPanel();
+        vp.setWidth("100%");
+        vp.add(pager);
+        vp.add(mCellTable);
+        initWidget(vp);
+        mSuccesfullSortByUnderscore = false;
     }
 
     /**
@@ -131,12 +133,12 @@ public class DynamicTableWidget extends Composite {
      * @return
      */
     protected int getPageSize() {
-	if (mOverrider != null) {
-	    int value = mOverrider.getPageSize();
-	    if (value > 0)
-		return value;
-	}
-	return 50;
+        if (mOverrider != null) {
+            int value = mOverrider.getPageSize();
+            if (value > 0)
+                return value;
+        }
+        return 50;
     }
 
     /**
@@ -146,89 +148,100 @@ public class DynamicTableWidget extends Composite {
      * @return
      */
     protected SelectionModel<HashMap<String, Object>> getSelectionModel() {
-	return null;
+        return null;
     }
 
-    private void initTableColumns(List<HashMap<String, Object>> mData,
-	    CellTable<HashMap<String, Object>> cellTable,
-	    ListHandler<HashMap<String, Object>> sortHandler) {
-	onStartCreatingColumns(mData, cellTable, sortHandler);
-	List<String> columns = getColumnsOrder(mData);
-	for (String columnName : columns) {
-	    Object dataExample = mData.get(0).get(columnName);
-	    Column<HashMap<String, Object>, String> column = createColumn(
-		    columnName, dataExample);
-	    boolean sortable = isColumnSortable(columnName);
-	    column.setSortable(sortable);
-	    if (sortable)
-		sortHandler.setComparator(column,
-			getComparator(columnName, dataExample));
+    private void initTableColumns(List<HashMap<String, Object>> mData, CellTable<HashMap<String, Object>> cellTable,
+            ListHandler<HashMap<String, Object>> sortHandler) {
+        // call handler
+        onStartCreatingColumns(mData, cellTable, sortHandler);
+        // get order of columns
+        List<String> columns = getColumnsOrder(mData);
 
-	    overrideColumn(column);
 
-	    cellTable.addColumn(column,
-		    convertToSafeHtml(getColumnName(columnName)),
-		    convertToSafeHtml(getFooterValue(columnName, mData)));
-	}
-	onFinishCreatingColumns(mData, cellTable, sortHandler);
+        for (String columnName : columns) {
+            // object
+            Object dataExample = mData.get(0).get(columnName);
+            // create column
+            Column<HashMap<String, Object>, String> column = createColumn(columnName, dataExample);
+
+            // make it sortable
+            boolean sortable = isColumnSortable(columnName);
+            column.setSortable(sortable);
+            if (sortable) {
+                sortHandler.setComparator(column, getComparator(columnName, dataExample));
+            }
+
+            // call overrider
+            overrideColumn(column);
+
+            // add to table
+            cellTable.addColumn(column, convertToSafeHtml(getColumnName(columnName)),
+                    convertToSafeHtml(getFooterValue(columnName, mData)));
+        }
+        // call handler
+        onFinishCreatingColumns(mData, cellTable, sortHandler);
     }
 
     protected SafeHtml convertToSafeHtml(String value) {
-	if (value == null)
-	    return null;
-	return new SafeHtmlBuilder().appendHtmlConstant(value).toSafeHtml();
+        if (value == null)
+            return null;
+        return new SafeHtmlBuilder().appendHtmlConstant(value).toSafeHtml();
     }
 
     protected void onFinishCreatingColumns(List<HashMap<String, Object>> mData,
-	    CellTable<HashMap<String, Object>> cellTable,
-	    ListHandler<HashMap<String, Object>> sortHandler) {
+            CellTable<HashMap<String, Object>> cellTable, ListHandler<HashMap<String, Object>> sortHandler) {
 
     }
 
     protected void onStartCreatingColumns(List<HashMap<String, Object>> mData,
-	    CellTable<HashMap<String, Object>> cellTable,
-	    ListHandler<HashMap<String, Object>> sortHandler) {
+            CellTable<HashMap<String, Object>> cellTable, ListHandler<HashMap<String, Object>> sortHandler) {
 
     }
 
     /**
      * Overrides default order of columns and which will be generated<br>
-     * Values must be same, you can skip some key. By default if all columns has
-     * NAME_{ORDER} its sorted by ORDER value
+     * Values must be same, you can skip some key. By default if all columns has NAME_{ORDER} its sorted by ORDER value
      * 
      * @param mData
      *            data downloaded from server
      * @return List of keys how should be table generated
      */
     protected List<String> getColumnsOrder(List<HashMap<String, Object>> mData) {
-	List<String> keys = null;
-	if (mOverrider != null) {
-	    keys = mOverrider.getColumnsOrder(mData);
-	    if (keys != null)
-		return keys;
-	}
+        List<String> keys = null;
+        // check if overrider wants handle it
+        if (mOverrider != null) {
+            keys = mOverrider.getColumnsOrder(mData);
+            if (keys != null)
+                return keys;
+        }
 
-	Set<String> columns = mData.get(0).keySet();
-	try {
-	    mSuccesfullSortByUnderscore = true;
-	    HashMap<String, String> ma = new HashMap<String, String>();
-	    for (String columnName : columns) {
-		String[] vals = columnName.split("_");
-		mSuccesfullSortByUnderscore = mSuccesfullSortByUnderscore
-			&& vals.length > 1;
-		String orderValue = vals[vals.length - 1];
-		ma.put(orderValue, columnName);
-	    }
-	    List<String> sorted = new ArrayList<String>(ma.keySet());
-	    Collections.sort(sorted);
-	    keys = new ArrayList<String>();
-	    for (String sort : sorted)
-		keys.add(ma.get(sort));
-	} catch (Exception e) {
-	    keys = new ArrayList<String>(mData.get(0).keySet());
-	    mSuccesfullSortByUnderscore = false;
-	}
-	return keys;
+
+        Set<String> columns = mData.get(0).keySet();
+        try {
+            mSuccesfullSortByUnderscore = true;
+
+            HashMap<String, String> ma = new HashMap<String, String>();
+
+            for (String columnName : columns) {
+                String[] vals = columnName.split("_");
+                mSuccesfullSortByUnderscore = mSuccesfullSortByUnderscore && vals.length > 1;
+                String orderValue = vals[vals.length - 1];
+                ma.put(orderValue, columnName);
+            }
+
+            List<String> sorted = new ArrayList<String>(ma.keySet());
+            Collections.sort(sorted);
+            keys = new ArrayList<String>();
+
+            for (String sort : sorted) {
+                keys.add(ma.get(sort));
+            }
+        } catch (Exception e) {
+            keys = new ArrayList<String>(mData.get(0).keySet());
+            mSuccesfullSortByUnderscore = false;
+        }
+        return keys;
     }
 
     /**
@@ -238,51 +251,57 @@ public class DynamicTableWidget extends Composite {
      * @param mData
      * @return
      */
-    public String getFooterValue(String columnName,
-	    List<HashMap<String, Object>> mData) {
-	return null;
+    public String getFooterValue(String columnName, List<HashMap<String, Object>> mData) {
+        return null;
     }
 
     public void overrideColumn(Column<HashMap<String, Object>, String> c) {
-	if (mOverrider != null)
-	    mOverrider.overrideColumn(c);
+        if (mOverrider != null) {
+            mOverrider.overrideColumn(c);
+        }
     }
 
     /**
-     * Called when column is created to replace default db column name to some
-     * user friendly value
+     * Called when column is created to replace default db column name to some user friendly value
      * 
      * @param key
      *            columnName from db
      * @return value to show user as column name
      */
     protected String getColumnName(String key) {
-	if (mOverrider != null) {
-	    String v = mOverrider.getColumnName(key);
-	    if (v != null)
-		return v;
-	}
-	String name = changeColumnName(key);
-	try {
-	    name = key;
-	} catch (Exception e) {
-	    // fucking stupids
-	}
-	return name;
+        if (mOverrider != null) {
+            String v = mOverrider.getColumnName(key);
+            if (v != null) {
+                return v;
+            }
+        }
+        String name = key;
+        try {
+            name = changeColumnName(key);
+        } catch (Exception e) {
+            // fucking stupids
+        }
+        return name;
     }
 
+    /**
+     * Renamte column_1 => column if sorting by this suffix was success
+     * 
+     * @param key
+     * @return
+     */
     private String changeColumnName(String key) {
-	if (mSuccesfullSortByUnderscore) {
-	    StringBuilder sb = new StringBuilder();
-	    String[] split = key.split("_");
-	    if (split.length > 1) {
-		for (int i = 0; i < split.length - 1; i++)
-		    // omit last order value
-		    sb.append(split[i] + "_");
-		return key.substring(0, sb.length() - 1);
-	    }
-	}
-	return key;
+        if (mSuccesfullSortByUnderscore) {
+            StringBuilder sb = new StringBuilder();
+            String[] split = key.split("_");
+            if (split.length > 1) {
+                for (int i = 0; i < split.length - 1; i++)
+                    // omit last order value
+                    sb.append(split[i] + "_");
+                return key.substring(0, sb.length() - 1);
+            }
+        }
+        return key;
     }
 
     /**
@@ -293,35 +312,41 @@ public class DynamicTableWidget extends Composite {
      * @return
      */
     protected boolean isColumnSortable(String key) {
-	return true;
+        return true;
     }
 
-    protected Column<HashMap<String, Object>, String> createColumn(
-	    final String key, Object dataExample) {
-	Column<HashMap<String, Object>, String> column = null;
-	if (column == null) {
-	    column = new Column<HashMap<String, Object>, String>(getCell(key,
-		    dataExample)) {
-		@Override
-		public String getValue(HashMap<String, Object> object) {
-		    return getValueToShow(key, object.get(key));
-		}
+    /**
+     * Create column for particular column
+     * 
+     * @param key
+     * @param dataExample
+     *            firts row value of column
+     * @return
+     */
+    protected Column<HashMap<String, Object>, String> createColumn(final String key, Object dataExample) {
 
-		@Override
-		public void render(Context context,
-			HashMap<String, Object> object, SafeHtmlBuilder sb) {
-		    boolean render = columnRender(key, this, context, object,
-			    sb);
-		    if (!render)
-			super.render(context, object, sb);
-		}
-	    };
-	}
-	return column;
+        Column<HashMap<String, Object>, String> column = new Column<HashMap<String, Object>, String>(getCell(key,
+                dataExample)) {
+            // get value to show user
+            @Override
+            public String getValue(HashMap<String, Object> object) {
+                return getValueToShow(key, object.get(key));
+            }
+
+            // render value
+            @Override
+            public void render(Context context, HashMap<String, Object> object, SafeHtmlBuilder sb) {
+                boolean render = onColumnRender(key, this, context, object, sb);
+                if (!render) {
+                    super.render(context, object, sb);
+                }
+            }
+        };
+        return column;
     }
 
     protected Cell<String> getCell(final String key, Object dataExample) {
-	return new TextCell();
+        return new TextCell();
     }
 
     /**
@@ -334,12 +359,12 @@ public class DynamicTableWidget extends Composite {
      * @param sb
      * @return true if render was overrided, false means default render
      */
-    protected boolean columnRender(String name,
-	    Column<HashMap<String, Object>, String> column, Context context,
-	    HashMap<String, Object> object, SafeHtmlBuilder sb) {
-	if (mOverrider != null)
-	    return mOverrider.columnRender(name, column, context, object, sb);
-	return false;
+    protected boolean onColumnRender(String name, Column<HashMap<String, Object>, String> column, Context context,
+            HashMap<String, Object> object, SafeHtmlBuilder sb) {
+        if (mOverrider != null) {
+            return mOverrider.onColumnRender(name, column, context, object, sb);
+        }
+        return false;
     }
 
     /**
@@ -351,10 +376,11 @@ public class DynamicTableWidget extends Composite {
      * @return string value to show user
      */
     protected String getValueToShow(String columnName, Object o) {
-	if (o == null)
-	    return "";
-	else
-	    return String.valueOf(o);
+        if (o == null) {
+            return "";
+        } else {
+            return String.valueOf(o);
+        }
     }
 
     /**
@@ -367,22 +393,24 @@ public class DynamicTableWidget extends Composite {
      *            example of data
      * @return
      */
-    protected Comparator<HashMap<String, Object>> getComparator(
-	    final String key, Object dataExample) {
-	return new Comparator<HashMap<String, Object>>() {
-	    @Override
-	    public int compare(HashMap<String, Object> o1,
-		    HashMap<String, Object> o2) {
-		return String.valueOf(o1.get(key)).compareTo(
-			String.valueOf(o2.get(key)));
-	    }
-	};
+    protected Comparator<HashMap<String, Object>> getComparator(final String key, Object dataExample) {
+        return new Comparator<HashMap<String, Object>>() {
+            @Override
+            public int compare(HashMap<String, Object> o1, HashMap<String, Object> o2) {
+                return String.valueOf(o1.get(key)).compareTo(String.valueOf(o2.get(key)));
+            }
+        };
     }
 
     /**
      * Notify object to refresh view after datachange
      */
     public void notifyDataChange() {
-	mListDataProvider.refresh();
+        mListDataProvider.refresh();
+    }
+
+    public void addData(Collection<HashMap<String, Object>> data) {
+        mListDataProvider.getList().addAll(data);
+        mListDataProvider.refresh();
     }
 }
