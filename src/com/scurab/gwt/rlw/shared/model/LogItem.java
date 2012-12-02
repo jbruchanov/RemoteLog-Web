@@ -3,6 +3,9 @@ package com.scurab.gwt.rlw.shared.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Entity;
+
+@Entity(name = "LogItems")
 public class LogItem implements Serializable {
 
     /**

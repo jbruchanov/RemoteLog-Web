@@ -22,5 +22,4 @@ public class DataGeneratorTest {
             System.out.println(s);
         }
     }
-
 }
