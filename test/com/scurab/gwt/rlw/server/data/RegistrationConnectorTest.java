@@ -27,6 +27,7 @@ import com.scurab.gwt.rlw.ApplicationTest;
 import com.scurab.gwt.rlw.server.Database;
 import com.scurab.gwt.rlw.server.util.DataGenerator;
 import com.scurab.gwt.rlw.shared.model.Device;
+import com.scurab.gwt.rlw.shared.model.DeviceRespond;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 import com.scurab.gwt.rlw.shared.model.Respond;
 
@@ -67,8 +68,7 @@ public class RegistrationConnectorTest extends ApplicationTest {
         // test
         assertNotNull(httpResponse);
 
-        Respond<Device> r = new Respond<Device>();
-        r = mGson.fromJson(httpResponse, r.getClass());
+        DeviceRespond r = mGson.fromJson(httpResponse, DeviceRespond.class);
 
         assertEquals("OK", r.getMessage());
         assertNotNull(r.getContext());
@@ -87,45 +87,8 @@ public class RegistrationConnectorTest extends ApplicationTest {
         s.close();
     }
 
-    public static class MockServletInputStream extends ServletInputStream {
 
-        private byte[] mData;
-        private int mIndex;
 
-        public MockServletInputStream(byte[] data) {
-            mData = data;
-        }
 
-        @Override
-        public int read() throws IOException {
-            if (mIndex >= mData.length) {
-                return -1;
-            }
-            return mData[mIndex++];
-        }
-
-        @Override
-        public synchronized void reset() throws IOException {
-            mIndex = 0;
-        }
-
-        public long skip(long n) throws IOException {
-            mIndex += n;
-            return mIndex;
-        };
-    }
-
-    public static class MockServletOutputStream extends ServletOutputStream {
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        @Override
-        public void write(int b) throws IOException {
-            baos.write(b);
-        }
-
-        public String getStringValue() {
-            return new String(baos.toByteArray());
-        }
-    }
 
 }

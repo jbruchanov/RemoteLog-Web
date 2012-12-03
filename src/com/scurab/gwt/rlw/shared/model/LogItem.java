@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import com.google.gson.annotations.SerializedName;
+
 @Entity(name = "LogItems")
 public class LogItem implements Serializable {
 
@@ -19,36 +21,44 @@ public class LogItem implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "ID")
+    @SerializedName("ID")
     private int mId;
     
     @Column(name = "Application", nullable = false)
+    @SerializedName("Application")
     private String mApplication;
 
     @Column(name = "AppVersion")
+    @SerializedName("AppVersion")
     private String mAppVersion;
 
     @Column(name = "AppBuild")
+    @SerializedName("AppBuild")
     private String mAppBuild;
 
-    private String mDeviceId;
-    
     @Column(name = "Date", nullable = false)
+    @SerializedName("Date")
     private Date mDate;
     
-    @Column(name = "Platform", nullable = false)
-    private String mPlatform;
-    
     @Column(name = "Category")
+    @SerializedName("Category")
     private String mCategory;
     
     @Column(name = "Message")
+    @SerializedName("Message")
     private String mMesage;
     
     @Column(name = "DataType")
+    @SerializedName("DataType")
     private String mBlobMime;
     
     @Column(name = "Data")
+    @SerializedName("Data")
     private byte[] mBlob;
+
+    @Column(name = "Platform")
+    @SerializedName("Platform")
+    private String mPlatform;
 
     public int getId() {
         return mId;
@@ -56,14 +66,6 @@ public class LogItem implements Serializable {
 
     public void setId(int id) {
         mId = id;
-    }
-
-    public String getDeviceId() {
-        return mDeviceId;
-    }
-
-    public void setDeviceId(String deviceId) {
-        mDeviceId = deviceId;
     }
 
     public Date getDate() {

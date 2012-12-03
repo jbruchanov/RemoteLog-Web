@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import org.apache.commons.io.IOUtils;
 
 import com.google.gson.Gson;
+import com.scurab.gwt.rlw.server.Application;
 
 public abstract class Connector extends HttpServlet {
 
@@ -17,7 +18,7 @@ public abstract class Connector extends HttpServlet {
      */
     private static final long serialVersionUID = 1009792762610851131L;
 
-    protected final Gson mGson = new Gson();
+    protected final Gson mGson = Application.GSON;
 
     protected String read(InputStream is) throws IOException {
         StringWriter writer = new StringWriter();

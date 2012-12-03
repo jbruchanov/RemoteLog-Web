@@ -7,10 +7,13 @@ import java.util.Properties;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class Application implements ServletContextListener {
 
     public static final Properties APPLICATION_PROPERTIES = new Properties();
-
+    public static final Gson GSON = new GsonBuilder().setDateFormat("yyyy-MM-dd kk:mm:ss.SSS").create();
     @Override
     public void contextDestroyed(ServletContextEvent arg0) {
 

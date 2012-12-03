@@ -1,6 +1,8 @@
 package com.scurab.gwt.rlw.shared.model;
 
-public class Respond<T> {
+import com.google.gson.Gson;
+
+public abstract class Respond<T> {
 
     private String mType;
     private String mMessage;

@@ -1,12 +1,14 @@
 package com.scurab.gwt.rlw.server.util;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
 import com.google.gson.Gson;
 import com.scurab.gwt.rlw.shared.model.Device;
+import com.scurab.gwt.rlw.shared.model.LogItem;
 
 public class DataGenerator {
 
@@ -17,10 +19,12 @@ public class DataGenerator {
     private static final String[] sResolutions = new String[] { "480x800", "320x480", "240x480", "800x1280",
             "1080x1920" };
 
+    private static final String[] sCategoryLog = new String[] { "Info", "Warning", "Error", "Debug" };
+
     private static final String[][] sRandomWords = new String[][] { sBrands, sPlatforms, sResolutions };
     private static final Gson sGson = new Gson();
     private static int sId;
-    
+
     public static List<Device> genDevices(int howMany) {
         ArrayList<Device> result = new ArrayList<Device>();
         for (int i = 0; i < howMany; i++) {
@@ -29,7 +33,7 @@ public class DataGenerator {
         return result;
     }
 
-    public static Device genRandomDevice(){
+    public static Device genRandomDevice() {
         Device d = new Device();
         d.setBrand(getRandomBrand());
         d.setDescription("Random desc:" + genRandomString());
@@ -82,5 +86,37 @@ public class DataGenerator {
             sb.append((char) ('a' + sRandom.nextInt('z' - 'a') + 1));
         }
         return sb.toString();
+    }
+
+    public static LogItem genRandomLogItem() {
+        return genRandomLogItem(genRandomString(), genRandomString());
+    }
+
+    public static List<LogItem> genRandomLogItems(int howMany) {
+        List<LogItem> items = new ArrayList<LogItem>();
+        for (int i = 0; i < howMany; i++) {
+            items.add(genRandomLogItem());
+        }
+        return items;
+    }
+
+    public static List<LogItem> genRandomLogItems(String devId, String app, int howMany) {
+        List<LogItem> items = new ArrayList<LogItem>();
+        for (int i = 0; i < howMany; i++) {
+            items.add(genRandomLogItem(devId, app));
+        }
+        return items;
+    }
+
+    public static LogItem genRandomLogItem(String devId, String app) {
+        LogItem li = new LogItem();
+        li.setAppBuild("" + sRandom.nextInt(256));
+        li.setApplication(app);
+        li.setAppVersion("1." + sRandom.nextInt());
+        li.setCategory(sCategoryLog[sRandom.nextInt(sCategoryLog.length)]);
+        li.setDate(new Date());
+        li.setMesage(getRandomBrand() + " " + genRandomString());
+        li.setPlatform(getRandomPlatform());
+        return li;
     }
 }

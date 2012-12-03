@@ -11,12 +11,11 @@ import org.hibernate.Session;
 import com.google.gson.JsonObject;
 import com.scurab.gwt.rlw.server.Database;
 import com.scurab.gwt.rlw.shared.model.Device;
-import com.scurab.gwt.rlw.shared.model.DeviceRespond;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 import com.scurab.gwt.rlw.shared.model.LogItemRespond;
 import com.scurab.gwt.rlw.shared.model.Respond;
 
-public class RegistrationConnector extends Connector {
+public class LogItemsConnector extends Connector {
 
     /**
      * 
@@ -29,7 +28,7 @@ public class RegistrationConnector extends Connector {
         try {
             throw new Exception("Not implemented");
         } catch (Exception e) {
-            Respond r = new DeviceRespond(e);
+            Respond r = new LogItemRespond(e);
             response = mGson.toJson(r);
         } finally {
             resp.getOutputStream().write(response.getBytes());
@@ -42,16 +41,16 @@ public class RegistrationConnector extends Connector {
         String response = null;
         try {
             String json = read(req.getInputStream());
-            Device[] saved = onPost(json, json.charAt(0) == '[');
+            LogItem[] saved = onPost(json, json.charAt(0) == '[');
             if (saved.length == 0) {
-                response = mGson.toJson(new DeviceRespond("Nothing saved!?"));
+                response = mGson.toJson(new LogItemRespond("Nothing saved!?"));
             } else if (saved.length == 1) {
-                response = mGson.toJson(new DeviceRespond(saved[0]));
+                response = mGson.toJson(new LogItemRespond("OK", saved[0]));
             } else {
-                response = mGson.toJson(new DeviceRespond());
+                response = mGson.toJson(new LogItemRespond("OK Saved:" + saved.length));
             }
         } catch (Exception e) {
-            Respond r = new DeviceRespond(e);
+            Respond r = new LogItemRespond(e);
             response = mGson.toJson(r);
         } finally {
             resp.getOutputStream().write(response.getBytes());
@@ -59,22 +58,22 @@ public class RegistrationConnector extends Connector {
         }
     }
 
-    private Device[] onPost(String obj, boolean isArray) {
-        Device[] toWrite = null;
+    private LogItem[] onPost(String obj, boolean isArray) {
+        LogItem[] toWrite = null;
         if (isArray) {
-            toWrite = mGson.fromJson(obj, Device[].class);
+            toWrite = mGson.fromJson(obj, LogItem[].class);
         } else {
-            Device d = mGson.fromJson(obj, Device.class);
-            toWrite = new Device[] { d };
+            LogItem d = mGson.fromJson(obj, LogItem.class);
+            toWrite = new LogItem[] { d };
         }
         onWrite(toWrite);
         return toWrite;
     }
 
-    protected void onWrite(Device[] data) {
+    protected void onWrite(LogItem[] data) {
         Session s = Database.openSession();
         s.beginTransaction();
-        for (Device d : data) {
+        for (LogItem d : data) {
             s.save(d);
         }
         s.getTransaction().commit();
@@ -86,7 +85,7 @@ public class RegistrationConnector extends Connector {
         try {
             throw new Exception("Not implemented");
         } catch (Exception e) {
-            Respond r = new DeviceRespond(e);
+            Respond r = new LogItemRespond(e);
             response = mGson.toJson(r);
         } finally {
             resp.getOutputStream().write(response.getBytes());

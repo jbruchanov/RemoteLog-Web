@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import com.google.gson.annotations.SerializedName;
 import com.google.gwt.i18n.client.LocalizableResource.Key;
 
 @Entity(name = "Devices")
@@ -18,36 +19,47 @@ public class Device implements Serializable {
 
     @Id
     @Column(name = "DevUUID", nullable = false)
+    @SerializedName("DevUUID")
     private String mDevUUID;
 
     @Column(name = "Brand")
+    @SerializedName("Brand")
     private String mBrand;
     
     @Column(nullable = false, name = "Platform")
+    @SerializedName("Platform")
     private String mPlatform;
     
     @Column(name = "Version")
+    @SerializedName("Version")
     private String mVersion;
     
     @Column(name = "Detail")
+    @SerializedName("Detail")
     private String mDetail;
     
     @Column(name = "Resolution")
+    @SerializedName("Resolution")
     private String mResolution;
     
     @Column(name = "Owner")
+    @SerializedName("Owner")
     private String mOwner;
     
     @Column(name = "OSDescription")
+    @SerializedName("OSDescription")
     private String mOsDescription;
 
     @Column(name = "Description")
+    @SerializedName("Description")
     private String mDescription;
     
     @Column(name = "PushID")
+    @SerializedName("PushID")
     private String mPushId;
 
     @Column(name = "Model")
+    @SerializedName("Model")
     private String mModel;
 
     public String getBrand() {
