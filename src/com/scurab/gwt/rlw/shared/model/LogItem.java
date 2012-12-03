@@ -60,6 +60,10 @@ public class LogItem implements Serializable {
     @SerializedName("Platform")
     private String mPlatform;
 
+    @Column(name = "DeviceID")
+    @SerializedName("DeviceID")
+    private int mDeviceId;
+
     public int getId() {
         return mId;
     }
@@ -138,5 +142,13 @@ public class LogItem implements Serializable {
 
     public void setAppBuild(String appBuild) {
         mAppBuild = appBuild;
+    }
+
+    public int getDeviceId() {
+        return mDeviceId;
+    }
+
+    public void setDeviceId(int deviceId) {
+        mDeviceId = deviceId;
     }
 }

@@ -22,8 +22,19 @@
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>connector</servlet-name>
-		<url-pattern>/connector</url-pattern>
+		<servlet-name>regs</servlet-name>
+		<url-pattern>/regs</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>logs</servlet-name>
+		<servlet-class>com.scurab.gwt.rlw.server.data.LogItemsConnector
+		</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>logs</servlet-name>
+		<url-pattern>/logs</url-pattern>
 	</servlet-mapping>
 
 	<welcome-file-list>

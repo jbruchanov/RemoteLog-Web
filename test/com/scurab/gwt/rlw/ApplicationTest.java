@@ -1,7 +1,12 @@
 package com.scurab.gwt.rlw;
 
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
 import com.scurab.gwt.rlw.server.Application;
 import com.scurab.gwt.rlw.server.Database;
+import com.scurab.gwt.rlw.server.Queries;
 
 public class ApplicationTest {
 
@@ -12,5 +17,10 @@ public class ApplicationTest {
             Application app = new Application();
             app.contextInitialized(null);
         }
+    }
+
+    @Test
+    public void test() {
+        assertNotNull(Queries.getQuery(Queries.QueryNames.CREATE_TABLES));
     }
 }

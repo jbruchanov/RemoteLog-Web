@@ -36,4 +36,9 @@
 	    )		   
 	]]>
 	</Query>
+	<Query name="SELECT_APPS" type="SQL">
+	<![CDATA[
+		SELECT DISTINCT Application FROM LogItems ORDER BY Application;
+	]]>
+	</Query>
 </SQLQueries>

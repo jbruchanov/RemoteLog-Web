@@ -89,7 +89,7 @@ public class DataGenerator {
     }
 
     public static LogItem genRandomLogItem() {
-        return genRandomLogItem(genRandomString(), genRandomString());
+        return genRandomLogItem(sRandom.nextInt(), genRandomString());
     }
 
     public static List<LogItem> genRandomLogItems(int howMany) {
@@ -100,7 +100,7 @@ public class DataGenerator {
         return items;
     }
 
-    public static List<LogItem> genRandomLogItems(String devId, String app, int howMany) {
+    public static List<LogItem> genRandomLogItems(int devId, String app, int howMany) {
         List<LogItem> items = new ArrayList<LogItem>();
         for (int i = 0; i < howMany; i++) {
             items.add(genRandomLogItem(devId, app));
@@ -108,7 +108,7 @@ public class DataGenerator {
         return items;
     }
 
-    public static LogItem genRandomLogItem(String devId, String app) {
+    public static LogItem genRandomLogItem(int devId, String app) {
         LogItem li = new LogItem();
         li.setAppBuild("" + sRandom.nextInt(256));
         li.setApplication(app);
@@ -117,6 +117,7 @@ public class DataGenerator {
         li.setDate(new Date());
         li.setMesage(getRandomBrand() + " " + genRandomString());
         li.setPlatform(getRandomPlatform());
+        li.setDeviceId(devId);
         return li;
     }
 }

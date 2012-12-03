@@ -3,7 +3,9 @@ package com.scurab.gwt.rlw.server;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -15,33 +17,6 @@ import com.scurab.gwt.rlw.shared.model.LogItem;
 @SuppressWarnings("serial")
 public class Database {
     private static SessionFactory factory;
-    // private static ServiceRegistry serviceRegistry;
-
-    static {
-        // Configuration config = getConfiguration();
-        // factory = config.buildSessionFactory();
-        // Configuration config = getConfiguration();
-        // serviceRegistry = new ServiceRegistryBuilder().applySettings(config.getProperties()).buildServiceRegistry();
-        // config.setSessionFactoryObserver(new SessionFactoryObserver() {
-        // @Override
-        // public void sessionFactoryCreated(SessionFactory factory) { }
-        //
-        // @Override
-        // public void sessionFactoryClosed(SessionFactory factory) {
-        // ServiceRegistryBuilder.destroy(serviceRegistry);
-        // }
-        // });
-        // factory = config.buildSessionFactory();
-        // factory = config.buildSessionFactory(serviceRegistry);
-    }
-
-    public static void create() {
-        // if(factory == null)
-        // {
-        // Configuration config = getConfiguration();
-        // factory = config.buildSessionFactory();
-        // }
-    }
 
     public static Session openSession() {
         return factory.openSession();
@@ -49,6 +24,7 @@ public class Database {
 
     public static void init() {
         if (factory == null) {
+            Queries.init();
             Configuration config = getConfiguration();
             factory = config.buildSessionFactory();
             checkTables();
@@ -75,6 +51,18 @@ public class Database {
                         .getProperty(Application.ApplicationPropertyKeys.connection_username),
                         Application.APPLICATION_PROPERTIES
                                 .getProperty(Application.ApplicationPropertyKeys.connection_password));
+    }
+
+    @SuppressWarnings("rawtypes")
+    public static List getDataByQuery(Session s, String query, boolean isSQL) throws Exception {
+        s.beginTransaction();
+        Query q = null;
+        if (isSQL)
+            q = s.createSQLQuery(query);
+        else
+            q = s.createQuery(query);
+        List result = q.list();
+        return result;
     }
 
     public static void createSchema() {

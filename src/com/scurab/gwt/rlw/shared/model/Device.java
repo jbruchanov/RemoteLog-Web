@@ -2,8 +2,10 @@ package com.scurab.gwt.rlw.shared.model;
 
 import java.io.Serializable;
 
+import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import com.google.gson.annotations.SerializedName;
@@ -18,6 +20,11 @@ public class Device implements Serializable {
     private static final long serialVersionUID = -5526599861310748107L;
 
     @Id
+    @GeneratedValue()
+    @Column(name = "DeviceID", nullable = false)
+    @SerializedName("DeviceID")
+    private int mDeviceId;
+
     @Column(name = "DevUUID", nullable = false)
     @SerializedName("DevUUID")
     private String mDevUUID;
@@ -140,5 +147,13 @@ public class Device implements Serializable {
 
     public void setModel(String model) {
         mModel = model;
+    }
+
+    public int getDeviceId() {
+        return mDeviceId;
+    }
+
+    public void setDeviceId(int deviceId) {
+        mDeviceId = deviceId;
     }
 }

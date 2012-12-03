@@ -3,8 +3,14 @@ package com.scurab.gwt.rlw.server.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.scurab.gwt.rlw.client.DataService;
+import com.scurab.gwt.rlw.server.Database;
+import com.scurab.gwt.rlw.server.Queries;
+import com.scurab.gwt.rlw.server.Queries.AppQuery;
 import com.scurab.gwt.rlw.server.util.DataGenerator;
 import com.scurab.gwt.rlw.shared.model.Device;
 
@@ -26,13 +32,15 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
     }
 
     @Override
-    public List<String> getApplications() {
-        // String[] apps = new String[] { "RadioAlarm", "RemoteControl", "ZumpaReader" };
-        // return Arrays.asList(apps);
+    public List<String> getApplications() throws Exception {
+        Session s = Database.openSession();
+        AppQuery sql = Queries.getQuery(Queries.QueryNames.SELECT_APPS);
+        List data = Database.getDataByQuery(s, sql.Query, sql.TYPE_SQL.equals(sql.Type));
         List<String> apps = new ArrayList<String>();
-        for(int i = 0;i<100;i++){
-            apps.add("Applikaèka " + i);
+        for (int i = 0, n = data.size(); i < n; i++) {
+            apps.add(data.get(i).toString());
         }
+        s.close();
         return apps;
     }
 

@@ -15,5 +15,5 @@ public interface DataService extends RemoteService {
     
     Device getDevice(int id);
 
-    List<String> getApplications();
+    List<String> getApplications() throws Exception;
 }
