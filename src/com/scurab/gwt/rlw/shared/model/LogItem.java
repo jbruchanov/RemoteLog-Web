@@ -3,7 +3,10 @@ package com.scurab.gwt.rlw.shared.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity(name = "LogItems")
 public class LogItem implements Serializable {
@@ -13,26 +16,38 @@ public class LogItem implements Serializable {
      */
     private static final long serialVersionUID = 7649642015381756913L;
 
+    @Id
+    @GeneratedValue
+    @Column(name = "ID")
     private int mId;
     
+    @Column(name = "Application", nullable = false)
     private String mApplication;
 
+    @Column(name = "AppVersion")
     private String mAppVersion;
 
+    @Column(name = "AppBuild")
     private String mAppBuild;
 
     private String mDeviceId;
     
+    @Column(name = "Date", nullable = false)
     private Date mDate;
     
+    @Column(name = "Platform", nullable = false)
     private String mPlatform;
     
+    @Column(name = "Category")
     private String mCategory;
     
+    @Column(name = "Message")
     private String mMesage;
     
+    @Column(name = "DataType")
     private String mBlobMime;
     
+    @Column(name = "Data")
     private byte[] mBlob;
 
     public int getId() {
@@ -105,5 +120,21 @@ public class LogItem implements Serializable {
 
     public void setApplication(String application) {
         mApplication = application;
+    }
+
+    public String getAppVersion() {
+        return mAppVersion;
+    }
+
+    public void setAppVersion(String appVersion) {
+        mAppVersion = appVersion;
+    }
+
+    public String getAppBuild() {
+        return mAppBuild;
+    }
+
+    public void setAppBuild(String appBuild) {
+        mAppBuild = appBuild;
     }
 }

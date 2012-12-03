@@ -4,8 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
+import com.google.gwt.i18n.client.LocalizableResource.Key;
 
 @Entity(name = "Devices")
 public class Device implements Serializable {
@@ -16,9 +17,8 @@ public class Device implements Serializable {
     private static final long serialVersionUID = -5526599861310748107L;
 
     @Id
-    @GeneratedValue
-    @Column(name = "ID")
-    private int mId;
+    @Column(name = "DevUUID", nullable = false)
+    private String mDevUUID;
 
     @Column(name = "Brand")
     private String mBrand;
@@ -47,19 +47,8 @@ public class Device implements Serializable {
     @Column(name = "PushID")
     private String mPushId;
 
-    @Column(name = "DevUUID", nullable = false)
-    private String mDevUUID;
-
     @Column(name = "Model")
     private String mModel;
-
-    public int getId() {
-        return mId;
-    }
-
-    public void setId(int id) {
-        mId = id;
-    }
 
     public String getBrand() {
         return mBrand;

@@ -2,42 +2,27 @@ package com.scurab.gwt.rlw.server.data;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-public class Connector extends HttpServlet {
+import org.apache.commons.io.IOUtils;
+
+import com.google.gson.Gson;
+
+public abstract class Connector extends HttpServlet {
 
     /**
      * 
      */
     private static final long serialVersionUID = 1009792762610851131L;
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getOutputStream().write("doGet".getBytes());
-    }
+    protected final Gson mGson = new Gson();
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String jsonRequest = read(req.getInputStream());
+    protected String read(InputStream is) throws IOException {
+        StringWriter writer = new StringWriter();
+        IOUtils.copy(is, writer, "utf-8");
+        String theString = writer.toString();
+        return theString;
     }
-
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getOutputStream().write("doPut".getBytes());
-    }
-
-    public static String read(InputStream is) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        int nRead;
-        byte[] data = new byte[16384];
-        while ((nRead = is.read(data, 0, data.length)) != -1) {
-            sb.append(new String(data, 0, nRead));
-        }
-        return sb.toString();
-    }
-
 }

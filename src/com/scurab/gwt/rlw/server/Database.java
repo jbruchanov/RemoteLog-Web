@@ -10,6 +10,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 
 import com.scurab.gwt.rlw.shared.model.Device;
+import com.scurab.gwt.rlw.shared.model.LogItem;
 
 @SuppressWarnings("serial")
 public class Database {
@@ -89,7 +90,7 @@ public class Database {
         Configuration c = new Configuration();
 
         c.addAnnotatedClass(Device.class);
-        // c.addAnnotatedClass(LogItem.class);
+        c.addAnnotatedClass(LogItem.class);
 
         c.setProperties(Application.APPLICATION_PROPERTIES);
         c.configure();

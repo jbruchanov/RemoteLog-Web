@@ -31,7 +31,6 @@ public class DataGenerator {
 
     public static Device genRandomDevice(){
         Device d = new Device();
-        d.setId(++sId);
         d.setBrand(getRandomBrand());
         d.setDescription("Random desc:" + genRandomString());
         d.setDetail(genRandomJSON(5));

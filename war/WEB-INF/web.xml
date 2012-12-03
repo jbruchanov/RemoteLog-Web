@@ -16,8 +16,8 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>connector</servlet-name>
-		<servlet-class>com.scurab.gwt.rlw.server.data.Connector
+		<servlet-name>regs</servlet-name>
+		<servlet-class>com.scurab.gwt.rlw.server.data.RegistrationConnector
 		</servlet-class>
 	</servlet>
 

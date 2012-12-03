@@ -103,7 +103,7 @@ public class MainPresenter extends BasePresenter implements IsWidget {
         for (int i = 0; i < data.size(); i++) {
             Device d = data.get(i);
             HashMap<String, Object> result = new HashMap<String, Object>();
-            result.put("ID_1", d.getId());
+            result.put("UUID_1", d.getDevUUID());
             result.put("Brand_2", d.getBrand());
             result.put("Model_3", d.getModel());
             result.put("Platform_4", d.getPlatform());
