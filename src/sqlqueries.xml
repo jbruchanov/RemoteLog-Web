@@ -41,4 +41,9 @@
 		SELECT DISTINCT Application FROM LogItems ORDER BY Application;
 	]]>
 	</Query>
+	<Query name="SELECT_DEVS" type="SQL">
+	<![CDATA[
+		SELECT * FROM Devices;
+	]]>
+	</Query>
 </SQLQueries>

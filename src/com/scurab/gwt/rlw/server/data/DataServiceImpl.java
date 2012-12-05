@@ -24,7 +24,14 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
 
     @Override
     public List<Device> getDevices(String app, int page) {
-        return null;
+        List<Device> result = new ArrayList<Device>();
+        Session s = Database.openSession();
+        if (app == null) {
+            Query q = s.createQuery("FROM Devices");
+            result.addAll(q.list());
+        }
+        s.close();
+        return result;
     }
 
     @Override
