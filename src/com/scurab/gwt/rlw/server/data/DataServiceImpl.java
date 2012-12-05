@@ -13,6 +13,7 @@ import com.scurab.gwt.rlw.server.Queries;
 import com.scurab.gwt.rlw.server.Queries.AppQuery;
 import com.scurab.gwt.rlw.server.util.DataGenerator;
 import com.scurab.gwt.rlw.shared.model.Device;
+import com.scurab.gwt.rlw.shared.model.LogItem;
 
 public class DataServiceImpl extends RemoteServiceServlet implements DataService {
 
@@ -22,8 +23,8 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
     private static final long serialVersionUID = -4187117132460121962L;
 
     @Override
-    public List<Device> getDevices() {
-        return DataGenerator.genDevices(150);
+    public List<Device> getDevices(String app, int page) {
+        return null;
     }
 
     @Override
@@ -44,4 +45,8 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
         return apps;
     }
 
+    @Override
+    public List<LogItem> getLogs(String app, int page) {
+        return null;
+    }
 }
