@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.transform.Transformers;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.scurab.gwt.rlw.client.DataService;
+import com.scurab.gwt.rlw.server.Application;
 import com.scurab.gwt.rlw.server.Database;
 import com.scurab.gwt.rlw.server.Queries;
 import com.scurab.gwt.rlw.server.Queries.AppQuery;
@@ -24,12 +26,25 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
 
     @Override
     public List<Device> getDevices(String app, int page) {
+
         List<Device> result = new ArrayList<Device>();
+
         Session s = Database.openSession();
+        Query q = null;
         if (app == null) {
-            Query q = s.createQuery("FROM Devices");
-            result.addAll(q.list());
+            q = s.createQuery("FROM Devices");
+        }else{
+            // create sql query
+            AppQuery query = Queries.getQuery(Queries.QueryNames.SELECT_DEVS_BY_APP);
+            q = s.createSQLQuery(query.Query).setResultTransformer(Transformers.aliasToBean(Device.class));
+            String[] param = query.Parameters.toArray(new String[1]);
+            q.setParameter(param[0], app);
         }
+
+        q.setMaxResults(Application.PAGE_SIZE);
+        if (page != 0)
+            q.setFirstResult(page * Application.PAGE_SIZE);
+        result.addAll(q.list());
         s.close();
         return result;
     }

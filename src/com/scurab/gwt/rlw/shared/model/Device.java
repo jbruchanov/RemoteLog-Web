@@ -23,7 +23,7 @@ public class Device implements Serializable {
     @GeneratedValue()
     @Column(name = "DeviceID", nullable = false)
     @SerializedName("DeviceID")
-    private int mDeviceId;
+    private int mDeviceID;
 
     @Column(name = "DevUUID", nullable = false)
     @SerializedName("DevUUID")
@@ -55,7 +55,7 @@ public class Device implements Serializable {
     
     @Column(name = "OSDescription")
     @SerializedName("OSDescription")
-    private String mOsDescription;
+    private String mOSDescription;
 
     @Column(name = "Description")
     @SerializedName("Description")
@@ -63,11 +63,27 @@ public class Device implements Serializable {
     
     @Column(name = "PushID")
     @SerializedName("PushID")
-    private String mPushId;
+    private String mPushID;
 
     @Column(name = "Model")
     @SerializedName("Model")
     private String mModel;
+
+    public int getDeviceID() {
+        return mDeviceID;
+    }
+
+    public void setDeviceID(int deviceID) {
+        mDeviceID = deviceID;
+    }
+
+    public String getDevUUID() {
+        return mDevUUID;
+    }
+
+    public void setDevUUID(String devUUID) {
+        mDevUUID = devUUID;
+    }
 
     public String getBrand() {
         return mBrand;
@@ -117,6 +133,14 @@ public class Device implements Serializable {
         mOwner = owner;
     }
 
+    public String getOSDescription() {
+        return mOSDescription;
+    }
+
+    public void setOSDescription(String oSDescription) {
+        mOSDescription = oSDescription;
+    }
+
     public String getDescription() {
         return mDescription;
     }
@@ -125,20 +149,12 @@ public class Device implements Serializable {
         mDescription = description;
     }
 
-    public String getPushId() {
-        return mPushId;
+    public String getPushID() {
+        return mPushID;
     }
 
-    public void setPushId(String pushId) {
-        mPushId = pushId;
-    }
-
-    public String getDevUUID() {
-        return mDevUUID;
-    }
-
-    public void setDevUUID(String devUUID) {
-        mDevUUID = devUUID;
+    public void setPushID(String pushID) {
+        mPushID = pushID;
     }
 
     public String getModel() {
@@ -149,11 +165,4 @@ public class Device implements Serializable {
         mModel = model;
     }
 
-    public int getDeviceId() {
-        return mDeviceId;
-    }
-
-    public void setDeviceId(int deviceId) {
-        mDeviceId = deviceId;
-    }
 }

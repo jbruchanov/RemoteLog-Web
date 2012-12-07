@@ -24,6 +24,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionModel;
+import com.scurab.gwt.rlw.client.RemoteLogWeb;
 
 /**
  * Dynamic table widget setData must be called before is widget attechd into element
@@ -39,7 +40,7 @@ public class DynamicTableWidget extends Composite {
 
     private ListDataProvider<HashMap<String, Object>> mListDataProvider = null;
 
-    private SimplePager pager;
+    private LazyPager pager;
 
     private DynamicTableWidgetOverrider mOverrider = null;
 
@@ -107,7 +108,7 @@ public class DynamicTableWidget extends Composite {
 
         // Create a Pager to control the table.
         SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
-        pager = new SimplePager(TextLocation.CENTER, pagerResources, false, 0, true);
+        pager = new LazyPager(TextLocation.CENTER, pagerResources, false, 0, true);
         pager.setDisplay(mCellTable);
         pager.setPageSize(getPageSize());
 
@@ -138,7 +139,7 @@ public class DynamicTableWidget extends Composite {
             if (value > 0)
                 return value;
         }
-        return 50;
+        return RemoteLogWeb.PAGE_SIZE;
     }
 
     /**
@@ -412,5 +413,9 @@ public class DynamicTableWidget extends Composite {
     public void addData(Collection<HashMap<String, Object>> data) {
         mListDataProvider.getList().addAll(data);
         mListDataProvider.refresh();
+    }
+
+    public void setLoadListener(LazyPager.OnPageLoaderListener loadListener) {
+        pager.setLoadListener(loadListener);
     }
 }

@@ -19,6 +19,7 @@ public class RemoteLogWeb implements EntryPoint {
 	    + "attempting to contact the server. Please check your network "
 	    + "connection and try again.";
 
+    public static int PAGE_SIZE = 30;
     /**
      * Create a remote service proxy to talk to the server-side Greeting
      * service.

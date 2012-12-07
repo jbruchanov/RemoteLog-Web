@@ -13,7 +13,9 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
 import com.scurab.gwt.rlw.client.components.DynamicTableWidget;
+import com.scurab.gwt.rlw.client.components.LazyPager;
 import com.scurab.gwt.rlw.client.controls.MainMenuLink;
+import com.scurab.gwt.rlw.client.interfaces.DownloadFinishListener;
 import com.scurab.gwt.rlw.client.view.ContentView;
 import com.scurab.gwt.rlw.shared.model.Device;
 
@@ -38,20 +40,21 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
     }
 
     private void init() {
-        mDisplay.getnLoadDataButton().addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent event) {
-                onLoadClick();
-            }
-        });
+        // mDisplay.getnLoadDataButton().addClickHandler(new ClickHandler() {
+        // @Override
+        // public void onClick(ClickEvent event) {
+        // loadDevices();
+        // }
+        // });
+        loadDevices(0);
     }
 
-    private void onLoadClick() {
-        mDataService.getDevices(mApp, 0, new AsyncCallback<List<Device>>() {
+    private void loadDevices(int page) {
+        mDataService.getDevices(mApp, page, new AsyncCallback<List<Device>>() {
 
             @Override
             public void onSuccess(List<Device> result) {
-                onLoadData(result);
+                onLoadDevices(result);
             }
 
             @Override
@@ -63,12 +66,30 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
 
     private DynamicTableWidget mTable;
 
-    protected void onLoadData(List<Device> result) {
+    protected void onLoadDevices(List<Device> result) {
         List<HashMap<String, Object>> transformed = transform(result);
         if (mTable == null) {
             mTable = new DynamicTableWidget();
             mTable.setData(transformed);
             mDisplay.getDevicesPanel().add(mTable);
+            mTable.setLoadListener(new LazyPager.OnPageLoaderListener() {
+                @Override
+                public void onLoadPage(int page, final DownloadFinishListener c) {
+                    mDataService.getDevices(mApp, page, new AsyncCallback<List<Device>>() {
+                        @Override
+                        public void onSuccess(List<Device> result) {
+                            int records = result != null ? result.size() : 0;
+                            onLoadDevices(result);
+                            c.onDownlodFinish(records);
+                        }
+
+                        @Override
+                        public void onFailure(Throwable caught) {
+                            Window.alert(caught.getMessage());
+                        }
+                    });
+                }
+            });
 
         } else {
             mTable.addData(transformed);

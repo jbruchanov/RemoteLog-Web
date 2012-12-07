@@ -28,13 +28,23 @@ public class DBData extends ApplicationTest {
         s.beginTransaction();
         for (int i = 0, n = devs.size(); i < n; i++) {
             Device d = devs.get(i);
-            List<LogItem> li = DataGenerator.genRandomLogItems(d.getDeviceId(), "TestApp2", 150);
+            List<LogItem> li = DataGenerator.genRandomLogItems(d.getDeviceID(), "TestApp2", 150);
             for(int j = 0, m = li.size();j<m;j++){
                 s.saveOrUpdate(li.get(j));
             }
         }
         s.getTransaction().commit();
-        
-        
+    }
+
+    @Test
+    public void genDevs() {
+        List<Device> devs = DataGenerator.genDevices(150);
+        Session s = Database.openSession();
+        s.beginTransaction();
+        for (int i = 0, n = devs.size(); i < n; i++) {
+            Device d = devs.get(i);
+            s.saveOrUpdate(devs.get(i));
+        }
+        s.getTransaction().commit();
     }
 }
