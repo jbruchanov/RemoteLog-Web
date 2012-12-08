@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.json.client.JSONNumber;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -14,6 +17,7 @@ import com.scurab.gwt.rlw.client.components.DynamicTableWidget;
 import com.scurab.gwt.rlw.client.components.LazyPager;
 import com.scurab.gwt.rlw.client.interfaces.DownloadFinishListener;
 import com.scurab.gwt.rlw.client.view.ContentView;
+import com.scurab.gwt.rlw.shared.SharedParams;
 import com.scurab.gwt.rlw.shared.model.Device;
 
 public class ContentViewPresenter extends BasePresenter implements IsWidget {
@@ -42,8 +46,8 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
     }
 
     private void loadDevices(int page) {
-        notifyLoadingDataStart(WORDS.LoadingDevices());
-        mDataService.getDevices(mApp, page, new AsyncCallback<List<Device>>() {
+        notifyLoadingDataStart(WORDS.LoadingDevices());        
+        mDataService.getDevices(createParams(page, mApp).toString(), new AsyncCallback<List<Device>>() {
             @Override
             public void onSuccess(List<Device> result) {
                 onLoadDevices(result);
@@ -71,7 +75,7 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
                 @Override
                 public void onLoadPage(int page, final DownloadFinishListener c) {
                     notifyLoadingDataStart(WORDS.LoadingDevices());
-                    mDataService.getDevices(mApp, page, new AsyncCallback<List<Device>>() {
+                    mDataService.getDevices(createParams(page, mApp).toString(), new AsyncCallback<List<Device>>() {
                         @Override
                         public void onSuccess(List<Device> result) {
                             int records = result != null ? result.size() : 0;
@@ -111,5 +115,13 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
             rCollection.add(result);
         }
         return rCollection;
+    }
+    
+    protected JSONObject createParams(int page, String appName) {
+        JSONObject param  = super.createParams(page);
+        if(appName != null){
+            param.put(SharedParams.APP_NAME, new JSONString(appName));
+        }
+        return param;
     }
 }

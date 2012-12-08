@@ -1,12 +1,17 @@
 package com.scurab.gwt.rlw.client.presenter;
 
+import java.util.HashMap;
+
 import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.json.client.JSONNumber;
+import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
 import com.scurab.gwt.rlw.client.RemoteLogWeb;
 import com.scurab.gwt.rlw.client.events.DataLoadingEvent;
 import com.scurab.gwt.rlw.language.Words;
+import com.scurab.gwt.rlw.shared.SharedParams;
 
 public abstract class BasePresenter implements IsWidget {
 
@@ -37,5 +42,17 @@ public abstract class BasePresenter implements IsWidget {
 
     protected void notifyLoadingDataStop() {
         mEventBus.fireEvent(new DataLoadingEvent(DataLoadingEvent.STOP_LOADING));
+    }
+    
+//    protected HashMap<String,Object> createParams(int page){
+//        HashMap<String, Object> params = new HashMap<String, Object>();
+//        params.put(SharedParams.PAGE, page);
+//        return params;
+//    }
+    
+    protected com.google.gwt.json.client.JSONObject createParams(int page){
+       JSONObject obj = new JSONObject();
+       obj.put(SharedParams.PAGE, new JSONNumber(page));
+       return obj;
     }
 }

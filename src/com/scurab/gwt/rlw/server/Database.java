@@ -1,9 +1,12 @@
 package com.scurab.gwt.rlw.server;
 
+import java.lang.annotation.Annotation;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
+
+import javax.persistence.Entity;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -90,5 +93,41 @@ public class Database {
     public static class TableInfo {
         public String TableName;
         public String DefaultOrderString;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> TableInfo getTable(Class<T> object) {
+        Class<T> c;
+        TableInfo result = null;
+        try {
+            java.lang.annotation.Annotation[] as = object.getDeclaredAnnotations();
+            Entity entity = null;
+            // DefaultOrderString orderString = null;
+            for (Annotation a : as) {
+                if (a.annotationType().equals(Entity.class)) {
+                    entity = (Entity) a;
+                    continue;
+                }
+                // if(a.annotationType().equals(DefaultOrderString.class))
+                // {
+                // orderString = (DefaultOrderString) a;
+                // continue;
+                // }
+            }
+
+            result = new TableInfo();
+            if (entity != null)
+                result.TableName = entity.name();
+
+            if (result.TableName == null || result.TableName.length() == 0)
+                result.TableName = object.getSimpleName();
+
+            // if(orderString != null)
+            // result.DefaultOrderString = orderString.value();
+        } catch (Exception e1) {
+            // should not happen
+            e1.printStackTrace();
+        }
+        return result;
     }
 }
