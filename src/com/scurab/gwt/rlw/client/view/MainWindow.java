@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.StackLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Button;
 
 public class MainWindow extends BaseWindow {
 
@@ -23,6 +24,8 @@ public class MainWindow extends BaseWindow {
     Image mProgressBar;
     @UiField
     Label mStatusBarLabel;
+    @UiField
+    Button mTestButton;
 
     interface MainWindowUiBinder extends UiBinder<Widget, MainWindow> {
     }
@@ -49,5 +52,9 @@ public class MainWindow extends BaseWindow {
 
     public Label getStatusBarLabel() {
         return mStatusBarLabel;
+    }
+
+    public Button getTestButton() {
+        return mTestButton;
     }
 }
