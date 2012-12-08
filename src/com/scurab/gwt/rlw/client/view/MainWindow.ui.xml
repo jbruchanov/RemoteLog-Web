@@ -45,6 +45,10 @@
 		.scrollable{
 			overflow: auto;
 		}
+		
+		.progress_bar_label{
+			margin-left: 15px;
+		}
 	</ui:style>
 	<g:HTMLPanel styleName="{style.contentHolder}">
 		<g:DockLayoutPanel unit="EM" width="100%" height="100%">
@@ -68,7 +72,14 @@
 				<g:HTMLPanel styleName="{style.center_panel}" ui:field="contentPanel" />
 			</g:center>
 			<g:south size="2">
-				<g:HTMLPanel styleName="{style.bottom_panel}" />
+				<g:HTMLPanel styleName="{style.bottom_panel}" width="100%" >
+					<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE">
+						<g:Image ui:field="mProgressBar" url="img/ajax-loader.gif" />
+						<g:Cell horizontalAlignment="ALIGN_CENTER">
+							<g:Label text="..." styleName="{style.progress_bar_label}" horizontalAlignment="ALIGN_CENTER" width="100%" ui:field="mStatusBarLabel" wordWrap="false" height=""/>
+						</g:Cell>
+					</g:HorizontalPanel>
+				</g:HTMLPanel>
 			</g:south>
 		</g:DockLayoutPanel>
 	</g:HTMLPanel>

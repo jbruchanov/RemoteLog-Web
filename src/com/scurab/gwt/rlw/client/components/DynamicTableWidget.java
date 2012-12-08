@@ -164,7 +164,7 @@ public class DynamicTableWidget extends Composite {
             // object
             Object dataExample = mData.get(0).get(columnName);
             // create column
-            Column<HashMap<String, Object>, String> column = createColumn(columnName, dataExample);
+            Column<HashMap<String, Object>, String> column = onCreateColumn(columnName, dataExample);
 
             // make it sortable
             boolean sortable = isColumnSortable(columnName);
@@ -324,7 +324,7 @@ public class DynamicTableWidget extends Composite {
      *            firts row value of column
      * @return
      */
-    protected Column<HashMap<String, Object>, String> createColumn(final String key, Object dataExample) {
+    protected Column<HashMap<String, Object>, String> onCreateColumn(final String key, Object dataExample) {
 
         Column<HashMap<String, Object>, String> column = new Column<HashMap<String, Object>, String>(getCell(key,
                 dataExample)) {

@@ -2,6 +2,7 @@ package com.scurab.gwt.rlw.client;
 
 import com.scurab.gwt.rlw.client.presenter.MainPresenter;
 import com.scurab.gwt.rlw.client.view.MainWindow;
+import com.scurab.gwt.rlw.language.Words;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerManager;
@@ -26,6 +27,7 @@ public class RemoteLogWeb implements EntryPoint {
      */
     private final DataServiceAsync mDataService = GWT.create(DataService.class);
     private final HandlerManager mEventBus = new HandlerManager(null);
+    public static final Words WORDS = GWT.create(Words.class);
 
     /**
      * This is the entry point method.

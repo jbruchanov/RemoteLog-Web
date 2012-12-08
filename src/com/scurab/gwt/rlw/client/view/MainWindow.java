@@ -6,6 +6,8 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.StackLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 
 public class MainWindow extends BaseWindow{
 
@@ -18,6 +20,10 @@ public class MainWindow extends BaseWindow{
     StackLayoutPanel mMenuStack;
     @UiField
     HTMLPanel mMenuItems;
+    @UiField
+    Image mProgressBar;
+    @UiField
+    Label mStatusBarLabel;
 
     interface MainWindowUiBinder extends UiBinder<Widget, MainWindow> {
     }
@@ -36,5 +42,13 @@ public class MainWindow extends BaseWindow{
 
     public HTMLPanel getMenuItemsContainer() {
         return mMenuItems;
+    }
+
+    public Image getProgressBar() {
+        return mProgressBar;
+    }
+
+    public Label getStatusBarLabel() {
+        return mStatusBarLabel;
     }
 }

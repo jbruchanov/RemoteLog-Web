@@ -12,6 +12,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
+import com.scurab.gwt.rlw.client.components.DeviceTableWidget;
 import com.scurab.gwt.rlw.client.components.DynamicTableWidget;
 import com.scurab.gwt.rlw.client.components.LazyPager;
 import com.scurab.gwt.rlw.client.controls.MainMenuLink;
@@ -40,16 +41,11 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
     }
 
     private void init() {
-        // mDisplay.getnLoadDataButton().addClickHandler(new ClickHandler() {
-        // @Override
-        // public void onClick(ClickEvent event) {
-        // loadDevices();
-        // }
-        // });
         loadDevices(0);
     }
 
     private void loadDevices(int page) {
+        notifyLoadingDataStart(WORDS.LoadingDevices());
         mDataService.getDevices(mApp, page, new AsyncCallback<List<Device>>() {
 
             @Override
@@ -60,6 +56,7 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
             @Override
             public void onFailure(Throwable caught) {
                 Window.alert(caught.getMessage());
+                notifyLoadingDataStop();
             }
         });
     }
@@ -69,12 +66,13 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
     protected void onLoadDevices(List<Device> result) {
         List<HashMap<String, Object>> transformed = transform(result);
         if (mTable == null) {
-            mTable = new DynamicTableWidget();
+            mTable = new DeviceTableWidget();
             mTable.setData(transformed);
             mDisplay.getDevicesPanel().add(mTable);
             mTable.setLoadListener(new LazyPager.OnPageLoaderListener() {
                 @Override
                 public void onLoadPage(int page, final DownloadFinishListener c) {
+                    notifyLoadingDataStart(WORDS.LoadingDevices());
                     mDataService.getDevices(mApp, page, new AsyncCallback<List<Device>>() {
                         @Override
                         public void onSuccess(List<Device> result) {
@@ -85,6 +83,7 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
 
                         @Override
                         public void onFailure(Throwable caught) {
+                            notifyLoadingDataStop();
                             Window.alert(caught.getMessage());
                         }
                     });
@@ -94,6 +93,7 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
         } else {
             mTable.addData(transformed);
         }
+        notifyLoadingDataStop();
     }
 
     private List<HashMap<String, Object>> transform(List<Device> data) {
