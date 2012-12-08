@@ -130,10 +130,11 @@ public class DynamicTableWidget extends Composite {
 
         HorizontalPanel hp = new HorizontalPanel();
         hp.add(pager);
-        hp.add(onCreateFilterButton());
-        CheckBox cb = onCreateFilterCheckBox();
-        hp.add(cb);
-        hp.setCellVerticalAlignment(cb, HasVerticalAlignment.ALIGN_MIDDLE);
+        mFilterButton = onCreateFilterButton(); 
+        hp.add(mFilterButton);
+        mFilterCheckBox = onCreateFilterCheckBox();
+        hp.add(mFilterCheckBox);
+        hp.setCellVerticalAlignment(mFilterCheckBox, HasVerticalAlignment.ALIGN_MIDDLE);
 
         VerticalPanel vp = new VerticalPanel();
         vp.setWidth("100%");
@@ -440,7 +441,7 @@ public class DynamicTableWidget extends Composite {
 
     public void addData(Collection<HashMap<String, Object>> data) {
         mListDataProvider.getList().addAll(data);
-        mListDataProvider.refresh();
+        notifyDataChange();
     }
 
     public void setLoadListener(LazyPager.OnPageLoaderListener loadListener) {
@@ -453,5 +454,10 @@ public class DynamicTableWidget extends Composite {
 
     public Button getFilterButton() {
         return mFilterButton;
+    }
+    
+    public void clear(){                
+        mListDataProvider.getList().clear();        
+        notifyDataChange();
     }
 }

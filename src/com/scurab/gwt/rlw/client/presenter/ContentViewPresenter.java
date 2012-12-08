@@ -4,16 +4,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
 import com.scurab.gwt.rlw.client.components.DeviceTableWidget;
 import com.scurab.gwt.rlw.client.components.DynamicTableWidget;
 import com.scurab.gwt.rlw.client.components.LazyPager;
+import com.scurab.gwt.rlw.client.dialog.DeviceFilterDialog;
+import com.scurab.gwt.rlw.client.dialog.FilterDialog;
 import com.scurab.gwt.rlw.client.interfaces.DownloadFinishListener;
 import com.scurab.gwt.rlw.client.view.ContentView;
 import com.scurab.gwt.rlw.shared.SharedParams;
@@ -28,6 +33,9 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
     private String mApp;
     private DynamicTableWidget mDevicesTable;
     private DynamicTableWidget mLogTable;
+    
+    private FilterDialog mDeviceFilterDialog;
+    private FilterDialog mLogFilterDialog;
 
     public ContentViewPresenter(DataServiceAsync dataService, HandlerManager eventBus, ContentView display) {
         this(null, dataService, eventBus, display);
@@ -86,6 +94,18 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
             // init table
             mLogTable = new DeviceTableWidget();
             mLogTable.setData(transformed);
+            mLogTable.getFilterButton().addClickHandler(new ClickHandler() {
+                @Override
+                public void onClick(ClickEvent event) {
+                    onLogFilterClick();
+                }
+            });
+            mLogTable.getFilterCheckBox().addClickHandler(new ClickHandler() {
+                @Override
+                public void onClick(ClickEvent event) {
+                    onLogFilterChange(((CheckBox)event.getSource()).getValue(), null);
+                }
+            });
             mDisplay.getLogsPanel().add(mLogTable);
             // init lazy loader
             mLogTable.setLoadListener(new LazyPager.OnPageLoaderListener() {
@@ -116,6 +136,48 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
         notifyLoadingDataStop();
     }
 
+    protected void onLogFilterChange(Boolean value, HashMap<String, Object> filters) {
+        if (value == true) {
+            if (filters == null && mLogFilterDialog != null) {
+                setLogFilter(filters);
+            } else if (filters != null) {
+                setLogFilter(filters);
+            }
+        } else {
+            setLogFilter(null);
+        }
+    }
+    
+    protected void setLogFilter(HashMap<String, Object> data){
+        if(mLogTable != null){
+            mLogTable.clear();
+            mLogTable = null;
+            loadLogs(0);    
+        }
+    }
+    
+    protected void setDeviceFilter(HashMap<String, Object> data){
+        if(mDevicesTable != null){
+            mDevicesTable.removeFromParent();        
+            mDevicesTable = null;
+            loadDevices(0);
+        }
+    }
+
+    protected void onLogFilterClick() {
+        if(mLogFilterDialog == null){
+            mLogFilterDialog = new DeviceFilterDialog(mApp, mDataService, new FilterDialog.OnOkListener() {
+                @Override
+                public void onClickOk(FilterDialog source, HashMap<String, Object> filters) {
+                    if(filters.size() > 0){
+                        onLogFilterChange(true, filters);
+                    }
+                }
+            });
+        }
+        mLogFilterDialog.show();
+    }
+
     private List<HashMap<String, Object>> transformLogs(List<LogItem> data) {
         List<HashMap<String, Object>> rCollection = new ArrayList<HashMap<String, Object>>();
         for (int i = 0; i < data.size(); i++) {
@@ -141,7 +203,19 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
             // init table
             mDevicesTable = new DeviceTableWidget();
             mDevicesTable.setData(transformed);
-            mDisplay.getDevicesPanel().add(mDevicesTable);
+            mDevicesTable.getFilterButton().addClickHandler(new ClickHandler() {
+                @Override
+                public void onClick(ClickEvent event) {
+                    onDeviceFilterClick();
+                }
+            });
+            mDevicesTable.getFilterCheckBox().addClickHandler(new ClickHandler() {
+                @Override
+                public void onClick(ClickEvent event) {
+                    onDeviceFilterChange(((CheckBox)event.getSource()).getValue(), null);
+                }
+            });
+            mDisplay.getDevicesPanel().add(mDevicesTable);            
             // init lazy loader
             mDevicesTable.setLoadListener(new LazyPager.OnPageLoaderListener() {
                 @Override
@@ -169,6 +243,32 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
             mDevicesTable.addData(transformed);
         }
         notifyLoadingDataStop();
+    }
+    
+    protected void onDeviceFilterChange(Boolean value, HashMap<String, Object> filters) {
+        if (value == true) {
+            if (filters == null && mLogFilterDialog != null) {
+                setDeviceFilter(filters);
+            } else if (filters != null) {
+                setDeviceFilter(filters);
+            }
+        } else {
+            setDeviceFilter(null);
+        }
+    }
+
+    protected void onDeviceFilterClick(){
+        if(mDeviceFilterDialog == null){
+            mDeviceFilterDialog = new DeviceFilterDialog(mApp, mDataService, new FilterDialog.OnOkListener() {
+                @Override
+                public void onClickOk(FilterDialog source, HashMap<String, Object> filters) {
+                    if(filters.size() > 0){
+                        onDeviceFilterChange(true, filters);
+                    }
+                }
+            });
+        }
+        mDeviceFilterDialog.show();
     }
 
     private List<HashMap<String, Object>> transformDevices(List<Device> data) {

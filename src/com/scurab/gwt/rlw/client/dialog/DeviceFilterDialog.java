@@ -36,7 +36,7 @@ public class DeviceFilterDialog extends FilterDialog {
 
     @Override
     public void refreshData() {
-
+        mFilterView.refreshData();
     }
 
 }

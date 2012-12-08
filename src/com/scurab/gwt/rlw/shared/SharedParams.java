@@ -15,4 +15,12 @@ public final class SharedParams {
     public static final String DEVICE_PLATFORM = "Platform";
     public static final String DEVICE_RESOLUTION = "Resolution";
     public static final String DEVICE_MODEL = "Model";
+    
+    public static final String LOG_APPBUILD = "AppBuild";
+    public static final String LOG_APPVERSION = "AppVersion";
+    public static final String LOG_DATE = "Date";
+    public static final String LOG_CATEGORY = "Category";
+    public static final String LOG_MESSAGE = "Message";
+    public static final String LOG_DATATYPE = "DataType";
+    public static final String LOG_DEVICEID = "DeviceID";
 }

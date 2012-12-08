@@ -7,6 +7,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TextBox;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
 
 public abstract class FilterDialog extends DialogBox {
@@ -54,7 +55,7 @@ public abstract class FilterDialog extends DialogBox {
 
     public abstract HashMap<String, Object> getFilterValues();
 
-    public abstract refreshData();
+    public abstract void refreshData();
 
     protected void insertValue(HashMap<String, Object> values, String key, Object value) {
         if (value != null && value.toString().length() > 0) {
@@ -64,6 +65,11 @@ public abstract class FilterDialog extends DialogBox {
 
     protected String getListBoxValue(ListBox v) {
         String result = v.getValue(v.getSelectedIndex());
+        return result.length() != 0 ? result : null;
+    }
+    
+    protected String getTextBoxValue(TextBox v) {
+        String result = v.getValue();
         return result.length() != 0 ? result : null;
     }
 }

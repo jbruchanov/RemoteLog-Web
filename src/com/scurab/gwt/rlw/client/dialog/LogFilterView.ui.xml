@@ -1,0 +1,83 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:p1="urn:import:com.google.gwt.user.datepicker.client">
+	<ui:with type="com.scurab.gwt.rlw.language.Words" field="res" />
+	<ui:style>
+		.important {
+			font-weight: bold;
+		}
+	</ui:style>
+	<g:HTMLPanel>
+		<g:Grid>
+			<g:row>
+				<g:customCell>
+					<g:Label text="{res.DeviceID}" />
+				</g:customCell>
+				<g:customCell>
+					<g:IntegerBox width="96%" ui:field="mDeviceID" height="26px" />
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
+					<g:Label text="{res.AppBuild}" />
+				</g:customCell>
+				<g:customCell>
+					<g:TextBox ui:field="mAppBuild" />
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
+					<g:Label text="{res.AppVersion}" />
+				</g:customCell>
+				<g:customCell>
+					<g:TextBox ui:field="mAppVersion" />
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
+					<g:Label text="{res.DataType}" />
+				</g:customCell>
+				<g:customCell>
+					<g:ListBox visibleItemCount="1" width="100%" ui:field="mDataType" />
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
+					<g:Label text="{res.Category}" />
+				</g:customCell>
+				<g:customCell>
+					<g:ListBox visibleItemCount="1" ui:field="mCategory"
+						width="100%" />
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
+					<g:Label text="{res.Date}" />
+				</g:customCell>
+				<g:customCell>
+					<p1:DateBox width="94%" ui:field="mDate" />
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
+					<g:Label text="{res.Message}" />
+				</g:customCell>
+				<g:customCell>
+					<g:TextBox ui:field="mMessage" />
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
+					<g:Label />
+				</g:customCell>
+				<g:customCell>
+					<g:HorizontalPanel width="100%">
+						<g:Button ui:field="mOkButton" text="{res.OK}" width="75px" />
+						<g:Button ui:field="mCancelButton" text="{res.Cancel}"
+							width="75px" />
+					</g:HorizontalPanel>
+				</g:customCell>
+			</g:row>
+		</g:Grid>
+	</g:HTMLPanel>
+</ui:UiBinder> 

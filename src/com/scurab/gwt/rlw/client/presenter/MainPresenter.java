@@ -19,6 +19,7 @@ import com.scurab.gwt.rlw.client.DataServiceAsync;
 import com.scurab.gwt.rlw.client.controls.MainMenuLink;
 import com.scurab.gwt.rlw.client.dialog.DeviceFilterDialog;
 import com.scurab.gwt.rlw.client.dialog.FilterDialog;
+import com.scurab.gwt.rlw.client.dialog.LogFilterDialog;
 import com.scurab.gwt.rlw.client.events.DataLoadingEvent;
 import com.scurab.gwt.rlw.client.events.DataLoadingEventHandler;
 import com.scurab.gwt.rlw.client.view.ContentView;
@@ -86,24 +87,7 @@ public class MainPresenter extends BasePresenter implements IsWidget {
                 onLoadApplications(null);
             }
         });
-
-        mWindow.getTestButton().addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent event) {
-                if (dfd == null) {
-                    dfd = new DeviceFilterDialog(null, mDataService, new DeviceFilterDialog.OnOkListener() {
-                        @Override
-                        public void onClickOk(FilterDialog source, HashMap<String, Object> filters) {
-                            Window.alert(filters.size() + "");
-                        }
-                    });
-                }
-                dfd.show();
-            }
-        });
     }
-
-    DeviceFilterDialog dfd;
 
     /**
      * Show progress dialog
