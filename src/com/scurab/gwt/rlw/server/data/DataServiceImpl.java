@@ -38,7 +38,7 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
 
     @Override
     public List<LogItem> getLogs(String jsonParams) {
-        return null;
+        return new DataProvider().getLogs(g.fromJson(jsonParams, HashMap.class));
     }
 
 }

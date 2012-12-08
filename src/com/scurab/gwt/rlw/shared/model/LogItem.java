@@ -3,14 +3,19 @@ package com.scurab.gwt.rlw.shared.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import com.google.gson.annotations.SerializedName;
+import com.scurab.gwt.rlw.server.annotation.DefaultOrderString;
 
 @Entity(name = "LogItems")
+@DefaultOrderString(value = "ID DESC")
 public class LogItem implements Serializable {
 
     /**
@@ -51,10 +56,6 @@ public class LogItem implements Serializable {
     @Column(name = "DataType")
     @SerializedName("DataType")
     private String mBlobMime;
-
-    @Column(name = "Data")
-    @SerializedName("Data")
-    private byte[] mBlob;
 
     @Column(name = "DeviceID")
     @SerializedName("DeviceID")
@@ -98,14 +99,6 @@ public class LogItem implements Serializable {
 
     public void setBlobMime(String blobMime) {
         mBlobMime = blobMime;
-    }
-
-    public byte[] getBlob() {
-        return mBlob;
-    }
-
-    public void setBlob(byte[] blob) {
-        mBlob = blob;
     }
 
     public String getApplication() {

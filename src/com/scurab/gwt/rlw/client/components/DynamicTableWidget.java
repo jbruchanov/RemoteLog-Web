@@ -25,6 +25,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionModel;
 import com.scurab.gwt.rlw.client.RemoteLogWeb;
+import com.scurab.gwt.rlw.shared.SharedParams;
 
 /**
  * Dynamic table widget setData must be called before is widget attechd into element
@@ -140,7 +141,7 @@ public class DynamicTableWidget extends Composite {
                 return value;
             }
         }
-        return RemoteLogWeb.PAGE_SIZE;
+        return SharedParams.PAGE_SIZE;
     }
 
     /**

@@ -13,9 +13,9 @@ public class ContentView extends Composite {
     private static ContentViewUiBinder uiBinder = GWT.create(ContentViewUiBinder.class);
 
     @UiField
-    protected Button btnLoadData;
-    @UiField
     protected HTMLPanel mDevicesPanel;
+    @UiField
+    protected HTMLPanel mLogsPanel;
 
     interface ContentViewUiBinder extends UiBinder<Widget, ContentView> {
     }
@@ -28,11 +28,11 @@ public class ContentView extends Composite {
         initWidget(uiBinder.createAndBindUi(this));
     }
 
-    public Button getnLoadDataButton() {
-        return btnLoadData;
-    }
-
     public HTMLPanel getDevicesPanel() {
         return mDevicesPanel;
+    }
+
+    public HTMLPanel getLogsPanel() {
+        return mLogsPanel;
     }
 }

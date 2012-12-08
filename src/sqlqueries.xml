@@ -46,12 +46,12 @@
 		SELECT * FROM Devices;
 	]]>
 	</Query>
-	<Query name="SELECT_DEVS_BY_APP" type="SQL" parameters="APP_NAME">
+	<Query name="SELECT_DEVS_BY_APP" type="SQL" parameters="Application">
 	<![CDATA[
 		Select * FROM Devices WHERE DeviceID IN( 
 			SELECT Devices.DeviceID FROM Devices INNER JOIN LogItems 
 			ON Devices.DeviceID = LogItems.DeviceID 
-			WHERE Application = :APP_NAME)
+			WHERE Application = :Application)
 	]]>
 	</Query>
 </SQLQueries>

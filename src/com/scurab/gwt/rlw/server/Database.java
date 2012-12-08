@@ -14,8 +14,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 
+import com.scurab.gwt.rlw.server.annotation.DefaultOrderString;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
+import com.scurab.gwt.rlw.shared.model.LogItemBlob;
 
 @SuppressWarnings("serial")
 public class Database {
@@ -83,6 +85,7 @@ public class Database {
 
         c.addAnnotatedClass(Device.class);
         c.addAnnotatedClass(LogItem.class);
+        c.addAnnotatedClass(LogItemBlob.class);
 
         c.setProperties(Application.APPLICATION_PROPERTIES);
         c.configure();
@@ -102,28 +105,30 @@ public class Database {
         try {
             java.lang.annotation.Annotation[] as = object.getDeclaredAnnotations();
             Entity entity = null;
-            // DefaultOrderString orderString = null;
+            DefaultOrderString orderString = null;
             for (Annotation a : as) {
                 if (a.annotationType().equals(Entity.class)) {
                     entity = (Entity) a;
                     continue;
                 }
-                // if(a.annotationType().equals(DefaultOrderString.class))
-                // {
-                // orderString = (DefaultOrderString) a;
-                // continue;
-                // }
+                if (a.annotationType().equals(DefaultOrderString.class)) {
+                    orderString = (DefaultOrderString) a;
+                    continue;
+                }
             }
 
             result = new TableInfo();
-            if (entity != null)
+            if (entity != null) {
                 result.TableName = entity.name();
+            }
 
-            if (result.TableName == null || result.TableName.length() == 0)
+            if (result.TableName == null || result.TableName.length() == 0) {
                 result.TableName = object.getSimpleName();
+            }
 
-            // if(orderString != null)
-            // result.DefaultOrderString = orderString.value();
+            if (orderString != null) {
+                result.DefaultOrderString = orderString.value();
+            }
         } catch (Exception e1) {
             // should not happen
             e1.printStackTrace();

@@ -19,6 +19,7 @@ import com.scurab.gwt.rlw.client.interfaces.DownloadFinishListener;
 import com.scurab.gwt.rlw.client.view.ContentView;
 import com.scurab.gwt.rlw.shared.SharedParams;
 import com.scurab.gwt.rlw.shared.model.Device;
+import com.scurab.gwt.rlw.shared.model.LogItem;
 
 public class ContentViewPresenter extends BasePresenter implements IsWidget {
 
@@ -26,6 +27,8 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
     private HandlerManager mEventBus;
     private ContentView mDisplay;
     private String mApp;
+    private DynamicTableWidget mDevicesTable;
+    private DynamicTableWidget mLogTable;
 
     public ContentViewPresenter(DataServiceAsync dataService, HandlerManager eventBus, ContentView display) {
         this(null, dataService, eventBus, display);
@@ -42,7 +45,7 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
     }
 
     private void init() {
-        loadDevices(0);
+        loadLogs(0); 
     }
 
     private void loadDevices(int page) {
@@ -60,18 +63,88 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
             }
         });
     }
+    
+    private void loadLogs(int page){
+        notifyLoadingDataStart(WORDS.LoadingLogItems());        
+        mDataService.getLogs(createParams(page, mApp).toString(), new AsyncCallback<List<LogItem>>() {
+            @Override
+            public void onSuccess(List<LogItem> result) {
+                onLoadLogs(result);
+                loadDevices(0);
+            }
 
-    private DynamicTableWidget mTable;
-
-    protected void onLoadDevices(List<Device> result) {
-        List<HashMap<String, Object>> transformed = transform(result);
-        if (mTable == null) {
+            @Override
+            public void onFailure(Throwable caught) {
+                Window.alert(caught.getMessage());
+                notifyLoadingDataStop();
+            }
+        });
+    }
+    
+    protected void onLoadLogs(List<LogItem> result) {
+        List<HashMap<String, Object>> transformed = transformLogs(result);
+        if (mLogTable == null) {
             // init table
-            mTable = new DeviceTableWidget();
-            mTable.setData(transformed);
-            mDisplay.getDevicesPanel().add(mTable);
+            mLogTable = new DeviceTableWidget();
+            mLogTable.setData(transformed);
+            mDisplay.getLogsPanel().add(mLogTable);
             // init lazy loader
-            mTable.setLoadListener(new LazyPager.OnPageLoaderListener() {
+            mLogTable.setLoadListener(new LazyPager.OnPageLoaderListener() {
+                @Override
+                public void onLoadPage(int page, final DownloadFinishListener c) {
+                    notifyLoadingDataStart(WORDS.LoadingLogItems());
+                    mDataService.getLogs(createParams(page, mApp).toString(), new AsyncCallback<List<LogItem>>() {
+                        @Override
+                        public void onSuccess(List<LogItem> result) {
+                            int records = result != null ? result.size() : 0;
+                            onLoadLogs(result);
+                            c.onDownlodFinish(records);
+                        }
+
+                        @Override
+                        public void onFailure(Throwable caught) {
+                            notifyLoadingDataStop();
+                            Window.alert(caught.getMessage());
+                            c.onDownlodFinish(-1);
+                        }
+                    });
+                }
+            });
+
+        } else {
+            mLogTable.addData(transformed);
+        }
+        notifyLoadingDataStop();
+    }
+    
+    private List<HashMap<String, Object>> transformLogs(List<LogItem> data) {
+        List<HashMap<String, Object>> rCollection = new ArrayList<HashMap<String, Object>>();
+        for (int i = 0; i < data.size(); i++) {
+            LogItem d = data.get(i);
+            HashMap<String, Object> result = new HashMap<String, Object>();
+            result.put("ID_1", d.getId());            
+            result.put("Application_2", d.getApplication());
+            result.put("AppVersion_3", d.getAppVersion());
+            result.put("AppBuild_4", d.getAppBuild());
+            result.put("Date_5", d.getDate());
+            result.put("Category_6", d.getCategory());
+            result.put("Message_7", d.getMesage());
+            result.put("DataType_8", d.getBlobMime());
+            result.put("DeviceID_9", d.getDeviceId());
+            rCollection.add(result);
+        }
+        return rCollection;
+    }
+    
+    protected void onLoadDevices(List<Device> result) {
+        List<HashMap<String, Object>> transformed = transformDevices(result);
+        if (mDevicesTable == null) {
+            // init table
+            mDevicesTable = new DeviceTableWidget();
+            mDevicesTable.setData(transformed);
+            mDisplay.getDevicesPanel().add(mDevicesTable);
+            // init lazy loader
+            mDevicesTable.setLoadListener(new LazyPager.OnPageLoaderListener() {
                 @Override
                 public void onLoadPage(int page, final DownloadFinishListener c) {
                     notifyLoadingDataStart(WORDS.LoadingDevices());
@@ -94,12 +167,12 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
             });
 
         } else {
-            mTable.addData(transformed);
+            mDevicesTable.addData(transformed);
         }
         notifyLoadingDataStop();
     }
 
-    private List<HashMap<String, Object>> transform(List<Device> data) {
+    private List<HashMap<String, Object>> transformDevices(List<Device> data) {
         List<HashMap<String, Object>> rCollection = new ArrayList<HashMap<String, Object>>();
         for (int i = 0; i < data.size(); i++) {
             Device d = data.get(i);
@@ -108,10 +181,7 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
             result.put("Brand_2", d.getBrand());
             result.put("Model_3", d.getModel());
             result.put("Platform_4", d.getPlatform());
-            result.put("Version_5", d.getVersion());
-            result.put("Resolution_6", d.getResolution());
-            result.put("Description_7", d.getDescription());
-            result.put("Detail_8", d.getDetail());
+            result.put("Version_5", d.getVersion());            
             rCollection.add(result);
         }
         return rCollection;

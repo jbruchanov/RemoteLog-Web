@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import com.google.gson.annotations.SerializedName;
 
 @Entity(name = "Devices")
+
 public class Device implements Serializable {
 
     /**

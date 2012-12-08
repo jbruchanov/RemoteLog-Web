@@ -15,7 +15,7 @@ public class DBData extends ApplicationTest {
 
     @Test
     public void genData() {
-        List<Device> devs = DataGenerator.genDevices(3);
+        List<Device> devs = DataGenerator.genDevices(10);
         Session s = Database.openSession();
         s.beginTransaction();
         for (int i = 0, n = devs.size(); i < n; i++) {
@@ -28,6 +28,22 @@ public class DBData extends ApplicationTest {
         for (int i = 0, n = devs.size(); i < n; i++) {
             Device d = devs.get(i);
             List<LogItem> li = DataGenerator.genRandomLogItems(d.getDeviceID(), "TestApp2", 150);
+            for (int j = 0, m = li.size(); j < m; j++) {
+                s.saveOrUpdate(li.get(j));
+            }
+        }
+        s.getTransaction().commit();
+        
+        List<Device> devs2 = DataGenerator.genDevices(10);        
+        s.beginTransaction();
+        for (int i = 0, n = devs.size(); i < n; i++) {
+            Device d = devs2.get(i);
+            s.saveOrUpdate(d);
+        }        
+        devs.addAll(devs2);
+        for (int i = 0, n = devs.size(); i < n; i++) {
+            Device d = devs.get(i);
+            List<LogItem> li = DataGenerator.genRandomLogItems(d.getDeviceID(), "TestApp", 150);
             for (int j = 0, m = li.size(); j < m; j++) {
                 s.saveOrUpdate(li.get(j));
             }

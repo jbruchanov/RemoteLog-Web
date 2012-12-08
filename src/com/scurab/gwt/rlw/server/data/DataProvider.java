@@ -17,14 +17,17 @@ import com.scurab.gwt.rlw.server.Queries;
 import com.scurab.gwt.rlw.server.Queries.AppQuery;
 import com.scurab.gwt.rlw.shared.SharedParams;
 import com.scurab.gwt.rlw.shared.model.Device;
+import com.scurab.gwt.rlw.shared.model.LogItem;
 
 public class DataProvider {
 
     /**
      * Get devices
      * 
-     * @param app - optional application
-     * @param page - page to download
+     * @param app
+     *            - optional application
+     * @param page
+     *            - page to download
      * @return
      */
     public List<Device> getDevices(HashMap<String, Object> params) {
@@ -32,21 +35,21 @@ public class DataProvider {
 
         Session s = Database.openSession();
         Query q = null;
-        //not much smart detection
-        if(params.keySet().size() > 1){
+        // not much smart detection
+        if (params.keySet().size() > 1) {
             AppQuery query = Queries.getQuery(Queries.QueryNames.SELECT_DEVS_BY_APP);
             q = s.createSQLQuery(query.Query).setResultTransformer(Transformers.aliasToBean(Device.class));
-        }else{
-            q = s.createQuery("FROM Devices");    
-        }        
+        } else {
+            q = s.createQuery("FROM Devices");
+        }
         initQuery(q, params);
-        
+
         result.addAll(q.list());
         s.close();
         return result;
     }
-    
-    public List<String> getApplications() throws Exception{
+
+    public List<String> getApplications() throws Exception {
         Session s = Database.openSession();
         AppQuery sql = Queries.getQuery(Queries.QueryNames.SELECT_APPS);
         List data = Database.getDataByQuery(s, sql.Query, AppQuery.TYPE_SQL.equals(sql.Type));
@@ -57,11 +60,27 @@ public class DataProvider {
         s.close();
         return apps;
     }
-    
+
+    public List<LogItem> getLogs(HashMap<String, Object> params) {
+        try {
+            List<LogItem> result = new ArrayList<LogItem>();
+
+            Session s = Database.openSession();
+            Query q = getQuery(s, LogItem.class, params);
+
+            result.addAll(q.list());
+            s.close();
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new IllegalStateException(e);
+        }
+    }
+
     private void initQuery(Query q) {
         initQuery(q, null);
     }
-    
+
     /**
      * 
      * @param q
@@ -69,65 +88,88 @@ public class DataProvider {
      */
     private void initQuery(Query q, HashMap<String, Object> params) {
         int page = 0;
-        if(params.containsKey(SharedParams.PAGE)){
-            page = ((Double) params.get(SharedParams.PAGE)).intValue();
+        if (params.containsKey(SharedParams.PAGE)) {
+            page = ((Number) params.get(SharedParams.PAGE)).intValue();
         }
-        q.setMaxResults(Application.SERVER_PAGE_SIZE);
+        q.setMaxResults(SharedParams.PAGE_SIZE);
         if (page != 0) {
-            q.setFirstResult(page * Application.SERVER_PAGE_SIZE);
+            q.setFirstResult(page * SharedParams.PAGE_SIZE);
         }
-        //init params
-        if(params != null){
-            for(String param : params.keySet()){
-                if(SharedParams.PAGE.equals(param)){
+        // init params
+        if (params != null) {
+            for (String param : params.keySet()) {
+                if (SharedParams.PAGE.equals(param)) {
                     continue;
                 }
                 q.setParameter(param, params.get(param));
             }
         }
     }
-    
-    protected Query getQuery(Session s, Class<?> clazz, HashMap<String, Object> filter) throws ClassNotFoundException
-    {
-        TableInfo ti = Database.getTable(clazz);
-        
-        StringBuilder sb = new StringBuilder();
-        sb.append(String.format("FROM %s WHERE ",ti.TableName));
-        for(String key : filter.keySet())
-        {
-            String v = filter.get(key).toString();
-            String op = (v.charAt(0) == '*' || v.charAt(v.length() -1) == '*') ? "LIKE" : "=";
-            sb.append(String.format("%1$s %2$s :%1$s AND ",key, op)); //http://www.stpe.se/2008/07/hibernate-hql-like-query-named-parameters/
-        }
-        sb.setLength(sb.length() - "AND ".length());
 
-        if(ti.DefaultOrderString != null)
-            sb.append(String.format(" ORDER BY %s",ti.DefaultOrderString));
+    protected Query getQuery(Session s, Class<?> clazz, HashMap<String, Object> srcParams)
+            throws ClassNotFoundException {
+        HashMap<String, Object> params = new HashMap<String, Object>(srcParams);
+        int page = 0;
+        if (params.containsKey(SharedParams.PAGE)) {
+            page = ((Number) params.get(SharedParams.PAGE)).intValue();
+            params.remove(SharedParams.PAGE);
+        }
+
+        boolean addedParams = false;
         
+        TableInfo ti = Database.getTable(clazz);
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("FROM %s", ti.TableName));
+        if (params.size() > 0) {
+            StringBuilder filter = new StringBuilder();
+            filter.append(String.format(" WHERE ", ti.TableName));
+            for (String key : params.keySet()) {
+                String columnName = key;
+                String v = params.get(columnName).toString();
+                String op = (v.charAt(0) == '*' || v.charAt(v.length() - 1) == '*') ? "LIKE" : "=";
+                filter.append(String.format("%1$s %2$s :%1$s AND ", key, op)); // http://www.stpe.se/2008/07/hibernate-hql-like-query-named-parameters/
+                addedParams = true;
+            }
+            if (addedParams) {
+                filter.setLength(filter.length() - "AND ".length());
+                sb.append(filter.toString());
+            }
+        }
+
+        if (ti.DefaultOrderString != null)
+            sb.append(String.format(" ORDER BY %s", ti.DefaultOrderString));
+
         String qry = sb.toString();
         Query q = s.createQuery(qry);
 
-        for(String key : filter.keySet())
-        {
-            Object o = filter.get(key);
-            if (o instanceof Integer) {
-                q.setInteger(key, (Integer) o);
-            } else if (o instanceof Double) {
-                q.setDouble(key, (Double) o);
-            } else if (o instanceof String) {
-                String v = (String) o;
-                if (v.charAt(v.length() - 1) == '*')
-                    v = v.substring(0, v.length() - 1) + "%";
-                if (v.charAt(0) == '*')
-                    v = "%" + v.substring(1, v.length());
-                q.setString(key, v);
-            } else if (o instanceof Date) {
-                Date d = (Date) o;
-                java.sql.Date sqld = new java.sql.Date(d.getTime());
-                q.setDate(key, sqld);
-            } else {
-                throw new IllegalStateException("Not implemented!");
+        //set values for WHERE params
+        if (addedParams) {
+            for (String key : params.keySet()) {
+                Object o = params.get(key);
+                if (o instanceof Integer) {
+                    q.setInteger(key, (Integer) o);
+                } else if (o instanceof Double) {
+                    q.setDouble(key, (Double) o);
+                } else if (o instanceof String) {
+                    String v = (String) o;
+                    if (v.charAt(v.length() - 1) == '*')
+                        v = v.substring(0, v.length() - 1) + "%";
+                    if (v.charAt(0) == '*')
+                        v = "%" + v.substring(1, v.length());
+                    q.setString(key, v);
+                } else if (o instanceof Date) {
+                    Date d = (Date) o;
+                    java.sql.Date sqld = new java.sql.Date(d.getTime());
+                    q.setDate(key, sqld);
+                } else {
+                    throw new IllegalStateException("Not implemented!");
+                }
             }
+        }
+        
+        q.setMaxResults(SharedParams.PAGE_SIZE);
+        if (page != 0) {
+            q.setFirstResult(page * SharedParams.PAGE_SIZE);
         }
         return q;
     }
