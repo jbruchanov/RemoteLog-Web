@@ -15,6 +15,7 @@ import com.scurab.gwt.rlw.server.Application;
 import com.scurab.gwt.rlw.server.Database;
 import com.scurab.gwt.rlw.server.Queries;
 import com.scurab.gwt.rlw.server.Queries.AppQuery;
+import com.scurab.gwt.rlw.shared.SharedParams;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 
@@ -39,6 +40,11 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
     @Override
     public List<LogItem> getLogs(String jsonParams) {
         return new DataProvider().getLogs(g.fromJson(jsonParams, HashMap.class));
+    }
+
+    @Override
+    public List<String> getDistinctValues(String appName, String query) {
+        return new DataProvider().getDistinctValues(query, appName);
     }
 
 }

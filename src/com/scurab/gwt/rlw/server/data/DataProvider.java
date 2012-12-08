@@ -15,6 +15,7 @@ import com.scurab.gwt.rlw.server.Database;
 import com.scurab.gwt.rlw.server.Database.TableInfo;
 import com.scurab.gwt.rlw.server.Queries;
 import com.scurab.gwt.rlw.server.Queries.AppQuery;
+import com.scurab.gwt.rlw.shared.QueryNames;
 import com.scurab.gwt.rlw.shared.SharedParams;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
@@ -37,7 +38,7 @@ public class DataProvider {
         Query q = null;
         // not much smart detection
         if (params.keySet().size() > 1) {
-            AppQuery query = Queries.getQuery(Queries.QueryNames.SELECT_DEVS_BY_APP);
+            AppQuery query = Queries.getQuery(QueryNames.SELECT_DEVS_BY_APP);
             q = s.createSQLQuery(query.Query).setResultTransformer(Transformers.aliasToBean(Device.class));
         } else {
             q = s.createQuery("FROM Devices");
@@ -51,7 +52,7 @@ public class DataProvider {
 
     public List<String> getApplications() throws Exception {
         Session s = Database.openSession();
-        AppQuery sql = Queries.getQuery(Queries.QueryNames.SELECT_APPS);
+        AppQuery sql = Queries.getQuery(QueryNames.SELECT_APPS);
         List data = Database.getDataByQuery(s, sql.Query, AppQuery.TYPE_SQL.equals(sql.Type));
         List<String> apps = new ArrayList<String>();
         for (int i = 0, n = data.size(); i < n; i++) {
@@ -60,7 +61,24 @@ public class DataProvider {
         s.close();
         return apps;
     }
-
+    
+    public List<String> getDistinctValues(String query, String appName){
+        Session s = Database.openSession();
+        AppQuery sql = Queries.getQuery(query);
+        Query q = s.createSQLQuery(sql.Query);
+        if(appName != null){
+            q.setParameter(SharedParams.APP_NAME, appName);        
+        }
+        
+        List data = q.list();
+        List<String> apps = new ArrayList<String>();
+        for (int i = 0, n = data.size(); i < n; i++) {                       
+            apps.add(String.valueOf(data.get(i)));
+        }
+        s.close();
+        return apps;
+    }    
+    
     public List<LogItem> getLogs(HashMap<String, Object> params) {
         try {
             List<LogItem> result = new ArrayList<LogItem>();

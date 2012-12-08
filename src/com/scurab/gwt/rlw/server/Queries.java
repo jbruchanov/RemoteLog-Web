@@ -73,10 +73,5 @@ public class Queries extends HashMap<String, String> {
         public HashSet<String> Parameters;
     }
 
-    public static final class QueryNames {
-        public static final String CREATE_TABLES = "CREATE_TABLES";
-        public static final String SELECT_APPS = "SELECT_APPS";
-        public static final String SELECT_DEVS = "SELECT_DEVS";
-        public static final String SELECT_DEVS_BY_APP = "SELECT_DEVS_BY_APP";
-    }
+    
 }

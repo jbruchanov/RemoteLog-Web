@@ -50,4 +50,12 @@ public interface Words extends com.google.gwt.i18n.client.ConstantsWithLookup {
     @DefaultStringValue("Loading log items")
     @Key("LoadingLogItems")
     String LoadingLogItems();
+    
+    @DefaultStringValue("Filter")
+    @Key("Filter")
+    String Filter();
+    
+    @DefaultStringValue("SetFilter")
+    @Key("SetFilter")
+    String SetFilter();
 }

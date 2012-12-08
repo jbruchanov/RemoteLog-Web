@@ -17,4 +17,6 @@ public interface DataServiceAsync {
     void getDevices(String jsonParams, AsyncCallback<List<Device>> callback);
 
     void getLogs(String jsonParams, AsyncCallback<List<LogItem>> callback);
+
+    void getDistinctValues(String appName, String query, AsyncCallback<List<String>> callback);
 }

@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import com.scurab.gwt.rlw.server.Application;
 import com.scurab.gwt.rlw.server.Queries;
+import com.scurab.gwt.rlw.shared.QueryNames;
 
 public class ApplicationTest {
 
@@ -20,6 +21,6 @@ public class ApplicationTest {
 
     @Test
     public void test() {
-        assertNotNull(Queries.getQuery(Queries.QueryNames.CREATE_TABLES));
+        assertNotNull(Queries.getQuery(QueryNames.CREATE_TABLES));
     }
 }
