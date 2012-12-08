@@ -23,7 +23,7 @@ public class LogItem implements Serializable {
     @Column(name = "ID")
     @SerializedName("ID")
     private int mId;
-    
+
     @Column(name = "Application", nullable = false)
     @SerializedName("Application")
     private String mApplication;
@@ -39,26 +39,22 @@ public class LogItem implements Serializable {
     @Column(name = "Date", nullable = false)
     @SerializedName("Date")
     private Date mDate;
-    
+
     @Column(name = "Category")
     @SerializedName("Category")
     private String mCategory;
-    
+
     @Column(name = "Message")
     @SerializedName("Message")
     private String mMesage;
-    
+
     @Column(name = "DataType")
     @SerializedName("DataType")
     private String mBlobMime;
-    
+
     @Column(name = "Data")
     @SerializedName("Data")
     private byte[] mBlob;
-
-    @Column(name = "Platform")
-    @SerializedName("Platform")
-    private String mPlatform;
 
     @Column(name = "DeviceID")
     @SerializedName("DeviceID")
@@ -78,14 +74,6 @@ public class LogItem implements Serializable {
 
     public void setDate(Date date) {
         mDate = date;
-    }
-
-    public String getPlatform() {
-        return mPlatform;
-    }
-
-    public void setPlatform(String platform) {
-        mPlatform = platform;
     }
 
     public String getCategory() {

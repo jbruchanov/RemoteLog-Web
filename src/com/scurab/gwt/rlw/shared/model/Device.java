@@ -2,14 +2,12 @@ package com.scurab.gwt.rlw.shared.model;
 
 import java.io.Serializable;
 
-import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import com.google.gson.annotations.SerializedName;
-import com.google.gwt.i18n.client.LocalizableResource.Key;
 
 @Entity(name = "Devices")
 public class Device implements Serializable {
@@ -32,27 +30,27 @@ public class Device implements Serializable {
     @Column(name = "Brand")
     @SerializedName("Brand")
     private String mBrand;
-    
+
     @Column(nullable = false, name = "Platform")
     @SerializedName("Platform")
     private String mPlatform;
-    
+
     @Column(name = "Version")
     @SerializedName("Version")
     private String mVersion;
-    
+
     @Column(name = "Detail")
     @SerializedName("Detail")
     private String mDetail;
-    
+
     @Column(name = "Resolution")
     @SerializedName("Resolution")
     private String mResolution;
-    
+
     @Column(name = "Owner")
     @SerializedName("Owner")
     private String mOwner;
-    
+
     @Column(name = "OSDescription")
     @SerializedName("OSDescription")
     private String mOSDescription;
@@ -60,7 +58,7 @@ public class Device implements Serializable {
     @Column(name = "Description")
     @SerializedName("Description")
     private String mDescription;
-    
+
     @Column(name = "PushID")
     @SerializedName("PushID")
     private String mPushID;

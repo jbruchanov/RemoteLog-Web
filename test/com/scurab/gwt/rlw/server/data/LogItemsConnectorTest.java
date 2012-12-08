@@ -19,15 +19,12 @@ import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import com.google.gson.Gson;
 import com.scurab.gwt.rlw.ApplicationTest;
 import com.scurab.gwt.rlw.server.Application;
 import com.scurab.gwt.rlw.server.Database;
 import com.scurab.gwt.rlw.server.util.DataGenerator;
-import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 import com.scurab.gwt.rlw.shared.model.LogItemRespond;
-import com.scurab.gwt.rlw.shared.model.Respond;
 
 public class LogItemsConnectorTest extends ApplicationTest {
 

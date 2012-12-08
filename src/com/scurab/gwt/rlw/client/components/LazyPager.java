@@ -75,16 +75,24 @@ public class LazyPager extends SimplePager {
     @Override
     public void nextPage() {
         if (getPage() == mLoadedPages - 1) {
-            if(mListener != null){
-                mListener.onLoadPage(getPage()+1, new DownloadFinishListener() {
+            if (mListener != null) {
+                mListener.onLoadPage(getPage() + 1, new DownloadFinishListener() {
                     @Override
                     public void onDownlodFinish(int records) {
+                        if (records == -1) {// download error
+                            return;
+                        }
                         // there is probably next page if loaded records is same like page size
                         mHasNextPage = records == getPageSize();
                         if (records > 0) {
                             mLoadedPages++;// increase loaded page
                             // run nextpage in scheduler to refresh data
-                            new Timer() {public void run() {nextPage();}}.schedule(10);
+                            new Timer() {
+                                @Override
+                                public void run() {
+                                    nextPage();
+                                }
+                            }.schedule(10);
                         } else {
                             // or invalidate view to update enability of next buttons
                             onRangeOrRowCountChanged();

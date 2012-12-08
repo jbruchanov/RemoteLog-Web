@@ -24,12 +24,11 @@ public class DBData extends ApplicationTest {
         }
         s.getTransaction().commit();
 
-        
         s.beginTransaction();
         for (int i = 0, n = devs.size(); i < n; i++) {
             Device d = devs.get(i);
             List<LogItem> li = DataGenerator.genRandomLogItems(d.getDeviceID(), "TestApp2", 150);
-            for(int j = 0, m = li.size();j<m;j++){
+            for (int j = 0, m = li.size(); j < m; j++) {
                 s.saveOrUpdate(li.get(j));
             }
         }

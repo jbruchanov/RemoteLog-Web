@@ -8,6 +8,7 @@ import javax.servlet.ServletOutputStream;
 public class MockServletOutputStream extends ServletOutputStream {
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
     @Override
     public void write(int b) throws IOException {
         baos.write(b);

@@ -26,6 +26,7 @@ public class MockServletInputStream extends ServletInputStream {
         mIndex = 0;
     }
 
+    @Override
     public long skip(long n) throws IOException {
         mIndex += n;
         return mIndex;

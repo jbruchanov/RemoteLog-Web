@@ -16,21 +16,20 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
-import com.scurab.gwt.rlw.client.components.DynamicTableWidget;
 import com.scurab.gwt.rlw.client.controls.MainMenuLink;
 import com.scurab.gwt.rlw.client.events.DataLoadingEvent;
 import com.scurab.gwt.rlw.client.events.DataLoadingEventHandler;
 import com.scurab.gwt.rlw.client.view.ContentView;
 import com.scurab.gwt.rlw.client.view.MainWindow;
-import com.scurab.gwt.rlw.server.Application;
-import com.scurab.gwt.rlw.shared.model.Device;
 
 public class MainPresenter extends BasePresenter implements IsWidget {
 
     private MainWindow mWindow;
-    private ContentView mContentView;
+
     private HashMap<String, ContentViewPresenter> mPresenters;
+
     private ContentViewPresenter mCurrent;
+
     private List<MainMenuLink> mMenuLinks;
 
     public MainPresenter(DataServiceAsync dataService, HandlerManager eventBus, MainWindow display) {
@@ -46,7 +45,7 @@ public class MainPresenter extends BasePresenter implements IsWidget {
         // add location change listener
         History.addValueChangeHandler(new ValueChangeHandler<String>() {
             @Override
-            public void onValueChange(ValueChangeEvent<String> event) {    
+            public void onValueChange(ValueChangeEvent<String> event) {
                 onLocationChange(event.getValue());
             }
         });
@@ -147,8 +146,8 @@ public class MainPresenter extends BasePresenter implements IsWidget {
      */
     protected ContentViewPresenter getPresenter(String name) {
         ContentViewPresenter cvp = mPresenters.get(name);
-        if(cvp == null){
-            String v = "0".equals(name) ? null : name;
+        if (cvp == null) {
+            String v = WORDS.All().equals(name) ? null : name;
             cvp = new ContentViewPresenter(v, mDataService, mEventBus, new ContentView());
             mPresenters.put(name, cvp);
         }
@@ -158,8 +157,8 @@ public class MainPresenter extends BasePresenter implements IsWidget {
     protected void onLoadApplications(List<String> result) {
         // create all link
         MainMenuLink mml = new MainMenuLink();
-        mml.setText("All");
-        mml.setTargetHistoryToken("0");
+        mml.setText(WORDS.All());
+        mml.setTargetHistoryToken(WORDS.All());
         mMenuLinks.add(mml);
         HTMLPanel container = mWindow.getMenuItemsContainer();
         container.add(mml);

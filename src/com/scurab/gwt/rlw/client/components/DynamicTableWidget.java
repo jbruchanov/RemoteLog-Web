@@ -136,8 +136,9 @@ public class DynamicTableWidget extends Composite {
     protected int getPageSize() {
         if (mOverrider != null) {
             int value = mOverrider.getPageSize();
-            if (value > 0)
+            if (value > 0) {
                 return value;
+            }
         }
         return RemoteLogWeb.PAGE_SIZE;
     }
@@ -158,7 +159,6 @@ public class DynamicTableWidget extends Composite {
         onStartCreatingColumns(mData, cellTable, sortHandler);
         // get order of columns
         List<String> columns = getColumnsOrder(mData);
-
 
         for (String columnName : columns) {
             // object
@@ -185,8 +185,9 @@ public class DynamicTableWidget extends Composite {
     }
 
     protected SafeHtml convertToSafeHtml(String value) {
-        if (value == null)
+        if (value == null) {
             return null;
+        }
         return new SafeHtmlBuilder().appendHtmlConstant(value).toSafeHtml();
     }
 
@@ -213,10 +214,10 @@ public class DynamicTableWidget extends Composite {
         // check if overrider wants handle it
         if (mOverrider != null) {
             keys = mOverrider.getColumnsOrder(mData);
-            if (keys != null)
+            if (keys != null) {
                 return keys;
+            }
         }
-
 
         Set<String> columns = mData.get(0).keySet();
         try {
@@ -296,9 +297,10 @@ public class DynamicTableWidget extends Composite {
             StringBuilder sb = new StringBuilder();
             String[] split = key.split("_");
             if (split.length > 1) {
-                for (int i = 0; i < split.length - 1; i++)
+                for (int i = 0; i < split.length - 1; i++) {
                     // omit last order value
                     sb.append(split[i] + "_");
+                }
                 return key.substring(0, sb.length() - 1);
             }
         }

@@ -9,11 +9,10 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 
-public class MainWindow extends BaseWindow{
+public class MainWindow extends BaseWindow {
 
-    private static MainWindowUiBinder uiBinder = GWT
-	    .create(MainWindowUiBinder.class);
-    
+    private static MainWindowUiBinder uiBinder = GWT.create(MainWindowUiBinder.class);
+
     @UiField
     HTMLPanel contentPanel;
     @UiField
@@ -29,15 +28,15 @@ public class MainWindow extends BaseWindow{
     }
 
     public MainWindow() {
-	initWidget(uiBinder.createAndBindUi(this));
+        initWidget(uiBinder.createAndBindUi(this));
     }
 
     public MainWindow(String firstName) {
-	initWidget(uiBinder.createAndBindUi(this));
+        initWidget(uiBinder.createAndBindUi(this));
     }
 
     public HTMLPanel getContentPanel() {
-	return contentPanel;
+        return contentPanel;
     }
 
     public HTMLPanel getMenuItemsContainer() {

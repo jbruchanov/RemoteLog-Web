@@ -13,7 +13,6 @@ import com.scurab.gwt.rlw.server.Application;
 import com.scurab.gwt.rlw.server.Database;
 import com.scurab.gwt.rlw.server.Queries;
 import com.scurab.gwt.rlw.server.Queries.AppQuery;
-import com.scurab.gwt.rlw.server.util.DataGenerator;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 
@@ -33,7 +32,7 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
         Query q = null;
         if (app == null) {
             q = s.createQuery("FROM Devices");
-        }else{
+        } else {
             // create sql query
             AppQuery query = Queries.getQuery(Queries.QueryNames.SELECT_DEVS_BY_APP);
             q = s.createSQLQuery(query.Query).setResultTransformer(Transformers.aliasToBean(Device.class));
@@ -41,9 +40,10 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
             q.setParameter(param[0], app);
         }
 
-        q.setMaxResults(Application.PAGE_SIZE);
-        if (page != 0)
-            q.setFirstResult(page * Application.PAGE_SIZE);
+        q.setMaxResults(Application.SERVER_PAGE_SIZE);
+        if (page != 0) {
+            q.setFirstResult(page * Application.SERVER_PAGE_SIZE);
+        }
         result.addAll(q.list());
         s.close();
         return result;
@@ -58,7 +58,7 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
     public List<String> getApplications() throws Exception {
         Session s = Database.openSession();
         AppQuery sql = Queries.getQuery(Queries.QueryNames.SELECT_APPS);
-        List data = Database.getDataByQuery(s, sql.Query, sql.TYPE_SQL.equals(sql.Type));
+        List data = Database.getDataByQuery(s, sql.Query, AppQuery.TYPE_SQL.equals(sql.Type));
         List<String> apps = new ArrayList<String>();
         for (int i = 0, n = data.size(); i < n; i++) {
             apps.add(data.get(i).toString());

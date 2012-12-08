@@ -1,15 +1,11 @@
 package com.scurab.gwt.rlw.server.data;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -28,8 +24,6 @@ import com.scurab.gwt.rlw.server.Database;
 import com.scurab.gwt.rlw.server.util.DataGenerator;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.DeviceRespond;
-import com.scurab.gwt.rlw.shared.model.LogItem;
-import com.scurab.gwt.rlw.shared.model.Respond;
 
 public class RegistrationConnectorTest extends ApplicationTest {
 
@@ -86,9 +80,5 @@ public class RegistrationConnectorTest extends ApplicationTest {
         s.getTransaction().commit();
         s.close();
     }
-
-
-
-
 
 }

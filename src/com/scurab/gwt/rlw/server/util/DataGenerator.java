@@ -116,7 +116,6 @@ public class DataGenerator {
         li.setCategory(sCategoryLog[sRandom.nextInt(sCategoryLog.length)]);
         li.setDate(new Date());
         li.setMesage(getRandomBrand() + " " + genRandomString());
-        li.setPlatform(getRandomPlatform());
         li.setDeviceId(devId);
         return li;
     }

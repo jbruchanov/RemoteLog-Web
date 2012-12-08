@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import com.scurab.gwt.rlw.server.Application;
-import com.scurab.gwt.rlw.server.Database;
 import com.scurab.gwt.rlw.server.Queries;
 
 public class ApplicationTest {

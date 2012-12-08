@@ -4,18 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
 import com.scurab.gwt.rlw.client.components.DeviceTableWidget;
 import com.scurab.gwt.rlw.client.components.DynamicTableWidget;
 import com.scurab.gwt.rlw.client.components.LazyPager;
-import com.scurab.gwt.rlw.client.controls.MainMenuLink;
 import com.scurab.gwt.rlw.client.interfaces.DownloadFinishListener;
 import com.scurab.gwt.rlw.client.view.ContentView;
 import com.scurab.gwt.rlw.shared.model.Device;
@@ -31,7 +27,8 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
         this(null, dataService, eventBus, display);
     }
 
-    public ContentViewPresenter(String appName, DataServiceAsync dataService, HandlerManager eventBus, ContentView display) {
+    public ContentViewPresenter(String appName, DataServiceAsync dataService, HandlerManager eventBus,
+            ContentView display) {
         super(dataService, eventBus, display);
         mEventBus = eventBus;
         mDataService = dataService;
@@ -47,7 +44,6 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
     private void loadDevices(int page) {
         notifyLoadingDataStart(WORDS.LoadingDevices());
         mDataService.getDevices(mApp, page, new AsyncCallback<List<Device>>() {
-
             @Override
             public void onSuccess(List<Device> result) {
                 onLoadDevices(result);
@@ -66,9 +62,11 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
     protected void onLoadDevices(List<Device> result) {
         List<HashMap<String, Object>> transformed = transform(result);
         if (mTable == null) {
+            // init table
             mTable = new DeviceTableWidget();
             mTable.setData(transformed);
             mDisplay.getDevicesPanel().add(mTable);
+            // init lazy loader
             mTable.setLoadListener(new LazyPager.OnPageLoaderListener() {
                 @Override
                 public void onLoadPage(int page, final DownloadFinishListener c) {
@@ -85,6 +83,7 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
                         public void onFailure(Throwable caught) {
                             notifyLoadingDataStop();
                             Window.alert(caught.getMessage());
+                            c.onDownlodFinish(-1);
                         }
                     });
                 }

@@ -13,17 +13,14 @@ import com.google.gwt.user.client.ui.RootPanel;
  */
 public class RemoteLogWeb implements EntryPoint {
     /**
-     * The message displayed to the user when the server cannot be reached or
-     * returns an error.
+     * The message displayed to the user when the server cannot be reached or returns an error.
      */
     private static final String SERVER_ERROR = "An error occurred while "
-	    + "attempting to contact the server. Please check your network "
-	    + "connection and try again.";
+            + "attempting to contact the server. Please check your network " + "connection and try again.";
 
     public static int PAGE_SIZE = 30;
     /**
-     * Create a remote service proxy to talk to the server-side Greeting
-     * service.
+     * Create a remote service proxy to talk to the server-side Greeting service.
      */
     private final DataServiceAsync mDataService = GWT.create(DataService.class);
     private final HandlerManager mEventBus = new HandlerManager(null);
@@ -34,7 +31,6 @@ public class RemoteLogWeb implements EntryPoint {
      */
     @Override
     public void onModuleLoad() {
-	RootPanel.get().add(
-		new MainPresenter(mDataService, mEventBus, new MainWindow()));
+        RootPanel.get().add(new MainPresenter(mDataService, mEventBus, new MainWindow()));
     }
 }

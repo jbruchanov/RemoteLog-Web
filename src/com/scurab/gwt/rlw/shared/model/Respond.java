@@ -1,7 +1,5 @@
 package com.scurab.gwt.rlw.shared.model;
 
-import com.google.gson.Gson;
-
 public abstract class Respond<T> {
 
     private String mType;
@@ -27,7 +25,7 @@ public abstract class Respond<T> {
         mContext = context;
     }
 
-    public Respond(Throwable t){
+    public Respond(Throwable t) {
         mMessage = t.getMessage();
         mType = t.getClass().getName();
         hasError = true;

@@ -46,7 +46,7 @@ public class Database {
     }
 
     public static Connection getConnection(String url) throws SQLException {
-        return (Connection) DriverManager
+        return DriverManager
                 .getConnection(url, Application.APPLICATION_PROPERTIES
                         .getProperty(Application.ApplicationPropertyKeys.connection_username),
                         Application.APPLICATION_PROPERTIES
@@ -57,10 +57,11 @@ public class Database {
     public static List getDataByQuery(Session s, String query, boolean isSQL) throws Exception {
         s.beginTransaction();
         Query q = null;
-        if (isSQL)
+        if (isSQL) {
             q = s.createSQLQuery(query);
-        else
+        } else {
             q = s.createQuery(query);
+        }
         List result = q.list();
         return result;
     }

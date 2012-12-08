@@ -14,7 +14,7 @@ public class Application implements ServletContextListener {
 
     public static final Properties APPLICATION_PROPERTIES = new Properties();
     public static final Gson GSON = new GsonBuilder().setDateFormat("yyyy-MM-dd kk:mm:ss.SSS").create();
-    public static int PAGE_SIZE = 30;
+    public static int SERVER_PAGE_SIZE = 30;
 
     @Override
     public void contextDestroyed(ServletContextEvent arg0) {

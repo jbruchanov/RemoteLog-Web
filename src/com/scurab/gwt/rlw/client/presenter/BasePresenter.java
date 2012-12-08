@@ -27,7 +27,7 @@ public abstract class BasePresenter implements IsWidget {
         return mDisplay.asWidget();
     }
 
-    protected void notifyLoadingDataStart(){
+    protected void notifyLoadingDataStart() {
         notifyLoadingDataStart(null);
     }
 
