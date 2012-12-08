@@ -3,14 +3,10 @@ package com.scurab.gwt.rlw.shared.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-
 import com.google.gson.annotations.SerializedName;
 import com.scurab.gwt.rlw.server.annotation.DefaultOrderString;
 

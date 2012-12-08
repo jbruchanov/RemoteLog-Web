@@ -12,11 +12,11 @@ public class DeviceFilterDialog extends FilterDialog {
 
     private DataServiceAsync mDataService;
     private DeviceFilterView mFilterView;
-    
+
     public DeviceFilterDialog(String appName, DataServiceAsync service, OnOkListener listener) {
         super(appName, service, listener);
     }
-        
+
     @Override
     protected IsFilterWidget onCreateView(String appName, DataServiceAsync service) {
         mFilterView = new DeviceFilterView(appName, service);
@@ -36,8 +36,7 @@ public class DeviceFilterDialog extends FilterDialog {
 
     @Override
     public void refreshData() {
-        
+
     }
-    
-    
+
 }

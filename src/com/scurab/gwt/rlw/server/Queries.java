@@ -73,5 +73,4 @@ public class Queries extends HashMap<String, String> {
         public HashSet<String> Parameters;
     }
 
-    
 }

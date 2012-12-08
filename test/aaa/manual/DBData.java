@@ -33,13 +33,13 @@ public class DBData extends ApplicationTest {
             }
         }
         s.getTransaction().commit();
-        
-        List<Device> devs2 = DataGenerator.genDevices(10);        
+
+        List<Device> devs2 = DataGenerator.genDevices(10);
         s.beginTransaction();
         for (int i = 0, n = devs.size(); i < n; i++) {
             Device d = devs2.get(i);
             s.saveOrUpdate(d);
-        }        
+        }
         devs.addAll(devs2);
         for (int i = 0, n = devs.size(); i < n; i++) {
             Device d = devs.get(i);

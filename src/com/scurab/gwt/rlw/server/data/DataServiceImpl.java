@@ -1,21 +1,11 @@
 package com.scurab.gwt.rlw.server.data;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.transform.Transformers;
 
 import com.google.gson.Gson;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.scurab.gwt.rlw.client.DataService;
-import com.scurab.gwt.rlw.server.Application;
-import com.scurab.gwt.rlw.server.Database;
-import com.scurab.gwt.rlw.server.Queries;
-import com.scurab.gwt.rlw.server.Queries.AppQuery;
-import com.scurab.gwt.rlw.shared.SharedParams;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 

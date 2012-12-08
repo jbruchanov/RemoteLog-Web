@@ -5,5 +5,6 @@ import com.google.gwt.user.client.ui.IsWidget;
 
 public interface IsFilterWidget extends IsWidget {
     Button getOkButton();
+
     Button getCancelButton();
 }

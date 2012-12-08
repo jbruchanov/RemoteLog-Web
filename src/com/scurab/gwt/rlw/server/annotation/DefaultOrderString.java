@@ -6,13 +6,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- *
- * @author Joe Scurab
- * Annotiation used by {@link DataServiceImpl.#getData(Class)} method to take care about sorting
- *
+ * 
+ * @author Joe Scurab Annotiation used by {@link DataServiceImpl.#getData(Class)} method to take care about sorting
+ * 
  */
 @Target(ElementType.TYPE)
-@Retention(value=RetentionPolicy.RUNTIME)
+@Retention(value = RetentionPolicy.RUNTIME)
 public @interface DefaultOrderString {
-	String value();
+    String value();
 }

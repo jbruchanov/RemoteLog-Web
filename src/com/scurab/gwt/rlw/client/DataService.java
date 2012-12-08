@@ -1,6 +1,5 @@
 package com.scurab.gwt.rlw.client;
 
-import java.util.HashMap;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -14,10 +13,11 @@ import com.scurab.gwt.rlw.shared.model.LogItem;
 @RemoteServiceRelativePath("dataservice")
 public interface DataService extends RemoteService {
     List<String> getApplications() throws Exception;
-    
+
     /**
      * 
-     * @param appName optional
+     * @param appName
+     *            optional
      * @return
      */
     List<String> getDistinctValues(String appName, String query);
@@ -25,6 +25,5 @@ public interface DataService extends RemoteService {
     List<Device> getDevices(String jsonParams);
 
     List<LogItem> getLogs(String jsonParams);
-    
-    
+
 }

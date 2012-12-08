@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Window;
@@ -45,11 +44,11 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
     }
 
     private void init() {
-        loadLogs(0); 
+        loadLogs(0);
     }
 
     private void loadDevices(int page) {
-        notifyLoadingDataStart(WORDS.LoadingDevices());        
+        notifyLoadingDataStart(WORDS.LoadingDevices());
         mDataService.getDevices(createParams(page, mApp).toString(), new AsyncCallback<List<Device>>() {
             @Override
             public void onSuccess(List<Device> result) {
@@ -63,9 +62,9 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
             }
         });
     }
-    
-    private void loadLogs(int page){
-        notifyLoadingDataStart(WORDS.LoadingLogItems());        
+
+    private void loadLogs(int page) {
+        notifyLoadingDataStart(WORDS.LoadingLogItems());
         mDataService.getLogs(createParams(page, mApp).toString(), new AsyncCallback<List<LogItem>>() {
             @Override
             public void onSuccess(List<LogItem> result) {
@@ -80,7 +79,7 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
             }
         });
     }
-    
+
     protected void onLoadLogs(List<LogItem> result) {
         List<HashMap<String, Object>> transformed = transformLogs(result);
         if (mLogTable == null) {
@@ -116,13 +115,13 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
         }
         notifyLoadingDataStop();
     }
-    
+
     private List<HashMap<String, Object>> transformLogs(List<LogItem> data) {
         List<HashMap<String, Object>> rCollection = new ArrayList<HashMap<String, Object>>();
         for (int i = 0; i < data.size(); i++) {
             LogItem d = data.get(i);
             HashMap<String, Object> result = new HashMap<String, Object>();
-            result.put("ID_1", d.getId());            
+            result.put("ID_1", d.getId());
             result.put("Application_2", d.getApplication());
             result.put("AppVersion_3", d.getAppVersion());
             result.put("AppBuild_4", d.getAppBuild());
@@ -135,7 +134,7 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
         }
         return rCollection;
     }
-    
+
     protected void onLoadDevices(List<Device> result) {
         List<HashMap<String, Object>> transformed = transformDevices(result);
         if (mDevicesTable == null) {
@@ -181,15 +180,15 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
             result.put("Brand_2", d.getBrand());
             result.put("Model_3", d.getModel());
             result.put("Platform_4", d.getPlatform());
-            result.put("Version_5", d.getVersion());            
+            result.put("Version_5", d.getVersion());
             rCollection.add(result);
         }
         return rCollection;
     }
-    
+
     protected JSONObject createParams(int page, String appName) {
-        JSONObject param  = super.createParams(page);
-        if(appName != null){
+        JSONObject param = super.createParams(page);
+        if (appName != null) {
             param.put(SharedParams.APP_NAME, new JSONString(appName));
         }
         return param;

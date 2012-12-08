@@ -22,7 +22,7 @@ import com.google.gwt.user.cellview.client.SimplePager.TextLocation;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HasVerticalAlignment.VerticalAlignmentConstant;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -50,9 +50,9 @@ public class DynamicTableWidget extends Composite {
     private DynamicTableWidgetOverrider mOverrider = null;
 
     private boolean mSuccesfullSortByUnderscore = false;
-    
+
     private CheckBox mFilterCheckBox;
-    
+
     private Button mFilterButton;
 
     public interface DynamicTableWidgetOverrider {
@@ -128,13 +128,13 @@ public class DynamicTableWidget extends Composite {
         mCellTable.addColumnSortHandler(sortHandler);
         mListDataProvider.addDataDisplay(mCellTable);
 
-        HorizontalPanel hp = new HorizontalPanel();        
-        hp.add(pager);        
+        HorizontalPanel hp = new HorizontalPanel();
+        hp.add(pager);
         hp.add(onCreateFilterButton());
         CheckBox cb = onCreateFilterCheckBox();
         hp.add(cb);
-        hp.setCellVerticalAlignment(cb, HorizontalPanel.ALIGN_MIDDLE);
-        
+        hp.setCellVerticalAlignment(cb, HasVerticalAlignment.ALIGN_MIDDLE);
+
         VerticalPanel vp = new VerticalPanel();
         vp.setWidth("100%");
         vp.add(hp);
@@ -142,13 +142,13 @@ public class DynamicTableWidget extends Composite {
         initWidget(vp);
         mSuccesfullSortByUnderscore = false;
     }
-    
-    protected CheckBox onCreateFilterCheckBox(){
+
+    protected CheckBox onCreateFilterCheckBox() {
         CheckBox c = new CheckBox(RemoteLogWeb.WORDS.Filter());
         return c;
     }
-    
-    protected Button onCreateFilterButton(){
+
+    protected Button onCreateFilterButton() {
         Button b = new Button(RemoteLogWeb.WORDS.SetFilter());
         return b;
     }

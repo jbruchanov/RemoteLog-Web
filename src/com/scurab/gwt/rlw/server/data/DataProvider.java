@@ -3,14 +3,12 @@ package com.scurab.gwt.rlw.server.data;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.transform.Transformers;
 
-import com.scurab.gwt.rlw.server.Application;
 import com.scurab.gwt.rlw.server.Database;
 import com.scurab.gwt.rlw.server.Database.TableInfo;
 import com.scurab.gwt.rlw.server.Queries;
@@ -61,24 +59,24 @@ public class DataProvider {
         s.close();
         return apps;
     }
-    
-    public List<String> getDistinctValues(String query, String appName){
+
+    public List<String> getDistinctValues(String query, String appName) {
         Session s = Database.openSession();
         AppQuery sql = Queries.getQuery(query);
         Query q = s.createSQLQuery(sql.Query);
-        if(appName != null){
-            q.setParameter(SharedParams.APP_NAME, appName);        
+        if (appName != null) {
+            q.setParameter(SharedParams.APP_NAME, appName);
         }
-        
+
         List data = q.list();
         List<String> apps = new ArrayList<String>();
-        for (int i = 0, n = data.size(); i < n; i++) {                       
+        for (int i = 0, n = data.size(); i < n; i++) {
             apps.add(String.valueOf(data.get(i)));
         }
         s.close();
         return apps;
-    }    
-    
+    }
+
     public List<LogItem> getLogs(HashMap<String, Object> params) {
         try {
             List<LogItem> result = new ArrayList<LogItem>();
@@ -134,7 +132,7 @@ public class DataProvider {
         }
 
         boolean addedParams = false;
-        
+
         TableInfo ti = Database.getTable(clazz);
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("FROM %s", ti.TableName));
@@ -154,13 +152,14 @@ public class DataProvider {
             }
         }
 
-        if (ti.DefaultOrderString != null)
+        if (ti.DefaultOrderString != null) {
             sb.append(String.format(" ORDER BY %s", ti.DefaultOrderString));
+        }
 
         String qry = sb.toString();
         Query q = s.createQuery(qry);
 
-        //set values for WHERE params
+        // set values for WHERE params
         if (addedParams) {
             for (String key : params.keySet()) {
                 Object o = params.get(key);
@@ -170,10 +169,12 @@ public class DataProvider {
                     q.setDouble(key, (Double) o);
                 } else if (o instanceof String) {
                     String v = (String) o;
-                    if (v.charAt(v.length() - 1) == '*')
+                    if (v.charAt(v.length() - 1) == '*') {
                         v = v.substring(0, v.length() - 1) + "%";
-                    if (v.charAt(0) == '*')
+                    }
+                    if (v.charAt(0) == '*') {
                         v = "%" + v.substring(1, v.length());
+                    }
                     q.setString(key, v);
                 } else if (o instanceof Date) {
                     Date d = (Date) o;
@@ -184,7 +185,7 @@ public class DataProvider {
                 }
             }
         }
-        
+
         q.setMaxResults(SharedParams.PAGE_SIZE);
         if (page != 0) {
             q.setFirstResult(page * SharedParams.PAGE_SIZE);
