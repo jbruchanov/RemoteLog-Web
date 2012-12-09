@@ -46,12 +46,14 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
         mDataService = dataService;
         mDisplay = display;
         mApp = appName;
-        init();
+        init();              
     }
 
     private void init() {
         mLogPresenter = new TabLogPresenter(mDataService, mEventBus, mApp, mDisplay.getLogsPanel());
+        mLogPresenter.onLoadData(0);
         mDevicePresenter = new TabDevicePresenter(mDataService, mEventBus, mApp, mDisplay.getDevicesPanel());
+        mDevicePresenter.onLoadData(0);
     }
 
     

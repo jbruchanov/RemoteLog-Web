@@ -23,7 +23,7 @@ public class LogItem implements Serializable {
     @GeneratedValue
     @Column(name = "ID")
     @SerializedName("ID")
-    private int mId;
+    private int mID;
 
     @Column(name = "Application", nullable = false)
     @SerializedName("Application")
@@ -47,54 +47,22 @@ public class LogItem implements Serializable {
 
     @Column(name = "Message")
     @SerializedName("Message")
-    private String mMesage;
+    private String mMessage;
 
-    @Column(name = "DataType")
-    @SerializedName("DataType")
+    @Column(name = "BlobMime")
+    @SerializedName("BlobMime")
     private String mBlobMime;
 
     @Column(name = "DeviceID")
     @SerializedName("DeviceID")
-    private int mDeviceId;
+    private int mDeviceID;
 
-    public int getId() {
-        return mId;
+    public int getID() {
+        return mID;
     }
 
-    public void setId(int id) {
-        mId = id;
-    }
-
-    public Date getDate() {
-        return mDate;
-    }
-
-    public void setDate(Date date) {
-        mDate = date;
-    }
-
-    public String getCategory() {
-        return mCategory;
-    }
-
-    public void setCategory(String category) {
-        mCategory = category;
-    }
-
-    public String getMesage() {
-        return mMesage;
-    }
-
-    public void setMesage(String mesage) {
-        mMesage = mesage;
-    }
-
-    public String getBlobMime() {
-        return mBlobMime;
-    }
-
-    public void setBlobMime(String blobMime) {
-        mBlobMime = blobMime;
+    public void setID(int iD) {
+        mID = iD;
     }
 
     public String getApplication() {
@@ -121,11 +89,44 @@ public class LogItem implements Serializable {
         mAppBuild = appBuild;
     }
 
-    public int getDeviceId() {
-        return mDeviceId;
+    public Date getDate() {
+        return mDate;
     }
 
-    public void setDeviceId(int deviceId) {
-        mDeviceId = deviceId;
+    public void setDate(Date date) {
+        mDate = date;
     }
+
+    public String getCategory() {
+        return mCategory;
+    }
+
+    public void setCategory(String category) {
+        mCategory = category;
+    }
+
+    public String getMessage() {
+        return mMessage;
+    }
+
+    public void setMessage(String message) {
+        mMessage = message;
+    }
+
+    public String getBlobMime() {
+        return mBlobMime;
+    }
+
+    public void setBlobMime(String blobMime) {
+        mBlobMime = blobMime;
+    }
+
+    public int getDeviceID() {
+        return mDeviceID;
+    }
+
+    public void setDeviceID(int deviceID) {
+        mDeviceID = deviceID;
+    }
+
 }

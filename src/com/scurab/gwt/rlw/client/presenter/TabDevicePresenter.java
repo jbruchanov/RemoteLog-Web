@@ -17,14 +17,15 @@ import com.scurab.gwt.rlw.client.components.DynamicTableWidget;
 import com.scurab.gwt.rlw.client.components.LazyPager;
 import com.scurab.gwt.rlw.client.dialog.DeviceFilterDialog;
 import com.scurab.gwt.rlw.client.dialog.FilterDialog;
+import com.scurab.gwt.rlw.client.dialog.FilterDialog.OnOkListener;
 import com.scurab.gwt.rlw.client.interfaces.DownloadFinishListener;
 import com.scurab.gwt.rlw.shared.model.Device;
+import com.scurab.gwt.rlw.shared.model.LogItem;
 
-public class TabDevicePresenter extends TabBasePresenter<Device> {
+public class TabDevicePresenter extends TabDataPresenter<Device> {
 
     private DynamicTableWidget mDevicesTable;
-    private FilterDialog mDeviceFilterDialog;
-    
+    private DeviceFilterDialog mFilterDialog;
     private DataServiceAsync mDataService;
     private HandlerManager mEventBus;
     private String mApp;
@@ -35,8 +36,7 @@ public class TabDevicePresenter extends TabBasePresenter<Device> {
         mDataService = dataService;
         mEventBus = eventBus;
         mApp = appName;
-        mLogPanel = tabPanel;
-        loadDevices(0);
+        mLogPanel = tabPanel;              
     }
 
     @Override
@@ -55,104 +55,25 @@ public class TabDevicePresenter extends TabBasePresenter<Device> {
         return rCollection;
     }
 
-    private void loadDevices(int page) {
-        notifyLoadingDataStart(WORDS.LoadingDevices());
-        mDataService.getDevices(createParams(page).toString(), new AsyncCallback<List<Device>>() {
-            @Override
-            public void onSuccess(List<Device> result) {
-                onLoadDevices(result);
-            }
-
-            @Override
-            public void onFailure(Throwable caught) {
-                Window.alert(caught.getMessage());
-                notifyLoadingDataStop();
-            }
-        });
+    @Override
+    protected DynamicTableWidget onCreateTable() {
+        mDevicesTable = new DeviceTableWidget();
+        return mDevicesTable;
     }
 
-    
-    
-    protected void setDeviceFilter(HashMap<String, Object> data){
-        if(mDevicesTable != null){
-            mDevicesTable.removeFromParent();        
-            mDevicesTable = null;
-            loadDevices(0);
-        }
+    @Override
+    protected FilterDialog onCreateFilterDialog(OnOkListener okListener) {
+        mFilterDialog = new DeviceFilterDialog(mApp, mDataService, okListener);
+        return mFilterDialog;
     }
 
-    
-    protected void onLoadDevices(List<Device> result) {
-        List<HashMap<String, Object>> transformed = transformData(result);
-        if (mDevicesTable == null) {
-            // init table
-            mDevicesTable = new DeviceTableWidget();
-            mDevicesTable.setData(transformed);
-            mDevicesTable.getFilterButton().addClickHandler(new ClickHandler() {
-                @Override
-                public void onClick(ClickEvent event) {
-                    onDeviceFilterClick();
-                }
-            });
-            mDevicesTable.getFilterCheckBox().addClickHandler(new ClickHandler() {
-                @Override
-                public void onClick(ClickEvent event) {
-                    onDeviceFilterChange(((CheckBox)event.getSource()).getValue(), null);
-                }
-            });
-            mLogPanel.add(mDevicesTable);            
-            // init lazy loader
-            mDevicesTable.setLoadListener(new LazyPager.OnPageLoaderListener() {
-                @Override
-                public void onLoadPage(int page, final DownloadFinishListener c) {
-                    notifyLoadingDataStart(WORDS.LoadingDevices());
-                    mDataService.getDevices(createParams(page).toString(), new AsyncCallback<List<Device>>() {
-                        @Override
-                        public void onSuccess(List<Device> result) {
-                            int records = result != null ? result.size() : 0;
-                            onLoadDevices(result);
-                            c.onDownlodFinish(records);
-                        }
-
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            notifyLoadingDataStop();
-                            Window.alert(caught.getMessage());
-                            c.onDownlodFinish(-1);
-                        }
-                    });
-                }
-            });
-
-        } else {
-            mDevicesTable.addData(transformed);
-        }
-        notifyLoadingDataStop();
-    }
-    
-    protected void onDeviceFilterChange(Boolean value, HashMap<String, Object> filters) {
-        if (value == true) {
-            if (filters == null && mDeviceFilterDialog != null) {
-                setDeviceFilter(filters);
-            } else if (filters != null) {
-                setDeviceFilter(filters);
-            }
-        } else {
-            setDeviceFilter(null);
-        }
+    @Override
+    protected void onLoadData(int page, AsyncCallback<List<Device>> listener) {
+        mDataService.getDevices(createParams(page).toString(), listener);
     }
 
-    protected void onDeviceFilterClick(){
-        if(mDeviceFilterDialog == null){
-            mDeviceFilterDialog = new DeviceFilterDialog(mApp, mDataService, new FilterDialog.OnOkListener() {
-                @Override
-                public void onClickOk(FilterDialog source, HashMap<String, Object> filters) {
-                    if(filters.size() > 0){
-                        onDeviceFilterChange(true, filters);
-                    }
-                }
-            });
-        }
-        mDeviceFilterDialog.show();
+    @Override
+    protected void notifyStartDownloading() {
+        notifyStartDownloading(WORDS.LoadingDevices());        
     }
 }

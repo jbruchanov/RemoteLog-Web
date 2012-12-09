@@ -19,144 +19,28 @@ import com.scurab.gwt.rlw.client.components.DynamicTableWidget;
 import com.scurab.gwt.rlw.client.components.LazyPager;
 import com.scurab.gwt.rlw.client.dialog.DeviceFilterDialog;
 import com.scurab.gwt.rlw.client.dialog.FilterDialog;
+import com.scurab.gwt.rlw.client.dialog.FilterDialog.OnOkListener;
+import com.scurab.gwt.rlw.client.dialog.LogFilterDialog;
 import com.scurab.gwt.rlw.client.interfaces.DownloadFinishListener;
 import com.scurab.gwt.rlw.shared.SharedParams;
+import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 
-public class TabLogPresenter extends TabBasePresenter<LogItem> {
+public class TabLogPresenter extends TabDataPresenter<LogItem> {
 
     private DynamicTableWidget mLogTable;
+    private LogFilterDialog mFilterDialog;
     private DataServiceAsync mDataService;
     private HandlerManager mEventBus;
     private String mApp;
     private HTMLPanel mLogPanel;
-    private FilterDialog mLogFilterDialog;
-    
+
     public TabLogPresenter(DataServiceAsync dataService, HandlerManager eventBus, String appName, HTMLPanel tabPanel) {
         super(dataService, eventBus, appName, tabPanel);
         mDataService = dataService;
         mEventBus = eventBus;
         mApp = appName;
-        mLogPanel = tabPanel;
-        init();
-    }
-    
-    private void init(){
-        loadLogs(0);
-    }
-    
-    private void loadLogs(int page) {
-        notifyLoadingDataStart(WORDS.LoadingLogItems());
-        mDataService.getLogs(createParams(page, mApp).toString(), new AsyncCallback<List<LogItem>>() {
-            @Override
-            public void onSuccess(List<LogItem> result) {
-                onLoadLogs(result);
-            }
-
-            @Override
-            public void onFailure(Throwable caught) {
-                Window.alert(caught.getMessage());
-                notifyLoadingDataStop();
-            }
-        });
-    }
-
-    protected void onLoadLogs(List<LogItem> result) {
-        onLoadLogs(result, true);
-    }
-    protected void onLoadLogs(List<LogItem> result, boolean add) {
-        List<HashMap<String, Object>> transformed = transformData(result);
-        if (mLogTable == null) {
-            // init table
-            mLogTable = new DeviceTableWidget();
-            mLogTable.setData(transformed);
-            mLogTable.getFilterButton().addClickHandler(new ClickHandler() {
-                @Override
-                public void onClick(ClickEvent event) {
-                    onLogFilterClick();
-                }
-            });
-            mLogTable.getFilterCheckBox().addClickHandler(new ClickHandler() {
-                @Override
-                public void onClick(ClickEvent event) {
-                    onLogFilterChange(((CheckBox)event.getSource()).getValue(), null);
-                }
-            });
-            mLogPanel.add(mLogTable);
-            // init lazy loader
-            mLogTable.setLoadListener(new LazyPager.OnPageLoaderListener() {
-                @Override
-                public void onLoadPage(int page, final DownloadFinishListener c) {
-                    notifyLoadingDataStart(WORDS.LoadingLogItems());
-                    mDataService.getLogs(createParams(page, mApp).toString(), new AsyncCallback<List<LogItem>>() {
-                        @Override
-                        public void onSuccess(List<LogItem> result) {
-                            int records = result != null ? result.size() : 0;
-                            onLoadLogs(result);
-                            c.onDownlodFinish(records);
-                        }
-
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            notifyLoadingDataStop();
-                            Window.alert(caught.getMessage());
-                            c.onDownlodFinish(-1);
-                        }
-                    });
-                }
-            });
-
-        } else {
-            if(add){
-                mLogTable.addData(transformed);
-            }else{
-                mLogTable.setData(transformed);
-            }
-        }
-        notifyLoadingDataStop();
-    }
-
-    protected void onLogFilterClick() {
-        if(mLogFilterDialog == null){
-            mLogFilterDialog = new DeviceFilterDialog(mApp, mDataService, new FilterDialog.OnOkListener() {
-                @Override
-                public void onClickOk(FilterDialog source, HashMap<String, Object> filters) {
-                    if(filters.size() > 0){
-                        onLogFilterChange(true, filters);
-                    }
-                }
-            });
-        }
-        mLogFilterDialog.show();
-    }
-
-
-    protected void onLogFilterChange(Boolean value, HashMap<String, Object> filters) {
-        if (value == true) {
-            if (filters == null && mLogFilterDialog != null) {
-                setLogFilter(filters);
-            } else if (filters != null) {
-                setLogFilter(filters);
-            }
-        } else {
-            setLogFilter(null);
-        }
-    }    
-    
-    protected void setLogFilter(HashMap<String, Object> data){
-        if(mLogTable != null){
-            mLogTable.clear();
-            mLogTable = null;
-            loadLogs(0);    
-        }
-    }
-    
-    protected JSONObject createParams(int page, String appName) {
-        JSONObject param = super.createParams(page);
-        if (appName != null) {
-            param.put(SharedParams.APP_NAME, new JSONString(appName));
-        }
-        return param;
+        mLogPanel = tabPanel;              
     }
 
     @Override
@@ -165,17 +49,39 @@ public class TabLogPresenter extends TabBasePresenter<LogItem> {
         for (int i = 0; i < data.size(); i++) {
             LogItem d = data.get(i);
             HashMap<String, Object> result = new HashMap<String, Object>();
-            result.put("ID_1", d.getId());
+            result.put("ID_1", d.getID());
             result.put("Application_2", d.getApplication());
             result.put("AppVersion_3", d.getAppVersion());
             result.put("AppBuild_4", d.getAppBuild());
             result.put("Date_5", d.getDate());
             result.put("Category_6", d.getCategory());
-            result.put("Message_7", d.getMesage());
+            result.put("Message_7", d.getMessage());
             result.put("DataType_8", d.getBlobMime());
-            result.put("DeviceID_9", d.getDeviceId());
+            result.put("DeviceID_9", d.getDeviceID());
             rCollection.add(result);
         }
         return rCollection;
+    }
+
+    @Override
+    protected DynamicTableWidget onCreateTable() {
+        mLogTable = new DeviceTableWidget();
+        return mLogTable;
+    }
+
+    @Override
+    protected FilterDialog onCreateFilterDialog(OnOkListener okListener) {
+        mFilterDialog = new LogFilterDialog(mApp, mDataService, okListener);
+        return mFilterDialog;
+    }
+
+    @Override
+    protected void onLoadData(int page, AsyncCallback<List<LogItem>> listener) {
+        mDataService.getLogs(createParams(page).toString(), listener);
+    }
+
+    @Override
+    protected void notifyStartDownloading() {
+        notifyStartDownloading(WORDS.LoadingLogItems());        
     }
 }

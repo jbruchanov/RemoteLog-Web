@@ -108,4 +108,9 @@ public class LazyPager extends SimplePager {
     public void setLoadListener(OnPageLoaderListener listener) {
         mListener = listener;
     }
+
+    public void resetLazy() {
+        mLoadedPages = 1;
+        mHasNextPage = true;
+    }
 }

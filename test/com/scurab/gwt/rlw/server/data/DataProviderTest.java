@@ -10,6 +10,7 @@ import org.junit.Test;
 import com.scurab.gwt.rlw.ApplicationTest;
 import com.scurab.gwt.rlw.shared.QueryNames;
 import com.scurab.gwt.rlw.shared.SharedParams;
+import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 
 public class DataProviderTest extends ApplicationTest {
@@ -110,6 +111,28 @@ public class DataProviderTest extends ApplicationTest {
         List<String> l = dp.getDistinctValues(QueryNames.SELECT_CATEGORIES_BY_APPNAME, TEST_APP2);
         assertNotNull(l);
         assertTrue(l.size() > 0);
+    }
+    
+    @Test
+    public void testGetDevices() {
+        DataProvider dp = new DataProvider();
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put(SharedParams.PAGE, 0);
+        List<Device> d = dp.getDevices(params);
+        assertNotNull(d);
+        assertTrue(d.size() > 0);
+    }
+
+    @Test
+    public void testGetDevicesValue() {
+        DataProvider dp = new DataProvider();
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put(SharedParams.APP_NAME, "TestApp2");
+        params.put(SharedParams.DEVICE_BRAND, "LG");
+        params.put(SharedParams.PAGE, 0);
+        List<Device> d = dp.getDevices(params);
+        assertNotNull(d);
+        assertTrue(d.size() > 0);
     }
 
     private static HashMap<String, Object> createParams(int page) {

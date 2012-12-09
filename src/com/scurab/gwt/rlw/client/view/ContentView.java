@@ -6,6 +6,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.TabPanel;
 
 public class ContentView extends Composite {
 
@@ -15,16 +16,15 @@ public class ContentView extends Composite {
     protected HTMLPanel mDevicesPanel;
     @UiField
     protected HTMLPanel mLogsPanel;
+    @UiField
+    protected TabPanel mTabPanel;
 
     interface ContentViewUiBinder extends UiBinder<Widget, ContentView> {
     }
 
     public ContentView() {
         initWidget(uiBinder.createAndBindUi(this));
-    }
-
-    public ContentView(String firstName) {
-        initWidget(uiBinder.createAndBindUi(this));
+        mTabPanel.selectTab(0);
     }
 
     public HTMLPanel getDevicesPanel() {

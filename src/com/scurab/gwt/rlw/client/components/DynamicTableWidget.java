@@ -93,16 +93,15 @@ public class DynamicTableWidget extends Composite {
      * @param data
      */
     public void setData(List<HashMap<String, Object>> data) {
+        if(data == null){
+            data = new ArrayList<HashMap<String, Object>>();
+        }
         mData = data;
-        if (mData != null && mData.size() != 0) {
-            if(mListDataProvider == null){
-                init(mData);
-            }
-            else{
-                mListDataProvider.setList(data);
-            }
-        } else {
-            initWidget(new Label("No data"));
+        if(mListDataProvider == null){
+            init(mData);
+        }else{
+            mListDataProvider.setList(data);
+            pager.resetLazy();
         }
     }
 

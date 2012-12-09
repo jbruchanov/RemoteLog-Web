@@ -118,7 +118,7 @@ public class LogItemsConnectorTest extends ApplicationTest {
         assertEquals("OK", r.getMessage());
         assertNotNull(r.getContext());
         LogItem li = r.getContext();
-        assertTrue(li.getId() > 0);
+        assertTrue(li.getID() > 0);
 
         Session s = Database.openSession();
         Query q = s.createQuery(String.format("FROM LogItems"));

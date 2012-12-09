@@ -69,26 +69,24 @@ public class MainPresenter extends BasePresenter implements IsWidget {
                     break;
                 case DataLoadingEvent.STOP_LOADING:
                     mLoadingEvents--;
-                    if(mLoadingEvents == 0){
-                        hideProgress();
-                    }
+                    hideProgress();
                     break;
                 }
             }
         });
 
         // download appliations
-        notifyLoadingDataStart(WORDS.Applications());
+        notifyStartDownloading(WORDS.Applications());
         mDataService.getApplications(new AsyncCallback<List<String>>() {
             @Override
             public void onSuccess(List<String> result) {
                 onLoadApplications(result);
-                notifyLoadingDataStop();
+                notifyStopDownloading();
             }
 
             @Override
             public void onFailure(Throwable caught) {
-                notifyLoadingDataStop();
+                notifyStopDownloading();
                 Window.alert(caught.getMessage());
                 onLoadApplications(null);
             }

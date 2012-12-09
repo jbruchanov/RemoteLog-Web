@@ -31,14 +31,14 @@ public abstract class BasePresenter implements IsWidget {
     }
 
     protected void notifyLoadingDataStart() {
-        notifyLoadingDataStart(null);
+        notifyStartDownloading(null);
     }
 
-    protected void notifyLoadingDataStart(String msg) {
+    protected void notifyStartDownloading(String msg) {
         mEventBus.fireEvent(new DataLoadingEvent(DataLoadingEvent.START_LOADING, msg));
     }
 
-    protected void notifyLoadingDataStop() {
+    protected void notifyStopDownloading() {
         mEventBus.fireEvent(new DataLoadingEvent(DataLoadingEvent.STOP_LOADING));
     }
 

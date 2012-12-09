@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -33,16 +34,14 @@ public class DataProvider {
         List<Device> result = new ArrayList<Device>();
 
         Session s = Database.openSession();
-        Query q = null;
-        // not much smart detection
-        if (params.keySet().size() > 1) {
-            AppQuery query = Queries.getQuery(QueryNames.SELECT_DEVS_BY_APP);
-            q = s.createSQLQuery(query.Query).setResultTransformer(Transformers.aliasToBean(Device.class));
-        } else {
-            q = s.createQuery("FROM Devices");
+        AppQuery query = null;
+        if(params.containsKey(SharedParams.APP_NAME)){
+            query = Queries.getQuery(QueryNames.SELECT_DEVS_BY_APP);
+        }else{
+            query = Queries.getQuery(QueryNames.SELECT_DEVS);
         }
-        initQuery(q, params);
-
+        Query q = getQueryWithDynamicParams(s, query, params).setResultTransformer(
+                Transformers.aliasToBean(Device.class));
         result.addAll(q.list());
         s.close();
         return result;
@@ -82,8 +81,14 @@ public class DataProvider {
             List<LogItem> result = new ArrayList<LogItem>();
 
             Session s = Database.openSession();
-            Query q = getQuery(s, LogItem.class, params);
-
+            AppQuery query = null;
+            if(params.containsKey(SharedParams.APP_NAME)){
+                query = Queries.getQuery(QueryNames.SELECT_LOGS_BY_APP);
+            }else{
+                query = Queries.getQuery(QueryNames.SELECT_LOGS);
+            }
+            Query q = getQueryWithDynamicParams(s, query, params).setResultTransformer(
+                    Transformers.aliasToBean(LogItem.class));
             result.addAll(q.list());
             s.close();
             return result;
@@ -94,7 +99,7 @@ public class DataProvider {
     }
 
     private void initQuery(Query q) {
-        initQuery(q, null);
+        initQueryWithDefinedParams(q, null);
     }
 
     /**
@@ -102,7 +107,7 @@ public class DataProvider {
      * @param q
      * @param params
      */
-    private void initQuery(Query q, HashMap<String, Object> params) {
+    private void initQueryWithDefinedParams(Query q, HashMap<String, Object> params) {
         int page = 0;
         if (params.containsKey(SharedParams.PAGE)) {
             page = ((Number) params.get(SharedParams.PAGE)).intValue();
@@ -122,47 +127,93 @@ public class DataProvider {
         }
     }
 
-    protected Query getQuery(Session s, Class<?> clazz, HashMap<String, Object> srcParams)
-            throws ClassNotFoundException {
-        HashMap<String, Object> params = new HashMap<String, Object>(srcParams);
+    
+    /**
+     * 
+     * @param s cant be null
+     * @param sqlQuery cant be null
+     * @param srcParams optional
+     * @return
+     */
+    protected Query getQueryWithDynamicParams(Session s, AppQuery appQuery, HashMap<String, Object> srcParams)
+            {
+        if(s == null){
+            throw new IllegalArgumentException("Session is null");
+        }
+        if(appQuery == null){
+            throw new IllegalArgumentException("Invalid query");
+        }
+        //make a copy of params to avoid changins set
+        HashMap<String, Object> params= new HashMap<String, Object>();
+        if(srcParams != null){
+            params.putAll(srcParams);
+        }
+        
         int page = 0;
         if (params.containsKey(SharedParams.PAGE)) {
             page = ((Number) params.get(SharedParams.PAGE)).intValue();
             params.remove(SharedParams.PAGE);
         }
+        
+        //remove params defined in query statically
+        if(appQuery.Parameters != null){
+            for(String key : appQuery.Parameters){
+                params.remove(key);
+            }
+        }
 
         boolean addedParams = false;
-
-        TableInfo ti = Database.getTable(clazz);
-        StringBuilder sb = new StringBuilder();
-        sb.append(String.format("FROM %s", ti.TableName));
+        
+        StringBuilder sb = new StringBuilder();        
         if (params.size() > 0) {
             StringBuilder filter = new StringBuilder();
-            filter.append(String.format(" WHERE ", ti.TableName));
-            for (String key : params.keySet()) {
+            filter.append("WHERE ");
+            Set<String> keySet = params.keySet();
+            for (String key : keySet) {
                 String columnName = key;
-                String v = params.get(columnName).toString();
-                String op = (v.charAt(0) == '*' || v.charAt(v.length() - 1) == '*') ? "LIKE" : "=";
-                filter.append(String.format("%1$s %2$s :%1$s AND ", key, op)); // http://www.stpe.se/2008/07/hibernate-hql-like-query-named-parameters/
+                Object o = params.get(columnName);
+                String op = "=";
+                if(o != null){
+                    String v = params.get(columnName).toString();
+                    op = (v.charAt(0) == '*' || v.charAt(v.length() - 1) == '*') ? "LIKE" : "=";
+                    filter.append(String.format("%1$s %2$s :%1$s AND ", key, op)); // http://www.stpe.se/2008/07/hibernate-hql-like-query-named-parameters/
+                }else{
+                    params.remove(key);
+                    filter.append(String.format("%1$s IS NULL AND ", key)); // http://www.stpe.se/2008/07/hibernate-hql-like-query-named-parameters/
+                }
+                
                 addedParams = true;
             }
             if (addedParams) {
                 filter.setLength(filter.length() - "AND ".length());
                 sb.append(filter.toString());
             }
+        }        
+        
+        String qry = appQuery.Query;
+
+        //check if the last char is not ';'
+        if(qry.charAt(qry.length()-1) == ';'){
+            qry = qry.substring(0,qry.length()-1);
         }
-
-        if (ti.DefaultOrderString != null) {
-            sb.append(String.format(" ORDER BY %s", ti.DefaultOrderString));
+        
+        if(addedParams){
+            qry = String.format("SELECT * FROM (%s) as drvTbl %s",qry, sb.toString());
         }
-
-        String qry = sb.toString();
-        Query q = s.createQuery(qry);
-
-        // set values for WHERE params
+        
+        Query q = s.createSQLQuery(qry);
+        
+        //set static params
+        if(appQuery.Parameters != null){
+            for(String key : appQuery.Parameters){
+                q.setParameter(key, srcParams.get(key));
+            }
+        }
+        
+        // set dynamic params
         if (addedParams) {
             for (String key : params.keySet()) {
-                Object o = params.get(key);
+                Object o = params.get(key);               
                 if (o instanceof Integer) {
                     q.setInteger(key, (Integer) o);
                 } else if (o instanceof Double) {
@@ -189,7 +240,9 @@ public class DataProvider {
         q.setMaxResults(SharedParams.PAGE_SIZE);
         if (page != 0) {
             q.setFirstResult(page * SharedParams.PAGE_SIZE);
-        }
+        }       
         return q;
     }
+    
+    
 }

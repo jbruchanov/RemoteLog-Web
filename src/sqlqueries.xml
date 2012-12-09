@@ -54,13 +54,23 @@
 			WHERE Application = :Application)
 	]]>
 	</Query>
-	<Query name="SELECT_PLATFORMS" type="SQL" >
+	<Query name="SELECT_LOGS" type="SQL">
+	<![CDATA[
+		SELECT * FROM LogItems;
+	]]>
+	</Query>
+	<Query name="SELECT_LOGS_BY_APP" type="SQL" parameters="Application">
+	<![CDATA[
+		Select * FROM LogItems WHERE Application = :Application;
+	]]>
+	</Query>
+	<Query name="SELECT_PLATFORMS" type="SQL">
 	<![CDATA[
 		SELECT DISTINCT Platform FROM LogItems INNER JOIN 
 		Devices ON Devices.DeviceID = LogItems.DeviceID 
 		ORDER BY Platform;
 	]]>
-	</Query>	
+	</Query>
 	<Query name="SELECT_PLATFORMS_BY_APPNAME" type="SQL" parameters="Application">
 	<![CDATA[
 		SELECT DISTINCT Platform FROM LogItems INNER JOIN 
@@ -69,13 +79,13 @@
 		ORDER BY Platform; 
 	]]>
 	</Query>
-	<Query name="SELECT_BRANDS" type="SQL" >
+	<Query name="SELECT_BRANDS" type="SQL">
 	<![CDATA[
 		SELECT DISTINCT Brand FROM LogItems INNER JOIN 
 		Devices ON Devices.DeviceID = LogItems.DeviceID 
 		ORDER BY Brand;
 	]]>
-	</Query>	
+	</Query>
 	<Query name="SELECT_BRANDS_BY_APPNAME" type="SQL" parameters="Application">
 	<![CDATA[
 		SELECT DISTINCT Brand FROM LogItems INNER JOIN 
@@ -84,13 +94,13 @@
 		ORDER BY Brand; 
 	]]>
 	</Query>
-	<Query name="SELECT_MODELS" type="SQL" >
+	<Query name="SELECT_MODELS" type="SQL">
 	<![CDATA[
 		SELECT DISTINCT Model FROM LogItems INNER JOIN 
 		Devices ON Devices.DeviceID = LogItems.DeviceID 
 		ORDER BY Model;
 	]]>
-	</Query>	
+	</Query>
 	<Query name="SELECT_MODELS_BY_APPNAME" type="SQL" parameters="Application">
 	<![CDATA[
 		SELECT DISTINCT Model FROM LogItems INNER JOIN 
@@ -99,14 +109,15 @@
 		ORDER BY Model; 
 	]]>
 	</Query>
-	<Query name="SELECT_RESOLUTIONS" type="SQL" >
+	<Query name="SELECT_RESOLUTIONS" type="SQL">
 	<![CDATA[
 		SELECT DISTINCT Resolution FROM LogItems INNER JOIN 
 		Devices ON Devices.DeviceID = LogItems.DeviceID 
 		ORDER BY Resolution;
 	]]>
-	</Query>	
-	<Query name="SELECT_RESOLUTIONS_BY_APPNAME" type="SQL" parameters="Application">
+	</Query>
+	<Query name="SELECT_RESOLUTIONS_BY_APPNAME" type="SQL"
+		parameters="Application">
 	<![CDATA[
 		SELECT DISTINCT Resolution FROM LogItems INNER JOIN 
 		Devices ON Devices.DeviceID = LogItems.DeviceID
@@ -114,20 +125,20 @@
 		ORDER BY Resolution; 
 	]]>
 	</Query>
-	<Query name="SELECT_DATATYPES" type="SQL" >
+	<Query name="SELECT_DATATYPES" type="SQL">
 	<![CDATA[
-		SELECT DISTINCT DataType FROM LogItems 
-		ORDER BY DataType;
+		SELECT DISTINCT BlobMime FROM LogItems 
+		ORDER BY BlobMime;
 	]]>
 	</Query>
 	<Query name="SELECT_DATATYPES_BY_APPNAME" type="SQL" parameters="Application">
 	<![CDATA[
-		SELECT DISTINCT DataType FROM LogItems 
+		SELECT DISTINCT BlobMime FROM LogItems 
 		WHERE Application = :Application 
-		ORDER BY DataType; 
+		ORDER BY BlobMime; 
 	]]>
 	</Query>
-	<Query name="SELECT_CATEGORIES" type="SQL" >
+	<Query name="SELECT_CATEGORIES" type="SQL">
 	<![CDATA[
 		SELECT DISTINCT Category FROM LogItems 
 		ORDER BY Category;
