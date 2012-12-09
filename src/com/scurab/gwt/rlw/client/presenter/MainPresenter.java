@@ -39,6 +39,7 @@ public class MainPresenter extends BasePresenter implements IsWidget {
     public MainPresenter(DataServiceAsync dataService, HandlerManager eventBus, MainWindow display) {
         super(dataService, eventBus, display);
         mWindow = display;
+        mWindow.getTestButton().setVisible(false);        
         mDataService = dataService;
         init();
     }

@@ -1,10 +1,19 @@
 package com.scurab.gwt.rlw.shared.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public abstract class Respond<T> {
 
+    @SerializedName("Type")
     private String mType;
+    
+    @SerializedName("Message")
     private String mMessage;
+    
+    @SerializedName("HasError")
     private boolean hasError;
+
+    @SerializedName("Context")
     private T mContext;
 
     public Respond() {

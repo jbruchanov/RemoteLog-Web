@@ -163,4 +163,18 @@ public class Device implements Serializable {
         mModel = model;
     }
 
+    public void updateValues(Device other){
+        mBrand = other.mBrand;
+        mDescription = other.mDescription;
+        mDetail = other.mDetail;
+//        mDeviceID = other.mDeviceID;
+//        mDevUUID = other.mDevUUID;
+        mModel = other.mModel;
+        mOSDescription = other.mOSDescription;
+        mOwner = other.mOwner;
+        mPlatform = other.mPlatform;
+        mPushID = other.mPushID;
+        mResolution = other.mResolution;
+        mVersion = other.mVersion;
+    }
 }

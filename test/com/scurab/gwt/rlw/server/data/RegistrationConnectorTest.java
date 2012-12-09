@@ -80,5 +80,4 @@ public class RegistrationConnectorTest extends ApplicationTest {
         s.getTransaction().commit();
         s.close();
     }
-
 }
