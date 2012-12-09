@@ -36,15 +36,14 @@ public class RegistrationConnector extends Connector<Device> {
         }
         return response;
     }
-    
-    protected Device[] parse(String obj, boolean isArray){
-        Device[] toWrite = null;
-        if (isArray) {
-            toWrite = mGson.fromJson(obj, Device[].class);
-        } else {
-            Device d = mGson.fromJson(obj, Device.class);
-            toWrite = new Device[] { d };
-        }
-        return toWrite;
+
+    @Override
+    public Class<?> getGenericClass() {
+        return Device.class;
+    }
+
+    @Override
+    public Class<?> getArrayGenericClass() {
+        return Device[].class;
     }
 }

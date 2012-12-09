@@ -3,6 +3,8 @@ package com.scurab.gwt.rlw.server.data;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.lang.reflect.Array;
+import java.lang.reflect.ParameterizedType;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,10 +15,12 @@ import org.apache.commons.io.IOUtils;
 import org.hibernate.Session;
 
 import com.google.gson.Gson;
+import com.google.gwt.user.client.rpc.core.java.util.Arrays;
 import com.scurab.gwt.rlw.server.Application;
 import com.scurab.gwt.rlw.server.Database;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.DeviceRespond;
+import com.scurab.gwt.rlw.shared.model.LogItem;
 import com.scurab.gwt.rlw.shared.model.Respond;
 
 public abstract class Connector<T> extends HttpServlet {
@@ -74,7 +78,24 @@ public abstract class Connector<T> extends HttpServlet {
     protected abstract Respond<?> onRequest(InputStream is) throws Exception;
     
     @SuppressWarnings("unchecked")
-    protected abstract T[] parse(String obj, boolean isArray);        
+//    protected abstract T[] parse(String obj, boolean isArray);       
+    
+    protected T[] parse(String obj, boolean isArray) {
+        T[] toWrite = null;
+        if (isArray) {
+            toWrite = (T[]) mGson.fromJson(obj, getArrayGenericClass());
+        } else {
+            T d = (T) mGson.fromJson(obj, getGenericClass());   
+            toWrite = (T[]) Array.newInstance(getGenericClass(),1);
+            toWrite[0] = d;
+        }
+        return toWrite;
+    }
+    
+    public abstract Class<?> getGenericClass();
+    
+    public abstract Class<?> getArrayGenericClass();
+        
 
     protected T[] onWrite(T[] data) {
         Session s = Database.openSession();

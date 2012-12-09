@@ -39,16 +39,13 @@ public class LogItemsConnector extends Connector<LogItem> {
         return response;
     }
 
-    
     @Override
-    protected LogItem[] parse(String obj, boolean isArray) {
-        LogItem[] toWrite = null;
-        if (isArray) {
-            toWrite = mGson.fromJson(obj, LogItem[].class);
-        } else {
-            LogItem d = mGson.fromJson(obj, LogItem.class);
-            toWrite = new LogItem[] { d };
-        }
-        return toWrite;
+    public Class<?> getGenericClass() {
+        return LogItem.class;
+    }
+
+    @Override
+    public Class<?> getArrayGenericClass() {
+        return LogItem[].class;
     }
 }
