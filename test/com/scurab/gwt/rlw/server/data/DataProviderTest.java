@@ -112,7 +112,7 @@ public class DataProviderTest extends ApplicationTest {
         assertNotNull(l);
         assertTrue(l.size() > 0);
     }
-    
+
     @Test
     public void testGetDevices() {
         DataProvider dp = new DataProvider();

@@ -81,9 +81,11 @@ public class DynamicTableWidget extends Composite {
     }
 
     public DynamicTableWidget() {
+
     }
 
     public DynamicTableWidget(List<HashMap<String, Object>> data) {
+        this();
         setData(data);
     }
 
@@ -93,13 +95,13 @@ public class DynamicTableWidget extends Composite {
      * @param data
      */
     public void setData(List<HashMap<String, Object>> data) {
-        if(data == null){
+        if (data == null) {
             data = new ArrayList<HashMap<String, Object>>();
         }
         mData = data;
-        if(mListDataProvider == null){
+        if (mListDataProvider == null) {
             init(mData);
-        }else{
+        } else {
             mListDataProvider.setList(data);
             pager.resetLazy();
         }
@@ -116,6 +118,8 @@ public class DynamicTableWidget extends Composite {
     private void init(List<HashMap<String, Object>> data) {
         mListDataProvider = new ListDataProvider<HashMap<String, Object>>(data);
         mCellTable = new CellTable<HashMap<String, Object>>();
+        mCellTable.setEmptyTableWidget(new Label(RemoteLogWeb.WORDS.NoData()).asWidget());
+        mCellTable.setLoadingIndicator(new Label("Loading").asWidget());
         mCellTable.setPageSize(getPageSize());
         mCellTable.setSelectionModel(getSelectionModel());
 
@@ -134,7 +138,7 @@ public class DynamicTableWidget extends Composite {
 
         HorizontalPanel hp = new HorizontalPanel();
         hp.add(pager);
-        mFilterButton = onCreateFilterButton(); 
+        mFilterButton = onCreateFilterButton();
         hp.add(mFilterButton);
         mFilterCheckBox = onCreateFilterCheckBox();
         hp.add(mFilterCheckBox);
@@ -459,9 +463,9 @@ public class DynamicTableWidget extends Composite {
     public Button getFilterButton() {
         return mFilterButton;
     }
-    
-    public void clear(){                
-        mListDataProvider.getList().clear();        
+
+    public void clear() {
+        mListDataProvider.getList().clear();
         notifyDataChange();
     }
 }

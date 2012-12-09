@@ -10,7 +10,7 @@ public class LogFilterDialog extends FilterDialog {
     private LogFilterView mFilterView;
     private String mAppName;
     private DataServiceAsync mDataService;
-    
+
     public LogFilterDialog(String appName, DataServiceAsync service, OnOkListener listener) {
         super(appName, service, listener);
         mAppName = appName;
@@ -32,7 +32,7 @@ public class LogFilterDialog extends FilterDialog {
         insertValue(filters, SharedParams.LOG_DATATYPE, getListBoxValue(mFilterView.mDataType));
         insertValue(filters, SharedParams.LOG_DATE, mFilterView.mDate.getValue());
         insertValue(filters, SharedParams.LOG_DEVICEID, mFilterView.mDeviceID.getValue());
-        insertValue(filters, SharedParams.LOG_MESSAGE, getTextBoxValue(mFilterView.mMessage));        
+        insertValue(filters, SharedParams.LOG_MESSAGE, getTextBoxValue(mFilterView.mMessage));
         return filters;
     }
 

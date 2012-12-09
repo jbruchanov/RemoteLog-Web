@@ -17,9 +17,6 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
 import com.scurab.gwt.rlw.client.controls.MainMenuLink;
-import com.scurab.gwt.rlw.client.dialog.DeviceFilterDialog;
-import com.scurab.gwt.rlw.client.dialog.FilterDialog;
-import com.scurab.gwt.rlw.client.dialog.LogFilterDialog;
 import com.scurab.gwt.rlw.client.events.DataLoadingEvent;
 import com.scurab.gwt.rlw.client.events.DataLoadingEventHandler;
 import com.scurab.gwt.rlw.client.view.ContentView;
@@ -36,7 +33,7 @@ public class MainPresenter extends BasePresenter implements IsWidget {
     private List<MainMenuLink> mMenuLinks;
 
     private DataServiceAsync mDataService;
-    
+
     private static int mLoadingEvents = 0;
 
     public MainPresenter(DataServiceAsync dataService, HandlerManager eventBus, MainWindow display) {

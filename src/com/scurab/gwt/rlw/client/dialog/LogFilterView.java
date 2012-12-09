@@ -3,16 +3,13 @@ package com.scurab.gwt.rlw.client.dialog;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
 import com.scurab.gwt.rlw.shared.QueryNames;
@@ -20,26 +17,34 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.datepicker.client.DateBox;
-import com.google.gwt.user.client.ui.Label;
 
 public class LogFilterView extends Composite implements IsFilterWidget {
 
     private static LogFilterViewUiBinder uiBinder = GWT.create(LogFilterViewUiBinder.class);
-    @UiField TextBox mAppBuild;
-    @UiField TextBox mAppVersion;
-    @UiField ListBox mDataType;
-    @UiField ListBox mCategory;
-    @UiField IntegerBox mDeviceID;
-    @UiField DateBox mDate;
-    @UiField TextBox mMessage;
-    @UiField Button mOkButton;
-    @UiField Button mCancelButton;
+    @UiField
+    TextBox mAppBuild;
+    @UiField
+    TextBox mAppVersion;
+    @UiField
+    ListBox mDataType;
+    @UiField
+    ListBox mCategory;
+    @UiField
+    IntegerBox mDeviceID;
+    @UiField
+    DateBox mDate;
+    @UiField
+    TextBox mMessage;
+    @UiField
+    Button mOkButton;
+    @UiField
+    Button mCancelButton;
 
     interface LogFilterViewUiBinder extends UiBinder<Widget, LogFilterView> {
     }
 
     private DataServiceAsync mDataService;
-    
+
     private String mApplication;
 
     public LogFilterView(String appName, DataServiceAsync dataService) {
@@ -63,7 +68,7 @@ public class LogFilterView extends Composite implements IsFilterWidget {
                 Window.alert(caught.getMessage());
             }
         });
-        
+
         mDataService.getDistinctValues(mApplication, mApplication == null ? QueryNames.SELECT_CATEGORIES
                 : QueryNames.SELECT_CATEGORIES_BY_APPNAME, new AsyncCallback<List<String>>() {
             @Override
@@ -97,8 +102,9 @@ public class LogFilterView extends Composite implements IsFilterWidget {
     public Button getCancelButton() {
         return mCancelButton;
     }
-    
-    public void refreshData(){
+
+    @Override
+    public void refreshData() {
         initData();
     }
 

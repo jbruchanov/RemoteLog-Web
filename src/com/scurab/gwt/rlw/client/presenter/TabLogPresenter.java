@@ -4,26 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONString;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
-import com.scurab.gwt.rlw.client.components.DeviceTableWidget;
 import com.scurab.gwt.rlw.client.components.DynamicTableWidget;
-import com.scurab.gwt.rlw.client.components.LazyPager;
-import com.scurab.gwt.rlw.client.dialog.DeviceFilterDialog;
 import com.scurab.gwt.rlw.client.dialog.FilterDialog;
 import com.scurab.gwt.rlw.client.dialog.FilterDialog.OnOkListener;
 import com.scurab.gwt.rlw.client.dialog.LogFilterDialog;
-import com.scurab.gwt.rlw.client.interfaces.DownloadFinishListener;
-import com.scurab.gwt.rlw.shared.SharedParams;
-import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 
 public class TabLogPresenter extends TabDataPresenter<LogItem> {
@@ -40,7 +28,7 @@ public class TabLogPresenter extends TabDataPresenter<LogItem> {
         mDataService = dataService;
         mEventBus = eventBus;
         mApp = appName;
-        mLogPanel = tabPanel;              
+        mLogPanel = tabPanel;
     }
 
     @Override
@@ -65,7 +53,7 @@ public class TabLogPresenter extends TabDataPresenter<LogItem> {
 
     @Override
     protected DynamicTableWidget onCreateTable() {
-        mLogTable = new DeviceTableWidget();
+        mLogTable = new DynamicTableWidget();
         return mLogTable;
     }
 
@@ -82,6 +70,6 @@ public class TabLogPresenter extends TabDataPresenter<LogItem> {
 
     @Override
     protected void notifyStartDownloading() {
-        notifyStartDownloading(WORDS.LoadingLogItems());        
+        notifyStartDownloading(WORDS.LoadingLogItems());
     }
 }

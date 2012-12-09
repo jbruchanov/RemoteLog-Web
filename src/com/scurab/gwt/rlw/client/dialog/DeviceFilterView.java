@@ -142,6 +142,7 @@ public class DeviceFilterView extends Composite implements IsFilterWidget {
         return mCancelButton;
     }
 
+    @Override
     public void refreshData() {
         initData();
     }

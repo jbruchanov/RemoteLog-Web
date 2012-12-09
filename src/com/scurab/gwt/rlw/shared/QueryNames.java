@@ -5,7 +5,7 @@ public final class QueryNames {
     public static final String SELECT_APPS = "SELECT_APPS";
     public static final String SELECT_DEVS = "SELECT_DEVS";
     public static final String SELECT_DEVS_BY_APP = "SELECT_DEVS_BY_APP";
-    
+
     public static final String SELECT_LOGS = "SELECT_LOGS";
     public static final String SELECT_LOGS_BY_APP = "SELECT_LOGS_BY_APP";
 

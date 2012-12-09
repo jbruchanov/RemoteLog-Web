@@ -2,9 +2,6 @@ package com.scurab.gwt.rlw.client.dialog;
 
 import java.util.HashMap;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.DialogBox;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
 import com.scurab.gwt.rlw.shared.SharedParams;
 

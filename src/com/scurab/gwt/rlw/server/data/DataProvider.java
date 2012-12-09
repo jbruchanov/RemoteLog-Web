@@ -11,7 +11,6 @@ import org.hibernate.Session;
 import org.hibernate.transform.Transformers;
 
 import com.scurab.gwt.rlw.server.Database;
-import com.scurab.gwt.rlw.server.Database.TableInfo;
 import com.scurab.gwt.rlw.server.Queries;
 import com.scurab.gwt.rlw.server.Queries.AppQuery;
 import com.scurab.gwt.rlw.shared.QueryNames;
@@ -35,9 +34,9 @@ public class DataProvider {
 
         Session s = Database.openSession();
         AppQuery query = null;
-        if(params.containsKey(SharedParams.APP_NAME)){
+        if (params.containsKey(SharedParams.APP_NAME)) {
             query = Queries.getQuery(QueryNames.SELECT_DEVS_BY_APP);
-        }else{
+        } else {
             query = Queries.getQuery(QueryNames.SELECT_DEVS);
         }
         Query q = getQueryWithDynamicParams(s, query, params).setResultTransformer(
@@ -82,9 +81,9 @@ public class DataProvider {
 
             Session s = Database.openSession();
             AppQuery query = null;
-            if(params.containsKey(SharedParams.APP_NAME)){
+            if (params.containsKey(SharedParams.APP_NAME)) {
                 query = Queries.getQuery(QueryNames.SELECT_LOGS_BY_APP);
-            }else{
+            } else {
                 query = Queries.getQuery(QueryNames.SELECT_LOGS);
             }
             Query q = getQueryWithDynamicParams(s, query, params).setResultTransformer(
@@ -127,44 +126,45 @@ public class DataProvider {
         }
     }
 
-    
     /**
      * 
-     * @param s cant be null
-     * @param sqlQuery cant be null
-     * @param srcParams optional
+     * @param s
+     *            cant be null
+     * @param sqlQuery
+     *            cant be null
+     * @param srcParams
+     *            optional
      * @return
      */
-    protected Query getQueryWithDynamicParams(Session s, AppQuery appQuery, HashMap<String, Object> srcParams)
-            {
-        if(s == null){
+    protected Query getQueryWithDynamicParams(Session s, AppQuery appQuery, HashMap<String, Object> srcParams) {
+        if (s == null) {
             throw new IllegalArgumentException("Session is null");
         }
-        if(appQuery == null){
+        if (appQuery == null) {
             throw new IllegalArgumentException("Invalid query");
         }
-        //make a copy of params to avoid changins set
-        HashMap<String, Object> params= new HashMap<String, Object>();
-        if(srcParams != null){
+        // make a copy of params to avoid changins set
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        if (srcParams != null) {
             params.putAll(srcParams);
         }
-        
+
         int page = 0;
         if (params.containsKey(SharedParams.PAGE)) {
             page = ((Number) params.get(SharedParams.PAGE)).intValue();
             params.remove(SharedParams.PAGE);
         }
-        
-        //remove params defined in query statically
-        if(appQuery.Parameters != null){
-            for(String key : appQuery.Parameters){
+
+        // remove params defined in query statically
+        if (appQuery.Parameters != null) {
+            for (String key : appQuery.Parameters) {
                 params.remove(key);
             }
         }
 
         boolean addedParams = false;
-        
-        StringBuilder sb = new StringBuilder();        
+
+        StringBuilder sb = new StringBuilder();
         if (params.size() > 0) {
             StringBuilder filter = new StringBuilder();
             filter.append("WHERE ");
@@ -173,47 +173,47 @@ public class DataProvider {
                 String columnName = key;
                 Object o = params.get(columnName);
                 String op = "=";
-                if(o != null){
+                if (o != null) {
                     String v = params.get(columnName).toString();
                     op = (v.charAt(0) == '*' || v.charAt(v.length() - 1) == '*') ? "LIKE" : "=";
                     filter.append(String.format("%1$s %2$s :%1$s AND ", key, op)); // http://www.stpe.se/2008/07/hibernate-hql-like-query-named-parameters/
-                }else{
+                } else {
                     params.remove(key);
                     filter.append(String.format("%1$s IS NULL AND ", key)); // http://www.stpe.se/2008/07/hibernate-hql-like-query-named-parameters/
                 }
-                
+
                 addedParams = true;
             }
             if (addedParams) {
                 filter.setLength(filter.length() - "AND ".length());
                 sb.append(filter.toString());
             }
-        }        
-        
+        }
+
         String qry = appQuery.Query;
 
-        //check if the last char is not ';'
-        if(qry.charAt(qry.length()-1) == ';'){
-            qry = qry.substring(0,qry.length()-1);
+        // check if the last char is not ';'
+        if (qry.charAt(qry.length() - 1) == ';') {
+            qry = qry.substring(0, qry.length() - 1);
         }
-        
-        if(addedParams){
-            qry = String.format("SELECT * FROM (%s) as drvTbl %s",qry, sb.toString());
+
+        if (addedParams) {
+            qry = String.format("SELECT * FROM (%s) as drvTbl %s", qry, sb.toString());
         }
-        
+
         Query q = s.createSQLQuery(qry);
-        
-        //set static params
-        if(appQuery.Parameters != null){
-            for(String key : appQuery.Parameters){
+
+        // set static params
+        if (appQuery.Parameters != null) {
+            for (String key : appQuery.Parameters) {
                 q.setParameter(key, srcParams.get(key));
             }
         }
-        
+
         // set dynamic params
         if (addedParams) {
             for (String key : params.keySet()) {
-                Object o = params.get(key);               
+                Object o = params.get(key);
                 if (o instanceof Integer) {
                     q.setInteger(key, (Integer) o);
                 } else if (o instanceof Double) {
@@ -240,9 +240,8 @@ public class DataProvider {
         q.setMaxResults(SharedParams.PAGE_SIZE);
         if (page != 0) {
             q.setFirstResult(page * SharedParams.PAGE_SIZE);
-        }       
+        }
         return q;
     }
-    
-    
+
 }

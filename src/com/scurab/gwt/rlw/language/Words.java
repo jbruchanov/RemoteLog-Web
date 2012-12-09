@@ -2,214 +2,259 @@ package com.scurab.gwt.rlw.language;
 
 /**
  * Interface to represent the constants contained in resource bundle:
- * 	'F:/0Work/eclipse-workspace-j2ee/RemoteLogWeb/src/com/scurab/gwt/rlw/language/Words.properties'.
+ * 'F:/0Work/eclipse-workspace-j2ee/RemoteLogWeb/src/com/scurab/gwt/rlw/language/Words.properties'.
  */
 public interface Words extends com.google.gwt.i18n.client.ConstantsWithLookup {
-  
-  /**
-   * Translated "All".
-   * 
-   * @return translated "All"
-   */
-  @DefaultStringValue("All")
-  @Key("All")
-  String All();
 
-  /**
-   * Translated "AppBuild".
-   * 
-   * @return translated "AppBuild"
-   */
-  @DefaultStringValue("AppBuild")
-  @Key("AppBuild")
-  String AppBuild();
+    /**
+     * Translated "All".
+     * 
+     * @return translated "All"
+     */
+    @DefaultStringValue("All")
+    @Key("All")
+    String All();
 
-  /**
-   * Translated "AppVersion".
-   * 
-   * @return translated "AppVersion"
-   */
-  @DefaultStringValue("AppVersion")
-  @Key("AppVersion")
-  String AppVersion();
+    /**
+     * Translated "AppBuild".
+     * 
+     * @return translated "AppBuild"
+     */
+    @DefaultStringValue("AppBuild")
+    @Key("AppBuild")
+    String AppBuild();
 
-  /**
-   * Translated "Applications".
-   * 
-   * @return translated "Applications"
-   */
-  @DefaultStringValue("Applications")
-  @Key("Applications")
-  String Applications();
+    /**
+     * Translated "AppVersion".
+     * 
+     * @return translated "AppVersion"
+     */
+    @DefaultStringValue("AppVersion")
+    @Key("AppVersion")
+    String AppVersion();
 
-  /**
-   * Translated "Brand".
-   * 
-   * @return translated "Brand"
-   */
-  @DefaultStringValue("Brand")
-  @Key("Brand")
-  String Brand();
+    /**
+     * Translated "Applications".
+     * 
+     * @return translated "Applications"
+     */
+    @DefaultStringValue("Applications")
+    @Key("Applications")
+    String Applications();
 
-  /**
-   * Translated "Cancel".
-   * 
-   * @return translated "Cancel"
-   */
-  @DefaultStringValue("Cancel")
-  @Key("Cancel")
-  String Cancel();
+    /**
+     * Translated "Brand".
+     * 
+     * @return translated "Brand"
+     */
+    @DefaultStringValue("Brand")
+    @Key("Brand")
+    String Brand();
 
-  /**
-   * Translated "Category".
-   * 
-   * @return translated "Category"
-   */
-  @DefaultStringValue("Category")
-  @Key("Category")
-  String Category();
+    /**
+     * Translated "Cancel".
+     * 
+     * @return translated "Cancel"
+     */
+    @DefaultStringValue("Cancel")
+    @Key("Cancel")
+    String Cancel();
 
-  /**
-   * Translated "DataType".
-   * 
-   * @return translated "DataType"
-   */
-  @DefaultStringValue("DataType")
-  @Key("DataType")
-  String DataType();
+    /**
+     * Translated "Category".
+     * 
+     * @return translated "Category"
+     */
+    @DefaultStringValue("Category")
+    @Key("Category")
+    String Category();
 
-  /**
-   * Translated "Date".
-   * 
-   * @return translated "Date"
-   */
-  @DefaultStringValue("Date")
-  @Key("Date")
-  String Date();
+    /**
+     * Translated "DataType".
+     * 
+     * @return translated "DataType"
+     */
+    @DefaultStringValue("DataType")
+    @Key("DataType")
+    String DataType();
 
-  /**
-   * Translated "DeviceID".
-   * 
-   * @return translated "DeviceID"
-   */
-  @DefaultStringValue("DeviceID")
-  @Key("DeviceID")
-  String DeviceID();
+    /**
+     * Translated "Date".
+     * 
+     * @return translated "Date"
+     */
+    @DefaultStringValue("Date")
+    @Key("Date")
+    String Date();
 
-  /**
-   * Translated "Filter".
-   * 
-   * @return translated "Filter"
-   */
-  @DefaultStringValue("Filter")
-  @Key("Filter")
-  String Filter();
+    /**
+     * Translated "Debug".
+     * 
+     * @return translated "Debug"
+     */
+    @DefaultStringValue("Debug")
+    @Key("Debug")
+    String Debug();
 
-  /**
-   * Translated "Loading application list".
-   * 
-   * @return translated "Loading application list"
-   */
-  @DefaultStringValue("Loading application list")
-  @Key("LoadingApp")
-  String LoadingApp();
+    /**
+     * Translated "DeviceID".
+     * 
+     * @return translated "DeviceID"
+     */
+    @DefaultStringValue("DeviceID")
+    @Key("DeviceID")
+    String DeviceID();
 
-  /**
-   * Translated "Loading devices".
-   * 
-   * @return translated "Loading devices"
-   */
-  @DefaultStringValue("Loading devices")
-  @Key("LoadingDevices")
-  String LoadingDevices();
+    /**
+     * Translated "Error".
+     * 
+     * @return translated "Error"
+     */
+    @DefaultStringValue("Error")
+    @Key("Error")
+    String Error();
 
-  /**
-   * Translated "Loading log items".
-   * 
-   * @return translated "Loading log items"
-   */
-  @DefaultStringValue("Loading log items")
-  @Key("LoadingLogItems")
-  String LoadingLogItems();
+    /**
+     * Translated "Filter".
+     * 
+     * @return translated "Filter"
+     */
+    @DefaultStringValue("Filter")
+    @Key("Filter")
+    String Filter();
 
-  /**
-   * Translated "Message".
-   * 
-   * @return translated "Message"
-   */
-  @DefaultStringValue("Message")
-  @Key("Message")
-  String Message();
+    /**
+     * Translated "Info".
+     * 
+     * @return translated "Info"
+     */
+    @DefaultStringValue("Info")
+    @Key("Info")
+    String Info();
 
-  /**
-   * Translated "Model".
-   * 
-   * @return translated "Model"
-   */
-  @DefaultStringValue("Model")
-  @Key("Model")
-  String Model();
+    /**
+     * Translated "Loading application list".
+     * 
+     * @return translated "Loading application list"
+     */
+    @DefaultStringValue("Loading application list")
+    @Key("LoadingApp")
+    String LoadingApp();
 
-  /**
-   * Translated "No".
-   * 
-   * @return translated "No"
-   */
-  @DefaultStringValue("No")
-  @Key("No")
-  String No();
+    /**
+     * Translated "Loading devices".
+     * 
+     * @return translated "Loading devices"
+     */
+    @DefaultStringValue("Loading devices")
+    @Key("LoadingDevices")
+    String LoadingDevices();
 
-  /**
-   * Translated "OK".
-   * 
-   * @return translated "OK"
-   */
-  @DefaultStringValue("OK")
-  @Key("OK")
-  String OK();
+    /**
+     * Translated "Loading log items".
+     * 
+     * @return translated "Loading log items"
+     */
+    @DefaultStringValue("Loading log items")
+    @Key("LoadingLogItems")
+    String LoadingLogItems();
 
-  /**
-   * Translated "Platform".
-   * 
-   * @return translated "Platform"
-   */
-  @DefaultStringValue("Platform")
-  @Key("Platform")
-  String Platform();
+    /**
+     * Translated "Message".
+     * 
+     * @return translated "Message"
+     */
+    @DefaultStringValue("Message")
+    @Key("Message")
+    String Message();
 
-  /**
-   * Translated "Really ?".
-   * 
-   * @return translated "Really ?"
-   */
-  @DefaultStringValue("Really ?")
-  @Key("ReallyQstn")
-  String ReallyQstn();
+    /**
+     * Translated "Model".
+     * 
+     * @return translated "Model"
+     */
+    @DefaultStringValue("Model")
+    @Key("Model")
+    String Model();
 
-  /**
-   * Translated "Resolution".
-   * 
-   * @return translated "Resolution"
-   */
-  @DefaultStringValue("Resolution")
-  @Key("Resolution")
-  String Resolution();
+    /**
+     * Translated "No".
+     * 
+     * @return translated "No"
+     */
+    @DefaultStringValue("No")
+    @Key("No")
+    String No();
 
-  /**
-   * Translated "SetFilter".
-   * 
-   * @return translated "SetFilter"
-   */
-  @DefaultStringValue("SetFilter")
-  @Key("SetFilter")
-  String SetFilter();
+    /**
+     * Translated "No data".
+     * 
+     * @return translated "No data"
+     */
+    @DefaultStringValue("No data")
+    @Key("NoData")
+    String NoData();
 
-  /**
-   * Translated "Yes".
-   * 
-   * @return translated "Yes"
-   */
-  @DefaultStringValue("Yes")
-  @Key("Yes")
-  String Yes();
+    /**
+     * Translated "OK".
+     * 
+     * @return translated "OK"
+     */
+    @DefaultStringValue("OK")
+    @Key("OK")
+    String OK();
+
+    /**
+     * Translated "Platform".
+     * 
+     * @return translated "Platform"
+     */
+    @DefaultStringValue("Platform")
+    @Key("Platform")
+    String Platform();
+
+    /**
+     * Translated "Really ?".
+     * 
+     * @return translated "Really ?"
+     */
+    @DefaultStringValue("Really ?")
+    @Key("ReallyQstn")
+    String ReallyQstn();
+
+    /**
+     * Translated "Resolution".
+     * 
+     * @return translated "Resolution"
+     */
+    @DefaultStringValue("Resolution")
+    @Key("Resolution")
+    String Resolution();
+
+    /**
+     * Translated "SetFilter".
+     * 
+     * @return translated "SetFilter"
+     */
+    @DefaultStringValue("SetFilter")
+    @Key("SetFilter")
+    String SetFilter();
+
+    /**
+     * Translated "Warning".
+     * 
+     * @return translated "Warning"
+     */
+    @DefaultStringValue("Warning")
+    @Key("Warning")
+    String Warning();
+
+    /**
+     * Translated "Yes".
+     * 
+     * @return translated "Yes"
+     */
+    @DefaultStringValue("Yes")
+    @Key("Yes")
+    String Yes();
 }

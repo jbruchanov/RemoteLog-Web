@@ -4,23 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
 import com.scurab.gwt.rlw.client.components.DeviceTableWidget;
 import com.scurab.gwt.rlw.client.components.DynamicTableWidget;
-import com.scurab.gwt.rlw.client.components.LazyPager;
 import com.scurab.gwt.rlw.client.dialog.DeviceFilterDialog;
 import com.scurab.gwt.rlw.client.dialog.FilterDialog;
 import com.scurab.gwt.rlw.client.dialog.FilterDialog.OnOkListener;
-import com.scurab.gwt.rlw.client.interfaces.DownloadFinishListener;
 import com.scurab.gwt.rlw.shared.model.Device;
-import com.scurab.gwt.rlw.shared.model.LogItem;
 
 public class TabDevicePresenter extends TabDataPresenter<Device> {
 
@@ -36,7 +29,7 @@ public class TabDevicePresenter extends TabDataPresenter<Device> {
         mDataService = dataService;
         mEventBus = eventBus;
         mApp = appName;
-        mLogPanel = tabPanel;              
+        mLogPanel = tabPanel;
     }
 
     @Override
@@ -50,6 +43,7 @@ public class TabDevicePresenter extends TabDataPresenter<Device> {
             result.put("Model_3", d.getModel());
             result.put("Platform_4", d.getPlatform());
             result.put("Version_5", d.getVersion());
+            result.put("Resolution_6", d.getResolution());
             rCollection.add(result);
         }
         return rCollection;
@@ -74,6 +68,6 @@ public class TabDevicePresenter extends TabDataPresenter<Device> {
 
     @Override
     protected void notifyStartDownloading() {
-        notifyStartDownloading(WORDS.LoadingDevices());        
+        notifyStartDownloading(WORDS.LoadingDevices());
     }
 }

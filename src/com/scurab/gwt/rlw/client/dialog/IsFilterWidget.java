@@ -7,6 +7,6 @@ public interface IsFilterWidget extends IsWidget {
     Button getOkButton();
 
     Button getCancelButton();
-    
+
     void refreshData();
 }
