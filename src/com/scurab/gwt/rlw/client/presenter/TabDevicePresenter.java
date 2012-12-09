@@ -38,7 +38,7 @@ public class TabDevicePresenter extends TabDataPresenter<Device> {
         List<HashMap<String, Object>> rCollection = new ArrayList<HashMap<String, Object>>();
         for (int i = 0; i < data.size(); i++) {
             Device d = data.get(i);
-            HashMap<String, Object> result = new HashMap<String, Object>();            
+            HashMap<String, Object> result = new HashMap<String, Object>();
             result.put("UUID_1", d.getDevUUID());
             result.put("Brand_2", d.getBrand());
             result.put("Model_3", d.getModel());
