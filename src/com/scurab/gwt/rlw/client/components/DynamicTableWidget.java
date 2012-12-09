@@ -95,7 +95,12 @@ public class DynamicTableWidget extends Composite {
     public void setData(List<HashMap<String, Object>> data) {
         mData = data;
         if (mData != null && mData.size() != 0) {
-            init(mData);
+            if(mListDataProvider == null){
+                init(mData);
+            }
+            else{
+                mListDataProvider.setList(data);
+            }
         } else {
             initWidget(new Label("No data"));
         }

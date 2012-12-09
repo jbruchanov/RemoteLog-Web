@@ -36,6 +36,8 @@ public class MainPresenter extends BasePresenter implements IsWidget {
     private List<MainMenuLink> mMenuLinks;
 
     private DataServiceAsync mDataService;
+    
+    private static int mLoadingEvents = 0;
 
     public MainPresenter(DataServiceAsync dataService, HandlerManager eventBus, MainWindow display) {
         super(dataService, eventBus, display);
@@ -62,10 +64,14 @@ public class MainPresenter extends BasePresenter implements IsWidget {
                 int what = event.getType();
                 switch (what) {
                 case DataLoadingEvent.START_LOADING:
+                    mLoadingEvents++;
                     showProgress(event.getMessageIfNullEmptyString());
                     break;
                 case DataLoadingEvent.STOP_LOADING:
-                    hideProgress();
+                    mLoadingEvents--;
+                    if(mLoadingEvents == 0){
+                        hideProgress();
+                    }
                     break;
                 }
             }
