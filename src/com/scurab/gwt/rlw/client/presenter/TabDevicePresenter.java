@@ -13,6 +13,7 @@ import com.scurab.gwt.rlw.client.components.DynamicTableWidget;
 import com.scurab.gwt.rlw.client.dialog.DeviceFilterDialog;
 import com.scurab.gwt.rlw.client.dialog.FilterDialog;
 import com.scurab.gwt.rlw.client.dialog.FilterDialog.OnOkListener;
+import com.scurab.gwt.rlw.shared.TableColumns;
 import com.scurab.gwt.rlw.shared.model.Device;
 
 public class TabDevicePresenter extends TabDataPresenter<Device> {
@@ -37,13 +38,14 @@ public class TabDevicePresenter extends TabDataPresenter<Device> {
         List<HashMap<String, Object>> rCollection = new ArrayList<HashMap<String, Object>>();
         for (int i = 0; i < data.size(); i++) {
             Device d = data.get(i);
-            HashMap<String, Object> result = new HashMap<String, Object>();
+            HashMap<String, Object> result = new HashMap<String, Object>();            
             result.put("UUID_1", d.getDevUUID());
             result.put("Brand_2", d.getBrand());
             result.put("Model_3", d.getModel());
             result.put("Platform_4", d.getPlatform());
             result.put("Version_5", d.getVersion());
             result.put("Resolution_6", d.getResolution());
+            result.put(TableColumns.DeviceID, d.getDeviceID());
             rCollection.add(result);
         }
         return rCollection;

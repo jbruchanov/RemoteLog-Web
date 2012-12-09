@@ -14,7 +14,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 
+import com.scurab.gwt.rlw.server.Queries.AppQuery;
 import com.scurab.gwt.rlw.server.annotation.DefaultOrderString;
+import com.scurab.gwt.rlw.shared.QueryNames;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 import com.scurab.gwt.rlw.shared.model.LogItemBlob;

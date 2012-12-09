@@ -2,38 +2,47 @@
 <SQLQueries>
 	<Query name="CREATE_TABLES" type="SQL">
 	<![CDATA[
-		drop table if exists Devices
-    	drop table if exists LogItems
-
-	    create table Devices (
-	        DevUUID varchar(255) not null,
-	        Brand varchar(255),
-	        Description varchar(255),
-	        Detail varchar(255),
-	        Model varchar(255),
-	        OSDescription varchar(255),
-	        Owner varchar(255),
-	        Platform varchar(255) not null,
-	        PushID varchar(255),
-	        Resolution varchar(255),
-	        Version varchar(255),
-	        primary key (DevUUID)
-	    )
-
-	    create table LogItems (
-	        ID integer not null auto_increment,
-	        AppBuild varchar(255),
-	        AppVersion varchar(255),
-	        Application varchar(255) not null,
-	        Data tinyblob,
-	        DataType varchar(255),
-	        Category varchar(255),
-	        Date datetime not null,
-	        mDeviceId varchar(255),
-	        Message varchar(255),
-	        Platform varchar(255) not null,
-	        primary key (ID)
-	    )		   
+		DROP TABLE IF EXISTS Devices;
+		CREATE TABLE Devices (
+		  DeviceID int(11) NOT NULL AUTO_INCREMENT,
+		  Brand varchar(255) DEFAULT NULL,
+		  Description varchar(255) DEFAULT NULL,
+		  Detail varchar(255) DEFAULT NULL,
+		  DevUUID varchar(255) NOT NULL,
+		  Model varchar(255) DEFAULT NULL,
+		  OSDescription varchar(255) DEFAULT NULL,
+		  Owner varchar(255) DEFAULT NULL,
+		  Platform varchar(255) NOT NULL,
+		  PushID varchar(255) DEFAULT NULL,
+		  Resolution varchar(255) DEFAULT NULL,
+		  Version varchar(255) DEFAULT NULL,
+		  PRIMARY KEY (DeviceID)
+		) DEFAULT CHARSET=utf8;
+		
+		DROP TABLE IF EXISTS LogItems;
+		CREATE TABLE LogItems (
+		  ID int(11) NOT NULL AUTO_INCREMENT,
+		  AppBuild varchar(255) DEFAULT NULL,
+		  AppVersion varchar(255) DEFAULT NULL,
+		  Application varchar(255) NOT NULL,
+		  BlobMime varchar(255) DEFAULT NULL,
+		  Category varchar(255) DEFAULT NULL,
+		  Date datetime NOT NULL,
+		  DeviceID int(11) DEFAULT NULL,
+		  Message varchar(255) DEFAULT NULL,
+		  PRIMARY KEY (ID),
+		  KEY FK_LogItems_Devices (DeviceID),
+		  CONSTRAINT FK_LogItems_Devices FOREIGN KEY (DeviceID) REFERENCES Devices (DeviceID) ON DELETE NO ACTION ON UPDATE NO ACTION
+		) DEFAULT CHARSET=utf8;
+		
+		DROP TABLE IF EXISTS LogItemBlobs;
+		CREATE TABLE LogItemBlobs (
+		  LogItemID int(11) NOT NULL,
+		  Data tinyblob,
+		  PRIMARY KEY (LogItemID),
+		  KEY Fk_LogItems_LogItemBlobs (LogItemID),
+		  CONSTRAINT Fk_LogItems_LogItemBlobs FOREIGN KEY (LogItemID) REFERENCES LogItems (ID) ON DELETE NO ACTION ON UPDATE NO ACTION
+		) DEFAULT CHARSET=utf8;
 	]]>
 	</Query>
 	<Query name="SELECT_APPS" type="SQL">
@@ -56,12 +65,12 @@
 	</Query>
 	<Query name="SELECT_LOGS" type="SQL">
 	<![CDATA[
-		SELECT * FROM LogItems;
+		SELECT * FROM LogItems ORDER BY ID DESC;
 	]]>
 	</Query>
 	<Query name="SELECT_LOGS_BY_APP" type="SQL" parameters="Application">
 	<![CDATA[
-		Select * FROM LogItems WHERE Application = :Application;
+		Select * FROM LogItems WHERE Application = :Application ORDER BY ID DESC;
 	]]>
 	</Query>
 	<Query name="SELECT_PLATFORMS" type="SQL">

@@ -9,9 +9,11 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
 import com.scurab.gwt.rlw.client.components.DynamicTableWidget;
+import com.scurab.gwt.rlw.client.components.LogItemTableWidget;
 import com.scurab.gwt.rlw.client.dialog.FilterDialog;
 import com.scurab.gwt.rlw.client.dialog.FilterDialog.OnOkListener;
 import com.scurab.gwt.rlw.client.dialog.LogFilterDialog;
+import com.scurab.gwt.rlw.shared.TableColumns;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 
 public class TabLogPresenter extends TabDataPresenter<LogItem> {
@@ -37,15 +39,15 @@ public class TabLogPresenter extends TabDataPresenter<LogItem> {
         for (int i = 0; i < data.size(); i++) {
             LogItem d = data.get(i);
             HashMap<String, Object> result = new HashMap<String, Object>();
-            result.put("ID_1", d.getID());
+            result.put(TableColumns.LogItemID, d.getID());
             result.put("Application_2", d.getApplication());
             result.put("AppVersion_3", d.getAppVersion());
             result.put("AppBuild_4", d.getAppBuild());
             result.put("Date_5", d.getDate());
             result.put("Category_6", d.getCategory());
             result.put("Message_7", d.getMessage());
-            result.put("DataType_8", d.getBlobMime());
-            result.put("DeviceID_9", d.getDeviceID());
+            result.put(TableColumns.LogBlobMime, d.getBlobMime());
+            result.put(TableColumns.LogDeviceID, d.getDeviceID());
             rCollection.add(result);
         }
         return rCollection;
@@ -53,7 +55,7 @@ public class TabLogPresenter extends TabDataPresenter<LogItem> {
 
     @Override
     protected DynamicTableWidget onCreateTable() {
-        mLogTable = new DynamicTableWidget();
+        mLogTable = new LogItemTableWidget();
         return mLogTable;
     }
 

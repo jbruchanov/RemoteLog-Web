@@ -65,13 +65,4 @@ public class DBData extends ApplicationTest {
         }
         s.getTransaction().commit();
     }
-
-    @Test
-    public void testDateJson() {
-        HashMap<String, Object> v = new HashMap<String, Object>();
-        v.put("DATE", new Date());
-        String json = Application.GSON.toJson(v);
-        HashMap<String, Object> v2 = Application.GSON.fromJson(json, v.getClass());
-        // assertTrue(v2.get("DATE") instanceof Date);
-    }
 }
