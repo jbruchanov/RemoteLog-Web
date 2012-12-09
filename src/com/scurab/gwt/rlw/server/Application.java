@@ -2,6 +2,7 @@ package com.scurab.gwt.rlw.server;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.Properties;
 
 import javax.servlet.ServletContextEvent;
@@ -13,6 +14,7 @@ import com.google.gson.GsonBuilder;
 public class Application implements ServletContextListener {
 
     public static final Properties APPLICATION_PROPERTIES = new Properties();
+    public static final SimpleDateFormat DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss.SSS");
     public static final Gson GSON = new GsonBuilder().setDateFormat("yyyy-MM-dd kk:mm:ss.SSS").create();
 
     @Override

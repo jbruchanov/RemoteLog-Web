@@ -162,12 +162,14 @@ public class MainPresenter extends BasePresenter implements IsWidget {
     }
 
     protected void onLoadApplications(List<String> result) {
+        HTMLPanel container = mWindow.getMenuItemsContainer();
+        
         // create all link
         MainMenuLink mml = new MainMenuLink();
         mml.setText(WORDS.All());
         mml.setTargetHistoryToken(WORDS.All());
         mMenuLinks.add(mml);
-        HTMLPanel container = mWindow.getMenuItemsContainer();
+        
         container.add(mml);
 
         // add links

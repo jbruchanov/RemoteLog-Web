@@ -1,11 +1,17 @@
 package aaa.manual;
 
+import static org.junit.Assert.*;
+
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.junit.Test;
 
+import com.google.gson.JsonObject;
 import com.scurab.gwt.rlw.ApplicationTest;
+import com.scurab.gwt.rlw.server.Application;
 import com.scurab.gwt.rlw.server.Database;
 import com.scurab.gwt.rlw.server.util.DataGenerator;
 import com.scurab.gwt.rlw.shared.model.Device;
@@ -61,5 +67,14 @@ public class DBData extends ApplicationTest {
             s.saveOrUpdate(devs.get(i));
         }
         s.getTransaction().commit();
+    }
+    
+    @Test
+    public void testDateJson(){
+        HashMap<String, Object> v = new HashMap<String, Object>();
+        v.put("DATE", new Date());
+        String json = Application.GSON.toJson(v);
+        HashMap<String, Object> v2 = Application.GSON.fromJson(json, v.getClass());
+//        assertTrue(v2.get("DATE") instanceof Date);
     }
 }

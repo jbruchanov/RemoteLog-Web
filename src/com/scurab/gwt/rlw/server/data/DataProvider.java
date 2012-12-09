@@ -1,6 +1,8 @@
 package com.scurab.gwt.rlw.server.data;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +21,9 @@ import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 
 public class DataProvider {
+
+    private static final String AND = " AND ";//put rather space on both sides
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
      * Get devices
@@ -149,6 +154,7 @@ public class DataProvider {
             params.putAll(srcParams);
         }
 
+        //get page value and remove it from params
         int page = 0;
         if (params.containsKey(SharedParams.PAGE)) {
             page = ((Number) params.get(SharedParams.PAGE)).intValue();
@@ -165,27 +171,45 @@ public class DataProvider {
         boolean addedParams = false;
 
         StringBuilder sb = new StringBuilder();
+        
+        //generate dynamic filter part
         if (params.size() > 0) {
             StringBuilder filter = new StringBuilder();
             filter.append("WHERE ");
             Set<String> keySet = params.keySet();
             for (String key : keySet) {
                 String columnName = key;
+                
                 Object o = params.get(columnName);
                 String op = "=";
+                
                 if (o != null) {
-                    String v = params.get(columnName).toString();
-                    op = (v.charAt(0) == '*' || v.charAt(v.length() - 1) == '*') ? "LIKE" : "=";
-                    filter.append(String.format("%1$s %2$s :%1$s AND ", key, op)); // http://www.stpe.se/2008/07/hibernate-hql-like-query-named-parameters/
+                    if(o instanceof Date){
+                        filter.append(String.format("date(%1$s) = :%1$s" + AND, key)); // http://www.stpe.se/2008/07/hibernate-hql-like-query-named-parameters/
+                        //filter.append(String.format("(%1$s BETWEEN :%1$s_FROM AND :%1$s_TO)" + AND, key)); // http://www.stpe.se/2008/07/hibernate-hql-like-query-named-parameters/
+                    }else{
+                        /**
+                         * if(contains *)
+                         *      key LIKE :key AND
+                         * else
+                         *      key = :key AND
+                         **/
+                        
+                        String v = params.get(columnName).toString();
+                        op = (v.charAt(0) == '*' || v.charAt(v.length() - 1) == '*') ? "LIKE" : "=";
+                        filter.append(String.format("%1$s %2$s :%1$s" + AND, key, op)); // http://www.stpe.se/2008/07/hibernate-hql-like-query-named-parameters/
+                    }
                 } else {
                     params.remove(key);
-                    filter.append(String.format("%1$s IS NULL AND ", key)); // http://www.stpe.se/2008/07/hibernate-hql-like-query-named-parameters/
+                    //key IS NULL AND
+                    filter.append(String.format("%1$s IS NULL" + AND, key)); 
                 }
 
                 addedParams = true;
             }
+            //remove last AND if necessary
             if (addedParams) {
-                filter.setLength(filter.length() - "AND ".length());
+                filter.setLength(filter.length() - AND.length());
                 sb.append(filter.toString());
             }
         }
@@ -196,14 +220,14 @@ public class DataProvider {
         if (qry.charAt(qry.length() - 1) == ';') {
             qry = qry.substring(0, qry.length() - 1);
         }
-
+        //if added, wrap requested query into new one
         if (addedParams) {
             qry = String.format("SELECT * FROM (%s) as drvTbl %s", qry, sb.toString());
         }
 
         Query q = s.createSQLQuery(qry);
 
-        // set static params
+        // set static params 
         if (appQuery.Parameters != null) {
             for (String key : appQuery.Parameters) {
                 q.setParameter(key, srcParams.get(key));
@@ -219,6 +243,7 @@ public class DataProvider {
                 } else if (o instanceof Double) {
                     q.setDouble(key, (Double) o);
                 } else if (o instanceof String) {
+                    //replace * chars by % to proper SQL
                     String v = (String) o;
                     if (v.charAt(v.length() - 1) == '*') {
                         v = v.substring(0, v.length() - 1) + "%";
@@ -227,10 +252,19 @@ public class DataProvider {
                         v = "%" + v.substring(1, v.length());
                     }
                     q.setString(key, v);
-                } else if (o instanceof Date) {
+                } else if (o instanceof Date) {                    
                     Date d = (Date) o;
-                    java.sql.Date sqld = new java.sql.Date(d.getTime());
-                    q.setDate(key, sqld);
+                    Date from = removeTime(d);
+                    q.setParameter(key, from);
+                    /*
+                     * For between                     
+                    Date to = new Date(from.getTime() + 86399999);                    
+                    java.sql.Date dFrom = new java.sql.Date(from.getTime());                    
+                    java.sql.Date dTo = new java.sql.Date(to.getTime());                                        
+                    q.setParameter(key+"_FROM", dFrom);
+                    q.setParameter(key+"_TO", dTo);
+ 
+                     */
                 } else {
                     throw new IllegalStateException("Not implemented!");
                 }
@@ -242,6 +276,17 @@ public class DataProvider {
             q.setFirstResult(page * SharedParams.PAGE_SIZE);
         }
         return q;
+    }
+    
+    private static final Date removeTime(Date d){
+        Calendar c = Calendar.getInstance();
+        c.setTime(d);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
+        
+        return c.getTime();
     }
 
 }

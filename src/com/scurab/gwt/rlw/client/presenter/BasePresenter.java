@@ -42,13 +42,7 @@ public abstract class BasePresenter implements IsWidget {
         mEventBus.fireEvent(new DataLoadingEvent(DataLoadingEvent.STOP_LOADING));
     }
 
-    // protected HashMap<String,Object> createParams(int page){
-    // HashMap<String, Object> params = new HashMap<String, Object>();
-    // params.put(SharedParams.PAGE, page);
-    // return params;
-    // }
-
-    protected com.google.gwt.json.client.JSONObject createParams(int page) {
+    protected JSONObject createParams(int page) {
         JSONObject obj = new JSONObject();
         obj.put(SharedParams.PAGE, new JSONNumber(page));
         return obj;

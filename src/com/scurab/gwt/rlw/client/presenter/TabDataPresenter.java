@@ -1,12 +1,16 @@
 package com.scurab.gwt.rlw.client.presenter;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
+import org.mortbay.util.ajax.JSONDateConvertor;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.json.client.JSONNull;
+import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Window;
@@ -14,6 +18,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
+import com.scurab.gwt.rlw.client.RemoteLogWeb;
 import com.scurab.gwt.rlw.client.components.DynamicTableWidget;
 import com.scurab.gwt.rlw.client.components.LazyPager;
 import com.scurab.gwt.rlw.client.dialog.FilterDialog;
@@ -22,10 +27,14 @@ import com.scurab.gwt.rlw.client.interfaces.DownloadFinishListener;
 public abstract class TabDataPresenter<T> extends TabBasePresenter {
 
     private DynamicTableWidget mTable;
+    
     private HTMLPanel mContentPanel;
+    
     private FilterDialog mFilterDialog;
 
     private LazyPager.OnPageLoaderListener mBigLoadListener;
+    
+    
 
     public TabDataPresenter(DataServiceAsync dataService, HandlerManager eventBus, String appName, HTMLPanel tabPanel) {
         super(dataService, eventBus, appName, tabPanel);
@@ -100,13 +109,16 @@ public abstract class TabDataPresenter<T> extends TabBasePresenter {
     }
 
     protected void onLogFilterClick() {
+        //init filter dialog 
         if (mFilterDialog == null) {
             mFilterDialog = onCreateFilterDialog(new FilterDialog.OnOkListener() {
                 @Override
                 public void onClickOk(FilterDialog source, HashMap<String, Object> filters) {
-                    if (filters != null && filters.size() > 0) {
+                    if (filters != null) {
                         CheckBox cb = mTable.getFilterCheckBox();
-                        cb.setValue(true);
+                        //set checkbox true/false according to filter size
+                        cb.setValue(filters.size() > 0);                  
+                        //notify about change
                         onFilterCheckBoxChange(cb);
                     }
                 }
@@ -119,25 +131,32 @@ public abstract class TabDataPresenter<T> extends TabBasePresenter {
         table.setLoadListener(mBigLoadListener);
     }
 
-    protected void onFilterCheckBoxChange(final CheckBox source) {
-        if (source.getValue() != null) {
-            if (mFilterDialog != null) {
+    protected void onFilterCheckBoxChange(final CheckBox source) {        
+        if (source.getValue() != null) {//probably not necessary check
+            if (mFilterDialog != null) {//only if there is any filter
+                //disable checkbox now to avoid crazyclicks
                 source.setEnabled(false);
+                //load data
                 onLoadData(0, new AsyncCallback<List<T>>() {
                     @Override
                     public void onFailure(Throwable caught) {
+                        //notify
+                        //TODO: better
                         Window.alert(caught.getMessage());
                         notifyStopDownloading();
+                        //enable again checkbox
                         source.setEnabled(true);
+                        //switch value to make it like before request
                         source.setValue(!source.getValue());
                     }
 
                     @Override
                     public void onSuccess(List<T> result) {
-                        if (result != null) {
+                        if (result != null) {//if it's null some problem is on server
                             mTable.setData(transformData(result));
                         }
                         notifyStopDownloading();
+                        //reenable filter checkbox
                         source.setEnabled(true);
                     }
                 });
@@ -150,10 +169,25 @@ public abstract class TabDataPresenter<T> extends TabBasePresenter {
 
     protected abstract DynamicTableWidget onCreateTable();
 
+    /**
+     * Transform data for DynamicTable
+     * @param data
+     * @return
+     */
     protected abstract List<HashMap<String, Object>> transformData(List<T> data);
 
+    /**
+     * Create FilterDialog
+     * @param okListener - pass oklistener to filterdialog to handle OK click by this class
+     * @return
+     */
     protected abstract FilterDialog onCreateFilterDialog(FilterDialog.OnOkListener okListener);
 
+    /**
+     * Load page<br/>
+     * Should be called only after object creation with page 0
+     * @param page
+     */
     public void onLoadData(int page) {
         mBigLoadListener.onLoadPage(page, null);
     }
@@ -167,6 +201,9 @@ public abstract class TabDataPresenter<T> extends TabBasePresenter {
      */
     protected abstract void onLoadData(int page, AsyncCallback<List<T>> listener);
 
+    /**
+     * Make something for notification user about start 
+     */
     protected abstract void notifyStartDownloading();
 
     /**
@@ -189,10 +226,19 @@ public abstract class TabDataPresenter<T> extends TabBasePresenter {
         HashMap<String, Object> values = getFilter();
         if (values != null) {
             for (String key : values.keySet()) {
-                String v = String.valueOf(values.get(key));
+                Object o = values.get(key);
+                String v = String.valueOf(o);
                 if ("null".equalsIgnoreCase(v)) {
                     obj.put(key, JSONNull.getInstance());
-                } else {
+                }else if(o instanceof Number){
+                    obj.put(key, new JSONNumber(((Number)o).doubleValue()));
+                }else if(o instanceof Date){
+                    //2012-12-09 18:30:36.830
+                    //by Gson is deserialized as date
+                    String f = RemoteLogWeb.DATETIMEFORMAT.format((Date)o);
+                    obj.put(key, new JSONString(f));
+                }else{
+                    
                     obj.put(key, new JSONString(v));
                 }
             }
