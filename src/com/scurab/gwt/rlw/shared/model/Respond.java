@@ -56,7 +56,7 @@ public abstract class Respond<T> {
         mMessage = message;
     }
 
-    public boolean isHasError() {
+    public boolean hasError() {
         return hasError;
     }
 
