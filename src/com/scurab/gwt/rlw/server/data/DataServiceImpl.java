@@ -4,8 +4,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.scurab.gwt.rlw.client.DataService;
 import com.scurab.gwt.rlw.server.Application;
@@ -38,24 +36,25 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
     public List<String> getDistinctValues(String appName, String query) {
         return new DataProvider().getDistinctValues(query, appName);
     }
-    
+
     /**
-     * Parse data and try to fix dates 
+     * Parse data and try to fix dates
+     * 
      * @param json
      * @return
      */
-    private HashMap<String, Object> parseParams(String json){
+    private HashMap<String, Object> parseParams(String json) {
         HashMap<String, Object> params = Application.GSON.fromJson(json, HashMap.class);
-        for(String key : params.keySet()){
-            if(key.toLowerCase().contains("date")){
+        for (String key : params.keySet()) {
+            if (key.toLowerCase().contains("date")) {
                 Object o = params.get(key);
-                if(o != null){
+                if (o != null) {
                     String v = String.valueOf(o);
-                    try{
+                    try {
                         Date d = Application.DATEFORMAT.parse(v);
                         params.put(key, d);
-                    }catch(Exception e){
-                        //ignore it
+                    } catch (Exception e) {
+                        // ignore it
                     }
                 }
             }

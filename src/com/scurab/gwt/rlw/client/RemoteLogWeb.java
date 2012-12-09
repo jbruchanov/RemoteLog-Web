@@ -25,7 +25,7 @@ public class RemoteLogWeb implements EntryPoint {
     private final DataServiceAsync mDataService = GWT.create(DataService.class);
     private final HandlerManager mEventBus = new HandlerManager(null);
     public static final Words WORDS = GWT.create(Words.class);
-    
+
     public static final DateTimeFormat DATETIMEFORMAT = DateTimeFormat.getFormat("yyyy-MM-dd kk:mm:ss.SSS");
 
     /**

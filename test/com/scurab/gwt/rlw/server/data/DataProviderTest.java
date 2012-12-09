@@ -136,27 +136,27 @@ public class DataProviderTest extends ApplicationTest {
         assertNotNull(d);
         assertTrue(d.size() > 0);
     }
-    
+
     @Test
     public void testGetLogsByDate() {
         DataProvider dp = new DataProvider();
-        HashMap<String, Object> params = new HashMap<String, Object>();                
+        HashMap<String, Object> params = new HashMap<String, Object>();
         params.put(SharedParams.PAGE, 0);
         List<LogItem> data = dp.getLogs(params);
-        
+
         LogItem li = data.get(0);
         Date date = li.getDate();
-        
+
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         c.set(Calendar.HOUR_OF_DAY, 0);
         c.set(Calendar.MINUTE, 0);
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);
-        
+
         date = c.getTime();
         params.put(SharedParams.LOG_DATE, date);
-        
+
         List<LogItem> d = dp.getLogs(params);
         assertNotNull(d);
         assertTrue(d.size() > 0);
