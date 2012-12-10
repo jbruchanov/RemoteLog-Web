@@ -63,7 +63,7 @@
 	</Query>
 	<Query name="SELECT_DEVS" type="SQL">
 	<![CDATA[
-		SELECT * FROM Devices;
+		SELECT * FROM Devices ORDER BY DeviceID DESC;
 	]]>
 	</Query>
 	<Query name="SELECT_DEVS_BY_APP" type="SQL" parameters="Application">
@@ -72,6 +72,7 @@
 			SELECT Devices.DeviceID FROM Devices INNER JOIN LogItems 
 			ON Devices.DeviceID = LogItems.DeviceID 
 			WHERE Application = :Application)
+			ORDER BY DeviceID DESC
 	]]>
 	</Query>
 	<Query name="SELECT_LOGS" type="SQL">
