@@ -2,47 +2,59 @@
 <SQLQueries>
 	<Query name="CREATE_TABLES" type="SQL">
 	<![CDATA[
+	
+		SET GLOBAL max_allowed_packet=20000000;
+		
 		DROP TABLE IF EXISTS Devices;
 		CREATE TABLE Devices (
 		  DeviceID int(11) NOT NULL AUTO_INCREMENT,
-		  Brand varchar(255) DEFAULT NULL,
+		  Brand varchar(32) DEFAULT NULL,
 		  Description varchar(255) DEFAULT NULL,
 		  Detail varchar(255) DEFAULT NULL,
 		  DevUUID varchar(255) NOT NULL,
-		  Model varchar(255) DEFAULT NULL,
+		  Model varchar(32) DEFAULT NULL,
 		  OSDescription varchar(255) DEFAULT NULL,
-		  Owner varchar(255) DEFAULT NULL,
-		  Platform varchar(255) NOT NULL,
+		  Owner varchar(64) DEFAULT NULL,
+		  Platform varchar(32) NOT NULL,
 		  PushID varchar(255) DEFAULT NULL,
-		  Resolution varchar(255) DEFAULT NULL,
-		  Version varchar(255) DEFAULT NULL,
+		  Resolution varchar(10) DEFAULT NULL,
+		  Version varchar(10) DEFAULT NULL,
 		  PRIMARY KEY (DeviceID)
+		  UNIQUE KEY DevUUID_UQ (DevUUID)
 		) DEFAULT CHARSET=utf8;
 		
 		DROP TABLE IF EXISTS LogItems;
 		CREATE TABLE LogItems (
 		  ID int(11) NOT NULL AUTO_INCREMENT,
-		  AppBuild varchar(255) DEFAULT NULL,
-		  AppVersion varchar(255) DEFAULT NULL,
-		  Application varchar(255) NOT NULL,
-		  BlobMime varchar(255) DEFAULT NULL,
-		  Category varchar(255) DEFAULT NULL,
+		  AppBuild varchar(16) DEFAULT NULL,
+		  AppVersion varchar(16) DEFAULT NULL,
+		  Application varchar(128) NOT NULL,
+		  BlobMime varchar(32) DEFAULT NULL,
+		  Category varchar(64) DEFAULT NULL,
 		  Date datetime NOT NULL,
 		  DeviceID int(11) DEFAULT NULL,
 		  Message varchar(255) DEFAULT NULL,
-		  PRIMARY KEY (ID),
-		  KEY FK_LogItems_Devices (DeviceID),
-		  CONSTRAINT FK_LogItems_Devices FOREIGN KEY (DeviceID) REFERENCES Devices (DeviceID) ON DELETE NO ACTION ON UPDATE NO ACTION
+		  PRIMARY KEY (ID)		  
 		) DEFAULT CHARSET=utf8;
 		
+#		Uncomment this to set LogItems be more strict about key references
+#		ALTER TABLE LogItems 
+#		  ADD CONSTRAINT FK_LogItems_Devices
+#		  FOREIGN KEY (DeviceID)
+#		  REFERENCES Devices (DeviceID)
+#		  ON DELETE NO ACTION
+#		  ON UPDATE CASCADE
+#		, ADD INDEX FK_LogItems_1 (DeviceID ASC) ;
+			
 		DROP TABLE IF EXISTS LogItemBlobs;
 		CREATE TABLE LogItemBlobs (
 		  LogItemID int(11) NOT NULL,
-		  Data tinyblob,
+		  Data mediumblob,
+		  FileName varchar(64) NOT NULL,
 		  PRIMARY KEY (LogItemID),
 		  KEY Fk_LogItems_LogItemBlobs (LogItemID),
-		  CONSTRAINT Fk_LogItems_LogItemBlobs FOREIGN KEY (LogItemID) REFERENCES LogItems (ID) ON DELETE NO ACTION ON UPDATE NO ACTION
-		) DEFAULT CHARSET=utf8;
+		  CONSTRAINT Fk_LogItems_LogItemBlobs FOREIGN KEY (LogItemID) REFERENCES LogItems (ID) ON DELETE CASCADE ON UPDATE CASCADE
+		) DEFAULT CHARSET=utf8;		
 	]]>
 	</Query>
 	<Query name="SELECT_APPS" type="SQL">
