@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -175,7 +176,7 @@ public class DataProvider {
         if (params.size() > 0) {
             StringBuilder filter = new StringBuilder();
             filter.append("WHERE ");
-            Set<String> keySet = params.keySet();
+            Set<String> keySet = new HashSet<String>(params.keySet());
             for (String key : keySet) {
                 String columnName = key;
 
