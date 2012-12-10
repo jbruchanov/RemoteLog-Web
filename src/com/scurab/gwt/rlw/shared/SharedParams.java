@@ -22,9 +22,9 @@ public final class SharedParams {
     public static final String LOG_MESSAGE = "Message";
     public static final String LOG_DATATYPE = "BlobMime";
     public static final String LOG_DEVICEID = "DeviceID";
-    
+
     public static final String CLIENT_DEFAULT_DATE_FORMAT = "DATE_FORMAT";
     public static final String CLIENT_PAGE_SIZE = "PAGE_SIZE";
     public static final String CLIENT_AUTO_REFRESH = "AUTO_REFRESH";
-    
+
 }

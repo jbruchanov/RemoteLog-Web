@@ -1,6 +1,5 @@
 package com.scurab.gwt.rlw.client;
 
-import java.util.HashMap;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;

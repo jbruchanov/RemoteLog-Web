@@ -42,7 +42,7 @@ public class RemoteLogWeb implements EntryPoint {
     public void onModuleLoad() {
         RootPanel.get().add(new MainPresenter(mDataService, mEventBus, new MainWindow()));
         mDataService.getProperties(new AsyncCallback<String>() {
-            
+
             @Override
             public void onSuccess(String result) {
                 JSONObject jso = JSONParser.parseStrict(result).isObject();
@@ -67,14 +67,14 @@ public class RemoteLogWeb implements EntryPoint {
                     Properties.AUTO_REFRESH = ((Number)(CLIENT_PROPERTIES.get(SharedParams.CLIENT_AUTO_REFRESH))).intValue();
                 }
             }
-            
+
             @Override
             public void onFailure(Throwable caught) {
                 Window.alert("Unable to download client properties!");
             }
         });
     }
-    
+
     public static class Properties{
         public static int PAGE_SIZE = 50;
         public static int AUTO_REFRESH = 5;

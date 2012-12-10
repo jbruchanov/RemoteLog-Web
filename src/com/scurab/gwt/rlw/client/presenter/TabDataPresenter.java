@@ -35,7 +35,7 @@ public abstract class TabDataPresenter<T> extends TabBasePresenter {
     private FilterDialog mFilterDialog;
 
     private LazyPager.OnPageLoaderListener mBigLoadListener;
-    
+
     private Timer mAutoReloadTimer;
 
     public TabDataPresenter(DataServiceAsync dataService, HandlerManager eventBus, String appName, HTMLPanel tabPanel) {
@@ -74,7 +74,7 @@ public abstract class TabDataPresenter<T> extends TabBasePresenter {
                 });
             }
         };
-        
+
         mAutoReloadTimer = new Timer() {
             @Override
             public void run() {

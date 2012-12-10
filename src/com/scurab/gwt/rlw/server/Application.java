@@ -9,11 +9,8 @@ import java.util.Properties;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import org.apache.commons.collections.map.HashedMap;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gwt.dev.javac.Shared;
 import com.scurab.gwt.rlw.server.data.Database;
 import com.scurab.gwt.rlw.shared.SharedParams;
 
@@ -48,7 +45,7 @@ public class Application implements ServletContextListener {
         InputStream inputStream = Application.class.getResourceAsStream(file);
         APP_PROPS.load(inputStream);
         inputStream.close();
-        
+
         //date format
         if(APP_PROPS.containsKey(SharedParams.CLIENT_DEFAULT_DATE_FORMAT)){
             DT_FORMAT = APP_PROPS.getProperty(SharedParams.CLIENT_DEFAULT_DATE_FORMAT);
@@ -66,7 +63,7 @@ public class Application implements ServletContextListener {
             }
         }
         CLIENT_PROPERTIES.put(SharedParams.CLIENT_PAGE_SIZE, PAGE_SIZE);
-        
+
         //autorefresh
         if(APP_PROPS.containsKey(SharedParams.CLIENT_AUTO_REFRESH)){
             try{

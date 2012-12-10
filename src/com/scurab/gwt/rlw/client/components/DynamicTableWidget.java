@@ -30,7 +30,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionModel;
 import com.scurab.gwt.rlw.client.RemoteLogWeb;
-import com.scurab.gwt.rlw.shared.SharedParams;
 
 /**
  * Dynamic table widget setData must be called before is widget attechd into element
@@ -57,7 +56,7 @@ public class DynamicTableWidget extends Composite {
     private Button mFilterButton;
 
     private Button mReloadButton;
-    
+
     private ListHandler<HashMap<String, Object>> mSortHandler;
 
     private ToggleButton mAutoReloadToggle; 
@@ -151,7 +150,7 @@ public class DynamicTableWidget extends Composite {
         hp.setCellVerticalAlignment(mAutoReloadToggle, HasVerticalAlignment.ALIGN_MIDDLE);
         mAutoReloadToggle.getElement().getStyle().setProperty("margin", "5px");
         hp.add(mAutoReloadToggle);
-        
+
         //reload button
         mReloadButton = onCreateReloadButton();
         mReloadButton.getElement().getStyle().setProperty("margin", "5px");
@@ -160,13 +159,13 @@ public class DynamicTableWidget extends Composite {
         //pager
         pager.getElement().getStyle().setProperty("margin", "5px");
         hp.add(pager);
-        
+
         //filter button
         mFilterButton = onCreateFilterButton();
         mFilterButton.getElement().getStyle().setProperty("margin", "5px");
         hp.setCellVerticalAlignment(mFilterButton, HasVerticalAlignment.ALIGN_MIDDLE);
         hp.add(mFilterButton);
-        
+
         //filter checkbox
         mFilterCheckBox = onCreateFilterCheckBox();
         hp.add(mFilterCheckBox);
