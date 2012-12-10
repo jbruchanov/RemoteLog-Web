@@ -19,8 +19,7 @@
 		  PushID varchar(255) DEFAULT NULL,
 		  Resolution varchar(10) DEFAULT NULL,
 		  Version varchar(10) DEFAULT NULL,
-		  PRIMARY KEY (DeviceID)
-		  UNIQUE KEY DevUUID_UQ (DevUUID)
+		  PRIMARY KEY (DeviceID)		  
 		) DEFAULT CHARSET=utf8;
 		
 		DROP TABLE IF EXISTS LogItems;
