@@ -188,7 +188,7 @@ public class DynamicTableWidget extends Composite {
                 return value;
             }
         }
-        return SharedParams.PAGE_SIZE;
+        return RemoteLogWeb.PAGE_SIZE;
     }
 
     /**

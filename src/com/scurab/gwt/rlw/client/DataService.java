@@ -1,5 +1,6 @@
 package com.scurab.gwt.rlw.client;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -25,5 +26,6 @@ public interface DataService extends RemoteService {
     List<Device> getDevices(String jsonParams);
 
     List<LogItem> getLogs(String jsonParams);
-
+    
+    String getProperties();
 }

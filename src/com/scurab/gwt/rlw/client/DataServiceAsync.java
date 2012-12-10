@@ -1,5 +1,6 @@
 package com.scurab.gwt.rlw.client;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -18,4 +19,6 @@ public interface DataServiceAsync {
     void getLogs(String jsonParams, AsyncCallback<List<LogItem>> callback);
 
     void getDistinctValues(String appName, String query, AsyncCallback<List<String>> callback);
+
+    void getProperties(AsyncCallback<String> callback);
 }

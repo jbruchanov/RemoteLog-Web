@@ -13,6 +13,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.transform.Transformers;
 
+import com.scurab.gwt.rlw.server.Application;
 import com.scurab.gwt.rlw.server.Queries;
 import com.scurab.gwt.rlw.server.Queries.AppQuery;
 import com.scurab.gwt.rlw.shared.QueryNames;
@@ -116,9 +117,9 @@ public class DataProvider {
         if (params.containsKey(SharedParams.PAGE)) {
             page = ((Number) params.get(SharedParams.PAGE)).intValue();
         }
-        q.setMaxResults(SharedParams.PAGE_SIZE);
+        q.setMaxResults(Application.PAGE_SIZE);
         if (page != 0) {
-            q.setFirstResult(page * SharedParams.PAGE_SIZE);
+            q.setFirstResult(page * Application.PAGE_SIZE);
         }
         // init params
         if (params != null) {
@@ -265,9 +266,9 @@ public class DataProvider {
             }
         }
 
-        q.setMaxResults(SharedParams.PAGE_SIZE);
+        q.setMaxResults(Application.PAGE_SIZE);
         if (page != 0) {
-            q.setFirstResult(page * SharedParams.PAGE_SIZE);
+            q.setFirstResult(page * Application.PAGE_SIZE);
         }
         return q;
     }

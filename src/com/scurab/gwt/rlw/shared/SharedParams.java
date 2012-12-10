@@ -5,8 +5,6 @@ public final class SharedParams {
     private SharedParams() {
     }
 
-    public static int PAGE_SIZE = 100;
-
     public static final String PAGE = "PAGE";
     public static final String APP_NAME = "Application";
 
@@ -23,4 +21,7 @@ public final class SharedParams {
     public static final String LOG_MESSAGE = "Message";
     public static final String LOG_DATATYPE = "BlobMime";
     public static final String LOG_DEVICEID = "DeviceID";
+    
+    public static final String CLIENT_DEFAULT_DATE_FORMAT = "DATE_FORMAT";
+    public static final String CLIENT_PAGE_SIZE = "PAGE_SIZE";
 }

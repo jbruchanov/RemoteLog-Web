@@ -43,7 +43,7 @@ public class TabDevicePresenter extends TabDataPresenter<Device> {
             result.put("Brand_2", d.getBrand());
             result.put("Model_3", d.getModel());
             result.put("Platform_4", d.getPlatform());
-            result.put("Version_5", d.getVersion());
+            result.put("OSv_5", d.getVersion());
             result.put("Resolution_6", d.getResolution());
             result.put(TableColumns.DeviceID, d.getDeviceID());
             rCollection.add(result);

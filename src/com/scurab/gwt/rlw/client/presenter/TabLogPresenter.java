@@ -8,6 +8,7 @@ import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
+import com.scurab.gwt.rlw.client.RemoteLogWeb;
 import com.scurab.gwt.rlw.client.components.DynamicTableWidget;
 import com.scurab.gwt.rlw.client.components.LogItemTableWidget;
 import com.scurab.gwt.rlw.client.dialog.FilterDialog;
@@ -40,10 +41,12 @@ public class TabLogPresenter extends TabDataPresenter<LogItem> {
             LogItem d = data.get(i);
             HashMap<String, Object> result = new HashMap<String, Object>();
             result.put(TableColumns.LogItemID, d.getID());
-            result.put("Application_2", d.getApplication());
-            result.put("AppVersion_3", d.getAppVersion());
-            result.put("AppBuild_4", d.getAppBuild());
-            result.put("Date_5", d.getDate());
+            if(mApp == null){
+                result.put("Application_2", d.getApplication());
+            }
+            result.put("Version_3", d.getAppVersion());
+            result.put("Build_4", d.getAppBuild());
+            result.put("Date_5", RemoteLogWeb.DATETIMEFORMAT.format(d.getDate()));
             result.put("Category_6", d.getCategory());
             result.put("Message_7", d.getMessage());
             result.put(TableColumns.LogBlobMime, d.getBlobMime());

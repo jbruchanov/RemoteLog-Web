@@ -48,15 +48,15 @@ public class Database {
     }
 
     public static Connection getConnection() throws SQLException {
-        return getConnection(Application.APPLICATION_PROPERTIES
+        return getConnection(Application.APP_PROPS
                 .getProperty(Application.ApplicationPropertyKeys.connection_url));
     }
 
     public static Connection getConnection(String url) throws SQLException {
         return DriverManager
-                .getConnection(url, Application.APPLICATION_PROPERTIES
+                .getConnection(url, Application.APP_PROPS
                         .getProperty(Application.ApplicationPropertyKeys.connection_username),
-                        Application.APPLICATION_PROPERTIES
+                        Application.APP_PROPS
                         .getProperty(Application.ApplicationPropertyKeys.connection_password));
     }
 
@@ -89,7 +89,7 @@ public class Database {
         c.addAnnotatedClass(LogItem.class);
         c.addAnnotatedClass(LogItemBlob.class);
 
-        c.setProperties(Application.APPLICATION_PROPERTIES);
+        c.setProperties(Application.APP_PROPS);
         c.configure();
 
         return c;

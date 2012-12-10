@@ -62,4 +62,9 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
         return params;
     }
 
+    @Override
+    public String getProperties() {
+        return Application.GSON.toJson(Application.CLIENT_PROPERTIES);
+    }
+
 }
