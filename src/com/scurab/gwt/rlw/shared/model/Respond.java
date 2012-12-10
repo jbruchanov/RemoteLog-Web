@@ -15,25 +15,53 @@ public abstract class Respond<T> {
 
     @SerializedName("Context")
     private T mContext;
+    
+    @SerializedName("Count")
+    private int mCount;
 
+    /**
+     * OK, count = 1, null Context
+     */
     public Respond() {
-        mMessage = "OK";
+        this("OK", 1);
     }
 
+    /**
+     * OK, count = 1, Context
+     * @param context
+     */
     public Respond(T context) {
-        mMessage = "OK";
+        this();
         mContext = context;
     }
 
-    public Respond(String msg) {
+    /**
+     * OK, count, null Context
+     * @param count
+     */
+    public Respond(int count) {
+        this("OK", count);
+    }
+    
+    public Respond(String msg, int count) {
         mMessage = msg;
+        mCount = count;
     }
 
+    /**
+     * Count = 1
+     * @param msg
+     * @param context
+     */
     public Respond(String msg, T context) {
-        mMessage = msg;
+        this(msg, 1);
         mContext = context;
     }
 
+    /**
+     * Count = 0
+     * @param t
+     */
     public Respond(Throwable t) {
         mMessage = t.getMessage();
         mType = t.getClass().getName();
@@ -70,5 +98,13 @@ public abstract class Respond<T> {
 
     public void setContext(T context) {
         mContext = context;
+    }
+
+    public int getCount() {
+        return mCount;
+    }
+
+    public void setCount(int count) {
+        mCount = count;
     }
 }

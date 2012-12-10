@@ -10,12 +10,16 @@ public class DeviceRespond extends Respond<Device> {
         super(context);
     }
 
+    public DeviceRespond(int count) {
+        super(count);
+    }
+
     public DeviceRespond(String msg, Device context) {
         super(msg, context);
     }
 
-    public DeviceRespond(String msg) {
-        super(msg);
+    public DeviceRespond(String msg, int count) {
+        super(msg, count);
     }
 
     public DeviceRespond(Throwable t) {

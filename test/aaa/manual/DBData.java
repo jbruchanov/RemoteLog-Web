@@ -6,7 +6,7 @@ import org.hibernate.Session;
 import org.junit.Test;
 
 import com.scurab.gwt.rlw.ApplicationTest;
-import com.scurab.gwt.rlw.server.Database;
+import com.scurab.gwt.rlw.server.data.Database;
 import com.scurab.gwt.rlw.server.util.DataGenerator;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;

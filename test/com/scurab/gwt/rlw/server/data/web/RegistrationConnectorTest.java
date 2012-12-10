@@ -1,4 +1,4 @@
-package com.scurab.gwt.rlw.server.data;
+package com.scurab.gwt.rlw.server.data.web;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,7 +20,10 @@ import static org.mockito.Mockito.*;
 
 import com.google.gson.Gson;
 import com.scurab.gwt.rlw.ApplicationTest;
-import com.scurab.gwt.rlw.server.Database;
+import com.scurab.gwt.rlw.server.data.Database;
+import com.scurab.gwt.rlw.server.data.MockServletInputStream;
+import com.scurab.gwt.rlw.server.data.MockServletOutputStream;
+import com.scurab.gwt.rlw.server.data.web.RegistrationConnector;
 import com.scurab.gwt.rlw.server.util.DataGenerator;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.DeviceRespond;

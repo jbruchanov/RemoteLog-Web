@@ -1,4 +1,4 @@
-package com.scurab.gwt.rlw.server.data;
+package com.scurab.gwt.rlw.server.data.web;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +17,7 @@ import org.hibernate.Session;
 import com.google.gson.Gson;
 import com.google.gwt.user.client.rpc.core.java.util.Arrays;
 import com.scurab.gwt.rlw.server.Application;
-import com.scurab.gwt.rlw.server.Database;
+import com.scurab.gwt.rlw.server.data.Database;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.DeviceRespond;
 import com.scurab.gwt.rlw.shared.model.LogItem;

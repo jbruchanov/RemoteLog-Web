@@ -1,4 +1,4 @@
-package com.scurab.gwt.rlw.server;
+package com.scurab.gwt.rlw.server.data;
 
 import java.lang.annotation.Annotation;
 import java.sql.Connection;
@@ -14,6 +14,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 
+import com.scurab.gwt.rlw.server.Application;
+import com.scurab.gwt.rlw.server.Queries;
 import com.scurab.gwt.rlw.server.annotation.DefaultOrderString;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
@@ -55,7 +57,7 @@ public class Database {
                 .getConnection(url, Application.APPLICATION_PROPERTIES
                         .getProperty(Application.ApplicationPropertyKeys.connection_username),
                         Application.APPLICATION_PROPERTIES
-                                .getProperty(Application.ApplicationPropertyKeys.connection_password));
+                        .getProperty(Application.ApplicationPropertyKeys.connection_password));
     }
 
     @SuppressWarnings("rawtypes")

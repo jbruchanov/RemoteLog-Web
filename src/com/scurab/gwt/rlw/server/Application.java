@@ -10,6 +10,7 @@ import javax.servlet.ServletContextListener;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.scurab.gwt.rlw.server.data.Database;
 
 public class Application implements ServletContextListener {
 

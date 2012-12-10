@@ -1,4 +1,4 @@
-package com.scurab.gwt.rlw.server.data;
+package com.scurab.gwt.rlw.server.data.web;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,43 +9,40 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.Session;
 
-import com.scurab.gwt.rlw.server.Database;
+import com.google.gwt.dev.shell.remoteui.RemoteMessageProto.Message.Response;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.DeviceRespond;
-import com.scurab.gwt.rlw.shared.model.LogItem;
-import com.scurab.gwt.rlw.shared.model.LogItemRespond;
 import com.scurab.gwt.rlw.shared.model.Respond;
 
-public class LogItemsConnector extends Connector<LogItem> {
+public class RegistrationConnector extends Connector<Device> {
 
     /**
      * 
      */
     private static final long serialVersionUID = 1L;
-
-    @Override
-    protected Respond<?> onRequest(InputStream is) throws Exception {
-        LogItemRespond response = null;
+    
+    protected DeviceRespond onRequest(InputStream is) throws IOException{
+        DeviceRespond response = null;
         String json = read(is);
-        LogItem[] data = parse(json, json.charAt(0) == '[');
-        LogItem[] saved = onWrite(data);
+        Device[] data = parse(json, json.charAt(0) == '[');
+        Device[] saved = onWrite(data);
         if (saved.length == 0) {
-            response = new LogItemRespond("Nothing saved!?");
+            response = new DeviceRespond("Nothing saved!?", 0);
         } else if (saved.length == 1) {
-            response = new LogItemRespond(saved[0]);
+            response = new DeviceRespond(saved[0]);
         } else {
-            response = new LogItemRespond();
+            response = new DeviceRespond();
         }
         return response;
     }
 
     @Override
     public Class<?> getGenericClass() {
-        return LogItem.class;
+        return Device.class;
     }
 
     @Override
     public Class<?> getArrayGenericClass() {
-        return LogItem[].class;
+        return Device[].class;
     }
 }
