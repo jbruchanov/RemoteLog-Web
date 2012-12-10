@@ -20,10 +20,12 @@ public class LogItemBlobsConnector extends DataConnector<Void> {
     private static final String TEXT = "text";
     private static final String IMAGE = "image";
     private static final String OCTET_STREAM = "application/octet-stream";
+    private static final String APPLICATION_JSON = "application/json";
     /**
      * 
      */
     private static final long serialVersionUID = 3072901058334309712L;
+    
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {        
@@ -67,15 +69,14 @@ public class LogItemBlobsConnector extends DataConnector<Void> {
             fileName = FILE_NAME_NOT_DEFINED;
         }
         
-        if(mime.startsWith(IMAGE)){
-            //keep browser to show it
-        }else if(mime.startsWith(TEXT)){
-            //keep browser to show it
+        if(mime.startsWith(IMAGE) 
+                || mime.startsWith(TEXT)
+                || mime.equals(APPLICATION_JSON)){
         }else{
             resp.setHeader(CONTENT_DISPOSITION,String.format(ATTACHMENT_TEMPLATE, lib.getFileName()));
         }
         //write data
-        resp.setContentType(li.getBlobMime());
+        resp.setContentType(mime);
         resp.setContentLength(data.length);
         resp.getOutputStream().write(data);
         resp.getOutputStream().close();
