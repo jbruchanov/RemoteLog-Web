@@ -13,8 +13,11 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.IsWidget;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
 import com.scurab.gwt.rlw.client.RemoteLogWeb;
 import com.scurab.gwt.rlw.client.components.DynamicTableWidget;
@@ -80,9 +83,19 @@ public abstract class TabDataPresenter<T> extends TabBasePresenter {
             dispatchSetFilterListeners(mTable);
             dispatchAddTableToPanel(mTable);
             dispatchSetLazyLoadListener(mTable);
+            dispatchSetReloadButtonListener(mTable);
         } else {
             mTable.addData(transformed);
         }
+    }
+
+    protected void dispatchSetReloadButtonListener(DynamicTableWidget table) {
+        mTable.getReloadButton().addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                dispatchReloadData((Button)event.getSource());
+            }
+        });
     }
 
     protected void dispatchAddTableToPanel(DynamicTableWidget table) {
@@ -127,40 +140,48 @@ public abstract class TabDataPresenter<T> extends TabBasePresenter {
         table.setLoadListener(mBigLoadListener);
     }
 
-    protected void onFilterCheckBoxChange(final CheckBox source) {
+    protected void onFilterCheckBoxChange(CheckBox source) {
         if (source.getValue() != null) {// probably not necessary check
             if (mFilterDialog != null) {// only if there is any filter
-                // disable checkbox now to avoid crazyclicks
-                source.setEnabled(false);
-                // load data
-                onLoadData(0, new AsyncCallback<List<T>>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        // notify
-                        // TODO: better
-                        Window.alert(caught.getMessage());
-                        notifyStopDownloading();
-                        // enable again checkbox
-                        source.setEnabled(true);
-                        // switch value to make it like before request
-                        source.setValue(!source.getValue());
-                    }
-
-                    @Override
-                    public void onSuccess(List<T> result) {
-                        if (result != null) {// if it's null some problem is on server
-                            mTable.setData(transformData(result));
-                        }
-                        notifyStopDownloading();
-                        // reenable filter checkbox
-                        source.setEnabled(true);
-                    }
-                });
-            } else {
+                dispatchReloadData(source);
+            }else{
                 // keep checbox unchecked if no filter defined
                 source.setValue(false);
             }
         }
+    }
+    
+    protected void dispatchReloadData(final FocusWidget initiator){
+        initiator.setEnabled(false);
+        // load data
+        notifyStartDownloading();
+        onLoadData(0, new AsyncCallback<List<T>>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                // notify
+                // TODO: better
+                Window.alert(caught.getMessage());
+                notifyStopDownloading();
+                // reenable initiator
+                initiator.setEnabled(true);
+                
+                // if checkbox switch value to previous one
+                if(initiator instanceof CheckBox){
+                    CheckBox cb = (CheckBox)initiator;
+                    cb.setValue(!cb.getValue());
+                }                
+            }
+
+            @Override
+            public void onSuccess(List<T> result) {
+                if (result != null) {// if it's null some problem is on server
+                    mTable.setData(transformData(result));
+                }
+                notifyStopDownloading();
+                // reenable initiator
+                initiator.setEnabled(true);
+            }
+        });
     }
 
     protected abstract DynamicTableWidget onCreateTable();

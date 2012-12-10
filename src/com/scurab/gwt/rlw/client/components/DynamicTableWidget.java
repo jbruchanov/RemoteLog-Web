@@ -54,6 +54,8 @@ public class DynamicTableWidget extends Composite {
     private CheckBox mFilterCheckBox;
 
     private Button mFilterButton;
+    
+    private Button mReloadButton;
 
     public interface DynamicTableWidgetOverrider {
         /**
@@ -136,7 +138,11 @@ public class DynamicTableWidget extends Composite {
         mCellTable.addColumnSortHandler(sortHandler);
         mListDataProvider.addDataDisplay(mCellTable);
 
+        //add top panel 
         HorizontalPanel hp = new HorizontalPanel();
+        mReloadButton = onCreateReloadButton();
+        hp.add(getReloadButton());
+        
         hp.add(pager);
         mFilterButton = onCreateFilterButton();
         hp.add(mFilterButton);
@@ -160,6 +166,10 @@ public class DynamicTableWidget extends Composite {
     protected Button onCreateFilterButton() {
         Button b = new Button(RemoteLogWeb.WORDS.SetFilter());
         return b;
+    }
+    
+    protected Button onCreateReloadButton(){
+        return new Button(RemoteLogWeb.WORDS.Reload());
     }
 
     /**
@@ -467,5 +477,9 @@ public class DynamicTableWidget extends Composite {
     public void clear() {
         mListDataProvider.getList().clear();
         notifyDataChange();
+    }
+
+    public Button getReloadButton() {
+        return mReloadButton;
     }
 }
