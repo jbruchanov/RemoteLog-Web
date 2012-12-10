@@ -36,6 +36,17 @@
 		<servlet-name>logs</servlet-name>
 		<url-pattern>/logs</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>blobs</servlet-name>
+		<servlet-class>com.scurab.gwt.rlw.server.data.web.LogItemBlobsConnector
+		</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>blobs</servlet-name>
+		<url-pattern>/blobs/*</url-pattern>
+	</servlet-mapping>
 
 	<welcome-file-list>
 		<welcome-file>RemoteLogWeb.html</welcome-file>

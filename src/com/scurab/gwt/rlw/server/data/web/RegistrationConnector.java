@@ -14,18 +14,18 @@ import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.DeviceRespond;
 import com.scurab.gwt.rlw.shared.model.Respond;
 
-public class RegistrationConnector extends Connector<Device> {
+public class RegistrationConnector extends DataConnector<Device> {
 
     /**
      * 
      */
     private static final long serialVersionUID = 1L;
     
-    protected DeviceRespond onRequest(InputStream is) throws IOException{
+    protected DeviceRespond onRequest(Session s, InputStream is) throws IOException{
         DeviceRespond response = null;
         String json = read(is);
         Device[] data = parse(json, json.charAt(0) == '[');
-        Device[] saved = onWrite(data);
+        Device[] saved = onWrite(s, data);
         if (saved.length == 0) {
             response = new DeviceRespond("Nothing saved!?", 0);
         } else if (saved.length == 1) {

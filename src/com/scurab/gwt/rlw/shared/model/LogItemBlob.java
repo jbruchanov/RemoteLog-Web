@@ -27,7 +27,7 @@ public class LogItemBlob implements Serializable {
     public LogItemBlob(int id, byte[] data, String fileName){
         mId = id;
         mData = data;
-        mFileName = fileName;
+        setFileName(fileName);
     }
     
     public int getId() {
@@ -44,5 +44,13 @@ public class LogItemBlob implements Serializable {
 
     public void setData(byte[] data) {
         mData = data;
+    }
+
+    public String getFileName() {
+        return mFileName;
+    }
+
+    public void setFileName(String fileName) {
+        mFileName = fileName;
     }
 }

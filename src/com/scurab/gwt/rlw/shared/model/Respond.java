@@ -2,7 +2,7 @@ package com.scurab.gwt.rlw.shared.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public abstract class Respond<T> {
+public class Respond<T> {
 
     @SerializedName("Type")
     private String mType;

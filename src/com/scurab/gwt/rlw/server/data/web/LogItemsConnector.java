@@ -25,7 +25,7 @@ import com.scurab.gwt.rlw.shared.model.LogItemBlobRespond;
 import com.scurab.gwt.rlw.shared.model.LogItemRespond;
 import com.scurab.gwt.rlw.shared.model.Respond;
 
-public class LogItemsConnector extends Connector<LogItem> {
+public class LogItemsConnector extends DataConnector<LogItem> {
 
     /**
      * 
@@ -33,11 +33,11 @@ public class LogItemsConnector extends Connector<LogItem> {
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected Respond<?> onRequest(InputStream is) throws Exception {
+    protected Respond<?> onRequest(Session s, InputStream is) throws Exception {
         LogItemRespond response = null;
         String json = read(is);
         LogItem[] data = parse(json, json.charAt(0) == '[');
-        LogItem[] saved = onWrite(data);
+        LogItem[] saved = onWrite(s, data);
         if (saved.length == 0) {
             response = new LogItemRespond("Nothing saved!?", 0);
         } else if (saved.length == 1) {
@@ -124,9 +124,17 @@ public class LogItemsConnector extends Connector<LogItem> {
     private int onWrite(int logItemId, String mime, String fileName, InputStream is) throws IOException{
         Session s = Database.openSession();
         //get LogItem
-        LogItem li = (LogItem) s.get(LogItem.class, logItemId);
+        LogItem li = null;
+        Exception err = null;
+        try{
+            li = (LogItem) s.get(LogItem.class, logItemId);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            err = e;
+        }
         if(li == null){
-            throw new IllegalArgumentException(String.format("LogItem with ID:%s not found!", logItemId));
+            throw new IllegalArgumentException(String.format("LogItem with ID:%s not found!", logItemId), err);
         }
         
         byte[] data = getData(is);
