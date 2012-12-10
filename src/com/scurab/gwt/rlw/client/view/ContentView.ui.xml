@@ -2,6 +2,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" 
 	xmlns:p1="urn:import:com.google.gwt.user.cellview.client">
+	<ui:with type="com.scurab.gwt.rlw.language.Words" field="res"/>
 	<ui:style>
 		.important {
 			font-weight: bold;
@@ -9,13 +10,14 @@
 	</ui:style>
 	<g:HTMLPanel>
 		<g:TabPanel width="100%" height="100%" ui:field="mTabPanel">
-			<g:Tab text="Log">
-				<g:HTMLPanel width="100%" height="100%" ui:field="mLogsPanel" >
-				</g:HTMLPanel>				
+			<g:Tab text="{res.Logs}">
+				<g:HTMLPanel width="100%" height="100%" ui:field="mLogsPanel" />							
 			</g:Tab>
-			<g:Tab text="Devices">
-				<g:HTMLPanel width="100%" height="100%" ui:field="mDevicesPanel">					
-				</g:HTMLPanel>
+			<g:Tab text="{res.Devices}">
+				<g:HTMLPanel width="100%" height="100%" ui:field="mDevicesPanel" />									
+			</g:Tab>
+			<g:Tab text="{res.Device}">
+				<g:HTMLPanel width="100%" height="100%" ui:field="mDevicePanel" />									
 			</g:Tab>
 		</g:TabPanel>
 	</g:HTMLPanel>

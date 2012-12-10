@@ -1,7 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:my="urn:import:com.scurab.gwt.rlw.client.controls">
-	<ui:with type="com.scurab.gwt.rlw.language.Words" field="res"></ui:with>
+	<ui:with type="com.scurab.gwt.rlw.language.Words" field="res"/>
 	<ui:style>
 		.contentHolder {
 			position: absolute;

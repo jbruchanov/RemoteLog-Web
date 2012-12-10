@@ -115,6 +115,15 @@ public interface Words extends com.google.gwt.i18n.client.ConstantsWithLookup {
   String Detail();
 
   /**
+   * Translated "Device".
+   * 
+   * @return translated "Device"
+   */
+  @DefaultStringValue("Device")
+  @Key("Device")
+  String Device();
+
+  /**
    * Translated "DeviceID".
    * 
    * @return translated "DeviceID"
@@ -122,6 +131,15 @@ public interface Words extends com.google.gwt.i18n.client.ConstantsWithLookup {
   @DefaultStringValue("DeviceID")
   @Key("DeviceID")
   String DeviceID();
+
+  /**
+   * Translated "Devices".
+   * 
+   * @return translated "Devices"
+   */
+  @DefaultStringValue("Devices")
+  @Key("Devices")
+  String Devices();
 
   /**
    * Translated "Download".
@@ -185,6 +203,15 @@ public interface Words extends com.google.gwt.i18n.client.ConstantsWithLookup {
   @DefaultStringValue("Loading log items")
   @Key("LoadingLogItems")
   String LoadingLogItems();
+
+  /**
+   * Translated "Logs".
+   * 
+   * @return translated "Logs"
+   */
+  @DefaultStringValue("Logs")
+  @Key("Logs")
+  String Logs();
 
   /**
    * Translated "Message".

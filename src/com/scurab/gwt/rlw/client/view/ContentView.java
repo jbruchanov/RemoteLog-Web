@@ -17,6 +17,8 @@ public class ContentView extends Composite {
     @UiField
     protected HTMLPanel mLogsPanel;
     @UiField
+    protected HTMLPanel mDevicePanel;
+    @UiField
     protected TabPanel mTabPanel;
 
     interface ContentViewUiBinder extends UiBinder<Widget, ContentView> {
@@ -33,5 +35,9 @@ public class ContentView extends Composite {
 
     public HTMLPanel getLogsPanel() {
         return mLogsPanel;
+    }
+
+    public HTMLPanel getDevicePanel() {
+        return mDevicePanel;
     }
 }
