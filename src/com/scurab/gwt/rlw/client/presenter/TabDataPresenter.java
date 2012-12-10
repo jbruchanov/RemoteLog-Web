@@ -11,12 +11,14 @@ import com.google.gwt.json.client.JSONNull;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.ToggleButton;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
 import com.scurab.gwt.rlw.client.RemoteLogWeb;
 import com.scurab.gwt.rlw.client.components.DynamicTableWidget;
@@ -33,6 +35,8 @@ public abstract class TabDataPresenter<T> extends TabBasePresenter {
     private FilterDialog mFilterDialog;
 
     private LazyPager.OnPageLoaderListener mBigLoadListener;
+    
+    private Timer mAutoReloadTimer;
 
     public TabDataPresenter(DataServiceAsync dataService, HandlerManager eventBus, String appName, HTMLPanel tabPanel) {
         super(dataService, eventBus, appName, tabPanel);
@@ -70,6 +74,13 @@ public abstract class TabDataPresenter<T> extends TabBasePresenter {
                 });
             }
         };
+        
+        mAutoReloadTimer = new Timer() {
+            @Override
+            public void run() {
+                dispatchReloadData(mTable.getReloadButton());
+            }
+        };
     }
 
     protected void onLoadFinish(List<T> data) {
@@ -83,9 +94,24 @@ public abstract class TabDataPresenter<T> extends TabBasePresenter {
             dispatchAddTableToPanel(mTable);
             dispatchSetLazyLoadListener(mTable);
             dispatchSetReloadButtonListener(mTable);
+            dispatchSetAutoReloadListener(mTable);
         } else {
             mTable.addData(transformed);
         }
+    }
+
+    protected void dispatchSetAutoReloadListener(DynamicTableWidget table) {
+        mTable.getAutoReloadToggle().addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                ToggleButton tb = (ToggleButton) event.getSource();
+                if(tb.isDown()){
+                    mAutoReloadTimer.scheduleRepeating(RemoteLogWeb.Properties.AUTO_REFRESH * 1000);
+                }else{
+                    mAutoReloadTimer.cancel();
+                }
+            }
+        });
     }
 
     protected void dispatchSetReloadButtonListener(DynamicTableWidget table) {

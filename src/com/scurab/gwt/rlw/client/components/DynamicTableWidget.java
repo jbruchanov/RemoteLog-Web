@@ -25,6 +25,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ToggleButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionModel;
@@ -57,7 +58,9 @@ public class DynamicTableWidget extends Composite {
 
     private Button mReloadButton;
     
-    private ListHandler<HashMap<String, Object>> mSortHandler; 
+    private ListHandler<HashMap<String, Object>> mSortHandler;
+
+    private ToggleButton mAutoReloadToggle; 
 
     public interface DynamicTableWidgetOverrider {
         /**
@@ -143,22 +146,43 @@ public class DynamicTableWidget extends Composite {
 
         //add top panel 
         HorizontalPanel hp = new HorizontalPanel();
+        //toggle
+        mAutoReloadToggle = onCreateAutoReloadToggle();
+        hp.setCellVerticalAlignment(mAutoReloadToggle, HasVerticalAlignment.ALIGN_MIDDLE);
+        mAutoReloadToggle.getElement().getStyle().setProperty("margin", "5px");
+        hp.add(mAutoReloadToggle);
+        
+        //reload button
         mReloadButton = onCreateReloadButton();
-        hp.add(getReloadButton());
+        mReloadButton.getElement().getStyle().setProperty("margin", "5px");
+        hp.add(mReloadButton);
 
+        //pager
+        pager.getElement().getStyle().setProperty("margin", "5px");
         hp.add(pager);
+        
+        //filter button
         mFilterButton = onCreateFilterButton();
+        mFilterButton.getElement().getStyle().setProperty("margin", "5px");
+        hp.setCellVerticalAlignment(mFilterButton, HasVerticalAlignment.ALIGN_MIDDLE);
         hp.add(mFilterButton);
+        
+        //filter checkbox
         mFilterCheckBox = onCreateFilterCheckBox();
         hp.add(mFilterCheckBox);
         hp.setCellVerticalAlignment(mFilterCheckBox, HasVerticalAlignment.ALIGN_MIDDLE);
 
+        //put it all to vertical panel
         VerticalPanel vp = new VerticalPanel();
         vp.setWidth("100%");
         vp.add(hp);
         vp.add(mCellTable);
         initWidget(vp);
         mSuccesfullSortByUnderscore = false;
+    }
+
+    private ToggleButton onCreateAutoReloadToggle() {
+        return new ToggleButton(RemoteLogWeb.WORDS.AutoReload());
     }
 
     protected CheckBox onCreateFilterCheckBox() {
@@ -188,7 +212,7 @@ public class DynamicTableWidget extends Composite {
                 return value;
             }
         }
-        return RemoteLogWeb.PAGE_SIZE;
+        return RemoteLogWeb.Properties.PAGE_SIZE;
     }
 
     /**
@@ -485,5 +509,9 @@ public class DynamicTableWidget extends Composite {
 
     public Button getReloadButton() {
         return mReloadButton;
+    }
+
+    public ToggleButton getAutoReloadToggle() {
+        return mAutoReloadToggle;
     }
 }

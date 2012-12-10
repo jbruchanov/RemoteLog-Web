@@ -48,11 +48,15 @@ public class Application implements ServletContextListener {
         InputStream inputStream = Application.class.getResourceAsStream(file);
         APP_PROPS.load(inputStream);
         inputStream.close();
+        
+        //date format
         if(APP_PROPS.containsKey(SharedParams.CLIENT_DEFAULT_DATE_FORMAT)){
             DT_FORMAT = APP_PROPS.getProperty(SharedParams.CLIENT_DEFAULT_DATE_FORMAT);
             DATEFORMAT = new SimpleDateFormat(DT_FORMAT);
         }
         CLIENT_PROPERTIES.put(SharedParams.CLIENT_DEFAULT_DATE_FORMAT, DT_FORMAT);
+
+        //page size
         if(APP_PROPS.containsKey(SharedParams.CLIENT_PAGE_SIZE)){
             try{
                 PAGE_SIZE = Integer.parseInt(APP_PROPS.getProperty(SharedParams.CLIENT_PAGE_SIZE));
@@ -62,6 +66,17 @@ public class Application implements ServletContextListener {
             }
         }
         CLIENT_PROPERTIES.put(SharedParams.CLIENT_PAGE_SIZE, PAGE_SIZE);
+        
+        //autorefresh
+        if(APP_PROPS.containsKey(SharedParams.CLIENT_AUTO_REFRESH)){
+            try{
+                int refresh = Integer.parseInt(APP_PROPS.getProperty(SharedParams.CLIENT_AUTO_REFRESH));
+                CLIENT_PROPERTIES.put(SharedParams.CLIENT_AUTO_REFRESH, refresh);
+            }catch(Exception e){
+                System.err.print("Invalid value for property AUTO_REFRESH");
+                e.printStackTrace();
+            }
+        }
     }
 
     public static final class ApplicationPropertyKeys {

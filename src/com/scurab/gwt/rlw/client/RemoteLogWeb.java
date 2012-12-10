@@ -32,8 +32,6 @@ public class RemoteLogWeb implements EntryPoint {
     private final DataServiceAsync mDataService = GWT.create(DataService.class);
     private final HandlerManager mEventBus = new HandlerManager(null);
     public static final Words WORDS = GWT.create(Words.class);
-    public static int PAGE_SIZE = 50;
-
     public static DateTimeFormat DATETIMEFORMAT = DateTimeFormat.getFormat("yyyy-MM-dd kk:mm:ss");
     public static final HashMap<String, Object> CLIENT_PROPERTIES = new HashMap<String, Object>();
 
@@ -59,11 +57,14 @@ public class RemoteLogWeb implements EntryPoint {
                     }
                 }
                 if(CLIENT_PROPERTIES.containsKey(SharedParams.CLIENT_PAGE_SIZE)){
-                    PAGE_SIZE = ((Number)(CLIENT_PROPERTIES.get(SharedParams.CLIENT_PAGE_SIZE))).intValue();    
+                    Properties.PAGE_SIZE = ((Number)(CLIENT_PROPERTIES.get(SharedParams.CLIENT_PAGE_SIZE))).intValue();    
                 }
                 if(CLIENT_PROPERTIES.containsKey(SharedParams.CLIENT_DEFAULT_DATE_FORMAT)){
                     String dateFormat = String.valueOf(CLIENT_PROPERTIES.get(SharedParams.CLIENT_DEFAULT_DATE_FORMAT));
                     DATETIMEFORMAT = DateTimeFormat.getFormat(dateFormat);
+                }
+                if(CLIENT_PROPERTIES.containsKey(SharedParams.CLIENT_AUTO_REFRESH)){
+                    Properties.AUTO_REFRESH = ((Number)(CLIENT_PROPERTIES.get(SharedParams.CLIENT_AUTO_REFRESH))).intValue();
                 }
             }
             
@@ -72,5 +73,10 @@ public class RemoteLogWeb implements EntryPoint {
                 Window.alert("Unable to download client properties!");
             }
         });
+    }
+    
+    public static class Properties{
+        public static int PAGE_SIZE = 50;
+        public static int AUTO_REFRESH = 5;
     }
 }
