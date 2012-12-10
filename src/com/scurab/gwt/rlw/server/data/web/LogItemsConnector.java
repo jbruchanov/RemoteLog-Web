@@ -33,7 +33,7 @@ public class LogItemsConnector extends DataConnector<LogItem> {
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected Respond<?> onRequest(Session s, InputStream is) throws Exception {
+    protected Respond<?> onPostRequest(Session s, InputStream is) throws Exception {
         LogItemRespond response = null;
         String json = read(is);
         LogItem[] data = parse(json, json.charAt(0) == '[');

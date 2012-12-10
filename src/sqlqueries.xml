@@ -10,7 +10,7 @@
 		  DeviceID int(11) NOT NULL AUTO_INCREMENT,
 		  Brand varchar(32) DEFAULT NULL,
 		  Description varchar(255) DEFAULT NULL,
-		  Detail varchar(255) DEFAULT NULL,
+		  Detail varchar(4096) DEFAULT NULL,
 		  DevUUID varchar(255) NOT NULL,
 		  Model varchar(32) DEFAULT NULL,
 		  OSDescription varchar(255) DEFAULT NULL,

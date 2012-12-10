@@ -41,7 +41,7 @@ public abstract class DataConnector<T> extends Connector {
         Session s = null;
         try {
             s = Database.openSession();
-            respond = onRequest(s, req.getInputStream());             
+            respond = onPostRequest(s, req.getInputStream());             
         } catch (Exception e) {
             respond = new Respond<Void>(e);
         } finally {            
@@ -59,7 +59,7 @@ public abstract class DataConnector<T> extends Connector {
         doNotImplementedRequest("PUT",req,resp);
     }
     
-    protected Respond<?> onRequest(Session s, InputStream is) throws Exception{
+    protected Respond<?> onPostRequest(Session s, InputStream is) throws Exception{
         throw new IllegalStateException("Not overrided onRequestMethod!");
     }
     

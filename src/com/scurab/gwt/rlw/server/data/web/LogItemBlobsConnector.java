@@ -29,7 +29,12 @@ public class LogItemBlobsConnector extends DataConnector<Void> {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {        
-        String sid = req.getPathInfo().replaceFirst("/", "");
+        String sid = null;
+        if(req.getPathInfo() == null){
+            sid = "0";
+        }else{
+            sid = req.getPathInfo().replaceFirst("/", "");
+        }
         Session s = null;
         try{
             s = Database.openSession();
@@ -54,7 +59,13 @@ public class LogItemBlobsConnector extends DataConnector<Void> {
     protected void onGet(Session s, int id, HttpServletResponse resp) throws IOException{
         //get data from db
         LogItem li = (LogItem) s.get(LogItem.class, id);
+        if(li == null){
+            throw new IllegalArgumentException(String.format("LogItem with ID:%s not found!",id));
+        }
         LogItemBlob lib = (LogItemBlob) s.get(LogItemBlob.class, id);
+        if(lib == null){
+            throw new IllegalArgumentException(String.format("LogItemBlob with ID:%s not found!",id));
+        }
         byte[] data = lib.getData();       
         
         //double check mime

@@ -1,13 +1,16 @@
 package com.scurab.gwt.rlw.shared.model;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
+import com.scurab.gwt.rlw.server.Application;
 
 @Entity(name = "Devices")
 public class Device implements Serializable {
@@ -176,5 +179,15 @@ public class Device implements Serializable {
         mPushID = other.mPushID;
         mResolution = other.mResolution;
         mVersion = other.mVersion;
+    }
+    
+    public HashMap convert(){
+        String v = Application.GSON.toJson(this);
+        HashMap obj = Application.GSON.fromJson(v, HashMap.class);
+        if(mDetail != null && mDetail.length() > 0 && mDetail.charAt(0) == '{'){
+            obj.remove("Detail");
+            obj.put("Detail", Application.GSON.fromJson(mDetail, HashMap.class));
+        }
+        return obj;
     }
 }

@@ -26,6 +26,11 @@
 		<url-pattern>/regs</url-pattern>
 	</servlet-mapping>
 	
+	<servlet-mapping>
+		<servlet-name>regs</servlet-name>
+		<url-pattern>/regs/*</url-pattern>
+	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>logs</servlet-name>
 		<servlet-class>com.scurab.gwt.rlw.server.data.web.LogItemsConnector

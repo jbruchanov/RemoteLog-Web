@@ -2,6 +2,7 @@ package com.scurab.gwt.rlw.server.data.web;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.Session;
 
+import com.google.gson.JsonObject;
 import com.google.gwt.dev.shell.remoteui.RemoteMessageProto.Message.Response;
+import com.scurab.gwt.rlw.server.Application;
+import com.scurab.gwt.rlw.server.data.Database;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.DeviceRespond;
 import com.scurab.gwt.rlw.shared.model.Respond;
@@ -21,7 +25,52 @@ public class RegistrationConnector extends DataConnector<Device> {
      */
     private static final long serialVersionUID = 1L;
     
-    protected DeviceRespond onRequest(Session s, InputStream is) throws IOException{
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {        
+        Session s = null;
+        Respond<?> dr = null;
+        
+        try{
+            boolean nice = false;
+            String sid = null;
+            String path = req.getPathInfo();
+            if(path == null){
+                throw new IllegalArgumentException("Missing id user /regs/{id}");
+            }else{
+                if(path.contains("/nice")){
+                    nice = true;
+                    path = path.replace("/nice", "");
+                }
+                sid = path.replaceFirst("/", "");
+            }
+       
+            s = Database.openSession();
+            int id = Integer.parseInt(sid);
+            Device d = (Device) s.get(Device.class, id);            
+            if(d == null){
+                throw new IllegalArgumentException(String.format("Record with id:%s not found", id));
+            }            
+            if(nice){
+                dr = new Respond<HashMap<?,?>>(d.convert());    
+            }else{
+                dr = new DeviceRespond(d);
+            }
+            
+        }
+        catch(Exception e){
+            dr = new DeviceRespond(e);
+        }
+        finally{
+            String r = Application.GSON.toJson(dr);
+            resp.getOutputStream().write(r.getBytes());
+            if(s != null && s.isOpen()){
+                s.close();
+            }
+        }
+        resp.getOutputStream().close();
+    }
+    
+    protected DeviceRespond onPostRequest(Session s, InputStream is) throws IOException{
         DeviceRespond response = null;
         String json = read(is);
         Device[] data = parse(json, json.charAt(0) == '[');

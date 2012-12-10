@@ -51,7 +51,7 @@ public class LogItemTableWidget extends DynamicTableWidget {
                 new Delegate<HashMap<String, Object>>() {
                     @Override
                     public void execute(HashMap<String, Object> object) {
-                        Window.alert("" + object.get(TableColumns.LogItemID));
+                        Window.open("blobs/" + object.get(TableColumns.LogItemID) , "_blank", null);
                     }
                 });
         return ac;
