@@ -8,6 +8,7 @@ public final class SharedParams {
     public static final String PAGE = "PAGE";
     public static final String APP_NAME = "Application";
 
+    public static final String DEVICE_ID = "DeviceID";
     public static final String DEVICE_UUID = "DevUUID";
     public static final String DEVICE_BRAND = "Brand";
     public static final String DEVICE_PLATFORM = "Platform";
@@ -24,4 +25,5 @@ public final class SharedParams {
     
     public static final String CLIENT_DEFAULT_DATE_FORMAT = "DATE_FORMAT";
     public static final String CLIENT_PAGE_SIZE = "PAGE_SIZE";
+    
 }

@@ -11,6 +11,14 @@
 		<g:Grid width="" height="">
 			<g:row>
 				<g:customCell>
+					<g:Label text="ID"/>
+				</g:customCell>
+				<g:customCell>
+					<g:IntegerBox ui:field="mDeviceID" width="150px"/>
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
 					<g:Label text="UUID"/>
 				</g:customCell>
 				<g:customCell>

@@ -23,6 +23,7 @@ public class DeviceFilterDialog extends FilterDialog {
     @Override
     public HashMap<String, Object> getFilterValues() {
         HashMap<String, Object> filters = new HashMap<String, Object>();
+        insertValue(filters, SharedParams.DEVICE_ID, mFilterView.mDeviceID.getValue());
         insertValue(filters, SharedParams.DEVICE_UUID, mFilterView.mUUID.getValue());
         insertValue(filters, SharedParams.DEVICE_BRAND, getListBoxValue(mFilterView.mBrand));
         insertValue(filters, SharedParams.DEVICE_MODEL, getListBoxValue(mFilterView.mModel));

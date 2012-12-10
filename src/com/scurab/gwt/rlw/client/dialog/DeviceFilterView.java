@@ -9,6 +9,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -32,6 +33,8 @@ public class DeviceFilterView extends Composite implements IsFilterWidget {
     Button mOkButton;
     @UiField
     Button mCancelButton;
+    @UiField
+    IntegerBox mDeviceID;
 
     private DataServiceAsync mDataService;
 
@@ -145,5 +148,9 @@ public class DeviceFilterView extends Composite implements IsFilterWidget {
     @Override
     public void refreshData() {
         initData();
+    }
+
+    public IntegerBox getDeviceID() {
+        return mDeviceID;
     }
 }
