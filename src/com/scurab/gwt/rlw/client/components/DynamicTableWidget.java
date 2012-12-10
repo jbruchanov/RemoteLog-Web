@@ -56,6 +56,8 @@ public class DynamicTableWidget extends Composite {
     private Button mFilterButton;
 
     private Button mReloadButton;
+    
+    private ListHandler<HashMap<String, Object>> mSortHandler; 
 
     public interface DynamicTableWidgetOverrider {
         /**
@@ -105,6 +107,7 @@ public class DynamicTableWidget extends Composite {
             init(mData);
         } else {
             mListDataProvider.setList(data);
+            mSortHandler.setList(mListDataProvider.getList());
             pager.resetLazy();
         }
     }
@@ -132,10 +135,10 @@ public class DynamicTableWidget extends Composite {
         pager.setPageSize(getPageSize());
 
         // init columns
-        ListHandler<HashMap<String, Object>> sortHandler = new ListHandler<HashMap<String, Object>>(
+        mSortHandler = new ListHandler<HashMap<String, Object>>(
                 mListDataProvider.getList());
-        initTableColumns(data, mCellTable, sortHandler);
-        mCellTable.addColumnSortHandler(sortHandler);
+        initTableColumns(data, mCellTable, mSortHandler);
+        mCellTable.addColumnSortHandler(mSortHandler);
         mListDataProvider.addDataDisplay(mCellTable);
 
         //add top panel 
@@ -458,7 +461,8 @@ public class DynamicTableWidget extends Composite {
     }
 
     public void addData(Collection<HashMap<String, Object>> data) {
-        mListDataProvider.getList().addAll(data);
+        mListDataProvider.getList().addAll(data);                
+        mSortHandler.setList(mListDataProvider.getList());
         notifyDataChange();
     }
 
