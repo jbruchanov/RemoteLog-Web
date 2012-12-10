@@ -83,7 +83,7 @@ public class DeviceTableWidget extends DynamicTableWidget {
                 new Delegate<HashMap<String, Object>>() {
             @Override
             public void execute(HashMap<String, Object> object) {
-                Window.alert("" + object.get(TableColumns.DeviceID));
+                Window.open("regs/nice/" + object.get(TableColumns.DeviceID) , "_blank", null);
             }
         });
         return ac;
