@@ -14,10 +14,10 @@ public class DataGenerator {
 
     private static final Random sRandom = new Random();
     private static final String[] sBrands = new String[] { "Acer", "Benq", "HTC", "Huawei", "LG", "Microsoft", "Nokia",
-            "Samsung", "ZTE" };
+        "Samsung", "ZTE" };
     private static final String[] sPlatforms = new String[] { "Android", "Windows Phone", "iOS", "BlackBerry" };
     private static final String[] sResolutions = new String[] { "480x800", "320x480", "240x480", "800x1280",
-            "1080x1920" };
+    "1080x1920" };
 
     private static final String[] sCategoryLog = new String[] { "Info", "Warning", "Error", "Debug" };
 

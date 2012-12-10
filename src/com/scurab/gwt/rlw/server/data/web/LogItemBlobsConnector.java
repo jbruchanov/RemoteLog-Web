@@ -25,7 +25,7 @@ public class LogItemBlobsConnector extends DataConnector<Void> {
      * 
      */
     private static final long serialVersionUID = 3072901058334309712L;
-    
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {        
@@ -55,7 +55,7 @@ public class LogItemBlobsConnector extends DataConnector<Void> {
         }
         resp.getOutputStream().close();
     }
-    
+
     protected void onGet(Session s, int id, HttpServletResponse resp) throws IOException{
         //get data from db
         LogItem li = (LogItem) s.get(LogItem.class, id);
@@ -67,19 +67,19 @@ public class LogItemBlobsConnector extends DataConnector<Void> {
             throw new IllegalArgumentException(String.format("LogItemBlob with ID:%s not found!",id));
         }
         byte[] data = lib.getData();       
-        
+
         //double check mime
         String mime = li.getBlobMime().toLowerCase();
         if(mime == null || mime.length() == 0){
             mime = OCTET_STREAM;
         }
-        
+
         //double check for fileName
         String fileName = lib.getFileName();
         if(fileName == null || fileName.length() == 0){
             fileName = FILE_NAME_NOT_DEFINED;
         }
-        
+
         if(mime.startsWith(IMAGE) 
                 || mime.startsWith(TEXT)
                 || mime.equals(APPLICATION_JSON)){

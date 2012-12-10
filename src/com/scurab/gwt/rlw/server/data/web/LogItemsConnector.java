@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
 import javax.servlet.ServletException;
@@ -16,8 +15,6 @@ import org.hibernate.Session;
 
 import com.scurab.gwt.rlw.server.Application;
 import com.scurab.gwt.rlw.server.data.Database;
-import com.scurab.gwt.rlw.shared.model.Device;
-import com.scurab.gwt.rlw.shared.model.DeviceRespond;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 import com.scurab.gwt.rlw.shared.model.LogItemBlob;
 import com.scurab.gwt.rlw.shared.model.LogItemBlobRequest;
@@ -57,7 +54,7 @@ public class LogItemsConnector extends DataConnector<LogItem> {
     public Class<?> getArrayGenericClass() {
         return LogItem[].class;
     }
-    
+
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Respond<?> respond = null;
@@ -71,12 +68,12 @@ public class LogItemsConnector extends DataConnector<LogItem> {
             resp.getOutputStream().close();
         }
     }
-    
+
     protected LogItemBlobRespond onPutRequest(HttpServletRequest req) throws IOException{
         String reqJson = URLDecoder.decode(req.getQueryString(),"UTF-8");
         LogItemBlobRequest libr = mGson.fromJson(reqJson, LogItemBlobRequest.class);
-        
-      //check id
+
+        //check id
         int id = libr.getLogItemID();
         if(id == 0){
             throw new IllegalArgumentException("LogItemID is 0!");
@@ -91,18 +88,18 @@ public class LogItemsConnector extends DataConnector<LogItem> {
         if(mime == null || mime.length() == 0){
             mime = "application/octet-stream";
         }
-        
+
         int written = onWrite(id, mime, fileName, req.getInputStream());
         LogItemBlobRespond res = new LogItemBlobRespond(libr, written);
         return res;
     }
-    
+
     private LogItemBlobRequest parse(InputStream is) throws IOException{
         StringBuilder sb = new StringBuilder();
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
         String line = null;
-        
+
         while((line = br.readLine()) != null){
             if(sb.length() != 0 && line.length() == 0){//second empty line                
                 break;
@@ -115,12 +112,12 @@ public class LogItemsConnector extends DataConnector<LogItem> {
         LogItemBlobRequest item = Application.GSON.fromJson(sb.toString(), LogItemBlobRequest.class);
         return item;
     }
-    
+
     private byte[] getData(InputStream is) throws IOException{
         byte[] bytes = IOUtils.toByteArray(is);
         return bytes;
     }
-    
+
     private int onWrite(int logItemId, String mime, String fileName, InputStream is) throws IOException{
         Session s = Database.openSession();
         //get LogItem
@@ -136,12 +133,12 @@ public class LogItemsConnector extends DataConnector<LogItem> {
         if(li == null){
             throw new IllegalArgumentException(String.format("LogItem with ID:%s not found!", logItemId), err);
         }
-        
+
         byte[] data = getData(is);
-        
+
         li.setBlobMime(mime);
         LogItemBlob lib = new LogItemBlob(logItemId, data, fileName);
-        
+
         //save data to DB
         s.beginTransaction();
         s.update(li);

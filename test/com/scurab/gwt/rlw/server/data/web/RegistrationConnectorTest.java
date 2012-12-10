@@ -1,5 +1,11 @@
 package com.scurab.gwt.rlw.server.data.web;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -15,15 +21,11 @@ import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
 import com.google.gson.Gson;
 import com.scurab.gwt.rlw.ApplicationTest;
 import com.scurab.gwt.rlw.server.data.Database;
 import com.scurab.gwt.rlw.server.data.MockServletInputStream;
 import com.scurab.gwt.rlw.server.data.MockServletOutputStream;
-import com.scurab.gwt.rlw.server.data.web.RegistrationConnector;
 import com.scurab.gwt.rlw.server.util.DataGenerator;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.DeviceRespond;

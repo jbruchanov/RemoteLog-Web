@@ -2,6 +2,7 @@ package com.scurab.gwt.rlw.client.components;
 
 import java.util.HashMap;
 import java.util.List;
+
 import com.google.gwt.cell.client.ActionCell;
 import com.google.gwt.cell.client.ActionCell.Delegate;
 import com.google.gwt.cell.client.Cell.Context;
@@ -49,11 +50,11 @@ public class LogItemTableWidget extends DynamicTableWidget {
     private ActionCell<HashMap<String, Object>> getActionCell() {
         ActionCell<HashMap<String, Object>> ac = new ActionCell<HashMap<String, Object>>(RemoteLogWeb.WORDS.Download(),
                 new Delegate<HashMap<String, Object>>() {
-                    @Override
-                    public void execute(HashMap<String, Object> object) {
-                        Window.open("blobs/" + object.get(TableColumns.LogItemID) , "_blank", null);
-                    }
-                });
+            @Override
+            public void execute(HashMap<String, Object> object) {
+                Window.open("blobs/" + object.get(TableColumns.LogItemID) , "_blank", null);
+            }
+        });
         return ac;
     }
 }

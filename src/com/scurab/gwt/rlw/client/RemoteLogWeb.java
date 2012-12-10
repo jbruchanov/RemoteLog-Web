@@ -1,13 +1,13 @@
 package com.scurab.gwt.rlw.client;
 
-import com.scurab.gwt.rlw.client.presenter.MainPresenter;
-import com.scurab.gwt.rlw.client.view.MainWindow;
-import com.scurab.gwt.rlw.language.Words;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.scurab.gwt.rlw.client.presenter.MainPresenter;
+import com.scurab.gwt.rlw.client.view.MainWindow;
+import com.scurab.gwt.rlw.language.Words;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.

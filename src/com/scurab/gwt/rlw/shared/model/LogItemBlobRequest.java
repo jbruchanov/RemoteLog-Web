@@ -6,26 +6,26 @@ public class LogItemBlobRequest {
 
     @SerializedName("LogItemID")
     private int mLogItemID;
-    
+
     @SerializedName("MimeType")
     private String mMimeType;
-    
+
     @SerializedName("DataLength")
     private int mDataLength;
-    
+
     @SerializedName("FileName")
     private String mFileName;
 
     public LogItemBlobRequest() {
     }
-    
+
     public LogItemBlobRequest(int logItemId, String mime, int length, String fileName) {
         mLogItemID = logItemId;
         mMimeType = mime;
         mDataLength = length;
         mFileName = fileName;
     }
-    
+
     public int getLogItemID() {
         return mLogItemID;
     }

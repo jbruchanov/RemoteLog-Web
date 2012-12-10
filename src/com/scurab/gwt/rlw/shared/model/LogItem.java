@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
 import com.google.gson.annotations.SerializedName;
 import com.scurab.gwt.rlw.server.annotation.DefaultOrderString;
 

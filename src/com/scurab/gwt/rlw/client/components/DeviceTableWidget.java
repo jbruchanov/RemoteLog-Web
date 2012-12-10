@@ -81,11 +81,11 @@ public class DeviceTableWidget extends DynamicTableWidget {
     private ActionCell<HashMap<String, Object>> getActionCell() {
         ActionCell<HashMap<String, Object>> ac = new ActionCell<HashMap<String, Object>>(RemoteLogWeb.WORDS.Detail(),
                 new Delegate<HashMap<String, Object>>() {
-                    @Override
-                    public void execute(HashMap<String, Object> object) {
-                        Window.alert("" + object.get(TableColumns.DeviceID));
-                    }
-                });
+            @Override
+            public void execute(HashMap<String, Object> object) {
+                Window.alert("" + object.get(TableColumns.DeviceID));
+            }
+        });
         return ac;
     }
 }

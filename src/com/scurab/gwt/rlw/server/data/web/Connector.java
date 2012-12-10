@@ -15,7 +15,7 @@ public class Connector extends HttpServlet {
      */
     private static final long serialVersionUID = -6167991750744476029L;
     protected final Gson mGson = Application.GSON;
-    
+
     protected void doNotImplementedRequest(HttpServletRequest req, HttpServletResponse resp){
         try{
             Respond<?> respond = null;        
@@ -28,7 +28,7 @@ public class Connector extends HttpServlet {
             e.printStackTrace();
         }
     }
-    
+
     protected void doNotImplementedRequest(String method, HttpServletRequest req, HttpServletResponse resp){
         try{
             Respond<?> respond = null;        

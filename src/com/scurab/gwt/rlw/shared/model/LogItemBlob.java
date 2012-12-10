@@ -17,19 +17,19 @@ public class LogItemBlob implements Serializable {
 
     @Column(name = "Data", nullable = false)
     private byte[] mData;
-    
+
     @Column(name = "FileName", nullable = false)
     private String mFileName;
 
     public LogItemBlob() {
     }
-    
+
     public LogItemBlob(int id, byte[] data, String fileName){
         mId = id;
         mData = data;
         setFileName(fileName);
     }
-    
+
     public int getId() {
         return mId;
     }

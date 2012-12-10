@@ -76,10 +76,10 @@ public class CloseableDialog extends DialogBox {
 
     private boolean isCloseEvent(NativeEvent event) {
         return event.getEventTarget().equals(close.getElement());// compares
-                                                                 // equality
-                                                                 // of the
-                                                                 // underlying
-                                                                 // DOM
-                                                                 // elements
+        // equality
+        // of the
+        // underlying
+        // DOM
+        // elements
     }
 }

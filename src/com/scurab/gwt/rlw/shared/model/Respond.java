@@ -6,16 +6,16 @@ public class Respond<T> {
 
     @SerializedName("Type")
     private String mType;
-    
+
     @SerializedName("Message")
     private String mMessage;
-    
+
     @SerializedName("HasError")
     private boolean hasError;
 
     @SerializedName("Context")
     private T mContext;
-    
+
     @SerializedName("Count")
     private int mCount;
 
@@ -42,7 +42,7 @@ public class Respond<T> {
     public Respond(int count) {
         this("OK", count);
     }
-    
+
     public Respond(String msg, int count) {
         mMessage = msg;
         mCount = count;

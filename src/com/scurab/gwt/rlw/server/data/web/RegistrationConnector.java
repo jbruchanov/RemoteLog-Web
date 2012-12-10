@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.Session;
 
-import com.google.gson.JsonObject;
-import com.google.gwt.dev.shell.remoteui.RemoteMessageProto.Message.Response;
 import com.scurab.gwt.rlw.server.Application;
 import com.scurab.gwt.rlw.server.data.Database;
 import com.scurab.gwt.rlw.shared.model.Device;
@@ -25,12 +23,12 @@ public class RegistrationConnector extends DataConnector<Device> {
      * 
      */
     private static final long serialVersionUID = 1L;
-    
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {        
         Session s = null;
         Respond<?> dr = null;
-        
+
         try{
             boolean nice = false;
             String sid = null;
@@ -44,7 +42,7 @@ public class RegistrationConnector extends DataConnector<Device> {
                 }
                 sid = path.replaceFirst("/", "");
             }
-       
+
             s = Database.openSession();
             int id = Integer.parseInt(sid);
             Device d = (Device) s.get(Device.class, id);            
@@ -56,7 +54,7 @@ public class RegistrationConnector extends DataConnector<Device> {
             }else{
                 dr = new DeviceRespond(d);
             }
-            
+
         }
         catch(Exception e){
             dr = new DeviceRespond(e);
@@ -70,7 +68,7 @@ public class RegistrationConnector extends DataConnector<Device> {
         }
         resp.getOutputStream().close();
     }
-    
+
     private static HashMap convert(Device d){
         String v = Application.GSON.toJson(d);
         HashMap obj = Application.GSON.fromJson(v, HashMap.class);
@@ -81,7 +79,8 @@ public class RegistrationConnector extends DataConnector<Device> {
         }
         return obj;
     }
-    
+
+    @Override
     protected DeviceRespond onPostRequest(Session s, InputStream is) throws IOException{
         DeviceRespond response = null;
         String json = read(is);

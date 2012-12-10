@@ -1,6 +1,9 @@
 package com.scurab.gwt.rlw.server.data.web;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 
@@ -24,7 +27,6 @@ import com.scurab.gwt.rlw.server.Application;
 import com.scurab.gwt.rlw.server.data.Database;
 import com.scurab.gwt.rlw.server.data.MockServletInputStream;
 import com.scurab.gwt.rlw.server.data.MockServletOutputStream;
-import com.scurab.gwt.rlw.server.data.web.LogItemsConnector;
 import com.scurab.gwt.rlw.server.util.DataGenerator;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 import com.scurab.gwt.rlw.shared.model.LogItemRespond;

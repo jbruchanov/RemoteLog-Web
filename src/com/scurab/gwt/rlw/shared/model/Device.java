@@ -1,18 +1,13 @@
 package com.scurab.gwt.rlw.shared.model;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
-import com.scurab.gwt.rlw.server.Application;
 
 @Entity(name = "Devices")
 public class Device implements Serializable {
@@ -172,8 +167,8 @@ public class Device implements Serializable {
         mBrand = other.mBrand;
         mDescription = other.mDescription;
         mDetail = other.mDetail;
-//        mDeviceID = other.mDeviceID;
-//        mDevUUID = other.mDevUUID;
+        //        mDeviceID = other.mDeviceID;
+        //        mDevUUID = other.mDevUUID;
         mModel = other.mModel;
         mOSDescription = other.mOSDescription;
         mOwner = other.mOwner;

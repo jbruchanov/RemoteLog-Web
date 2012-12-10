@@ -17,7 +17,6 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.IsWidget;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
 import com.scurab.gwt.rlw.client.RemoteLogWeb;
 import com.scurab.gwt.rlw.client.components.DynamicTableWidget;
@@ -150,7 +149,7 @@ public abstract class TabDataPresenter<T> extends TabBasePresenter {
             }
         }
     }
-    
+
     protected void dispatchReloadData(final FocusWidget initiator){
         initiator.setEnabled(false);
         // load data
@@ -164,7 +163,7 @@ public abstract class TabDataPresenter<T> extends TabBasePresenter {
                 notifyStopDownloading();
                 // reenable initiator
                 initiator.setEnabled(true);
-                
+
                 // if checkbox switch value to previous one
                 if(initiator instanceof CheckBox){
                     CheckBox cb = (CheckBox)initiator;
