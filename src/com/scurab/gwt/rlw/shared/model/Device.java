@@ -2,6 +2,8 @@ package com.scurab.gwt.rlw.shared.model;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -186,7 +188,7 @@ public class Device implements Serializable {
         HashMap obj = Application.GSON.fromJson(v, HashMap.class);
         if(mDetail != null && mDetail.length() > 0 && mDetail.charAt(0) == '{'){
             obj.remove("Detail");
-            obj.put("Detail", Application.GSON.fromJson(mDetail, HashMap.class));
+            obj.put("Detail", Application.GSON.fromJson(mDetail, TreeMap.class));
         }
         return obj;
     }
