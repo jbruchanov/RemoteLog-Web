@@ -3,6 +3,7 @@ package com.scurab.gwt.rlw.server.data.web;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -51,7 +52,7 @@ public class RegistrationConnector extends DataConnector<Device> {
                 throw new IllegalArgumentException(String.format("Record with id:%s not found", id));
             }            
             if(nice){
-                dr = new Respond<HashMap<?,?>>(d.convert());    
+                dr = new Respond<HashMap<?,?>>(convert(d));    
             }else{
                 dr = new DeviceRespond(d);
             }
@@ -68,6 +69,17 @@ public class RegistrationConnector extends DataConnector<Device> {
             }
         }
         resp.getOutputStream().close();
+    }
+    
+    private static HashMap convert(Device d){
+        String v = Application.GSON.toJson(d);
+        HashMap obj = Application.GSON.fromJson(v, HashMap.class);
+        String mDetail = d.getDetail();
+        if(mDetail != null && mDetail.length() > 0 && mDetail.charAt(0) == '{'){
+            obj.remove("Detail");
+            obj.put("Detail", Application.GSON.fromJson(mDetail, TreeMap.class));
+        }
+        return obj;
     }
     
     protected DeviceRespond onPostRequest(Session s, InputStream is) throws IOException{

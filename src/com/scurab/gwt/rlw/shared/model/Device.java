@@ -182,14 +182,4 @@ public class Device implements Serializable {
         mResolution = other.mResolution;
         mVersion = other.mVersion;
     }
-    
-    public HashMap convert(){
-        String v = Application.GSON.toJson(this);
-        HashMap obj = Application.GSON.fromJson(v, HashMap.class);
-        if(mDetail != null && mDetail.length() > 0 && mDetail.charAt(0) == '{'){
-            obj.remove("Detail");
-            obj.put("Detail", Application.GSON.fromJson(mDetail, TreeMap.class));
-        }
-        return obj;
-    }
 }
