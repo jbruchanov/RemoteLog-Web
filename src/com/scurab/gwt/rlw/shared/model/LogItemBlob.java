@@ -15,9 +15,21 @@ public class LogItemBlob implements Serializable {
     @Column(name = "LogItemID", nullable = false)
     private int mId;
 
-    @Column(name = "Data")
+    @Column(name = "Data", nullable = false)
     private byte[] mData;
+    
+    @Column(name = "FileName", nullable = false)
+    private String mFileName;
 
+    public LogItemBlob() {
+    }
+    
+    public LogItemBlob(int id, byte[] data, String fileName){
+        mId = id;
+        mData = data;
+        mFileName = fileName;
+    }
+    
     public int getId() {
         return mId;
     }

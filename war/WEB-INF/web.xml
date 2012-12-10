@@ -17,7 +17,7 @@
 
 	<servlet>
 		<servlet-name>regs</servlet-name>
-		<servlet-class>com.scurab.gwt.rlw.server.data.RegistrationConnector
+		<servlet-class>com.scurab.gwt.rlw.server.data.web.RegistrationConnector
 		</servlet-class>
 	</servlet>
 
@@ -28,7 +28,7 @@
 	
 	<servlet>
 		<servlet-name>logs</servlet-name>
-		<servlet-class>com.scurab.gwt.rlw.server.data.LogItemsConnector
+		<servlet-class>com.scurab.gwt.rlw.server.data.web.LogItemsConnector
 		</servlet-class>
 	</servlet>
 

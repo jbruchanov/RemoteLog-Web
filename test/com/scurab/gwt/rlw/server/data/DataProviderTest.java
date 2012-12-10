@@ -129,7 +129,7 @@ public class DataProviderTest extends ApplicationTest {
     public void testGetDevicesValue() {
         DataProvider dp = new DataProvider();
         HashMap<String, Object> params = new HashMap<String, Object>();
-        params.put(SharedParams.APP_NAME, "TestApp2");
+        params.put(SharedParams.APP_NAME, "TestApp");
         params.put(SharedParams.DEVICE_BRAND, "LG");
         params.put(SharedParams.PAGE, 0);
         List<Device> d = dp.getDevices(params);
