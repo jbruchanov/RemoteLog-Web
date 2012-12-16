@@ -23,6 +23,7 @@ public class Device implements Serializable {
     @SerializedName("DeviceID")
     private int mDeviceID;
 
+    //column name ref in RegistrationConnector
     @Column(name = "DevUUID", nullable = false)
     @SerializedName("DevUUID")
     private String mDevUUID;
@@ -39,7 +40,7 @@ public class Device implements Serializable {
     @SerializedName("Version")
     private String mVersion;
 
-    @Column(name = "Detail")
+    @Column(name = "Detail",length=4096)
     @SerializedName("Detail")
     private String mDetail;
 

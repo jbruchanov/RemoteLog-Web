@@ -83,7 +83,11 @@ public class DeviceTableWidget extends DynamicTableWidget {
                 new Delegate<HashMap<String, Object>>() {
             @Override
             public void execute(HashMap<String, Object> object) {
-                Window.open("regs/nice/" + object.get(TableColumns.DeviceID) , "_blank", null);
+                String url = "regs/nice/" + object.get(TableColumns.DeviceID);
+                if(RemoteLogWeb.isIE()){
+                    url = "/" + url;
+                }
+                Window.open(url , "_blank", null);
             }
         });
         return ac;

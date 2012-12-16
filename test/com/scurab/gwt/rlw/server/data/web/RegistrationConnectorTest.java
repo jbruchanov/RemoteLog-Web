@@ -23,10 +23,12 @@ import org.mockito.stubbing.Answer;
 
 import com.google.gson.Gson;
 import com.scurab.gwt.rlw.ApplicationTest;
+import com.scurab.gwt.rlw.server.Application;
 import com.scurab.gwt.rlw.server.data.Database;
 import com.scurab.gwt.rlw.server.data.MockServletInputStream;
 import com.scurab.gwt.rlw.server.data.MockServletOutputStream;
 import com.scurab.gwt.rlw.server.util.DataGenerator;
+import com.scurab.gwt.rlw.shared.SharedParams;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.DeviceRespond;
 
@@ -83,6 +85,28 @@ public class RegistrationConnectorTest extends ApplicationTest {
             s.delete(l.get(i));
         }
         s.getTransaction().commit();
+        s.close();
+    }
+    
+    @Test
+    public void testOnWriteUpdateValues(){
+        Application.APP_PROPS.setProperty(SharedParams.CLIENT_UNIQUE_UUID_PER_DEVICE, Boolean.toString(true));
+        Device d = DataGenerator.genDevices(1).get(0);
+        
+        RegistrationConnector rc = new RegistrationConnector();
+        Session s = Database.openSession();
+        Device[] data = rc.onWrite(s, new Device[] {d});
+        Device saved = data[0];
+        assertTrue(saved.getDeviceID() > 0);
+        
+        saved.setModel("UPDATED TEST abcd");
+        data = rc.onWrite(s, new Device[] {saved});
+        
+        Device updated = data[0];
+        
+        assertEquals(saved.getDeviceID(),updated.getDeviceID());
+        assertEquals(saved.getModel(),updated.getModel());
+        
         s.close();
     }
 }

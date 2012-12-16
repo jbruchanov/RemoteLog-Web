@@ -52,7 +52,11 @@ public class LogItemTableWidget extends DynamicTableWidget {
                 new Delegate<HashMap<String, Object>>() {
             @Override
             public void execute(HashMap<String, Object> object) {
-                Window.open("blobs/" + object.get(TableColumns.LogItemID) , "_blank", null);
+                String url = "blobs/" + object.get(TableColumns.LogItemID);
+                if(RemoteLogWeb.isIE()){
+                    url = "/" + url;
+                }
+                Window.open(url  , "_blank", null);
             }
         });
         return ac;

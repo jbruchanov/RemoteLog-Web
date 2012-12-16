@@ -77,7 +77,7 @@ public abstract class DataConnector<T> extends Connector {
 
     protected T[] onWrite(Session s, T[] data) {
         s.beginTransaction();
-        for (T d : data) {            
+        for (T d : data) {
             s.saveOrUpdate(d);
         }
         s.getTransaction().commit();

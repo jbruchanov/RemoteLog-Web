@@ -30,16 +30,27 @@ public class RemoteLogWeb implements EntryPoint {
      * Create a remote service proxy to talk to the server-side Greeting service.
      */
     private final DataServiceAsync mDataService = GWT.create(DataService.class);
+    
     private final HandlerManager mEventBus = new HandlerManager(null);
+    
     public static final Words WORDS = GWT.create(Words.class);
+    
     public static DateTimeFormat DATETIMEFORMAT = DateTimeFormat.getFormat("yyyy-MM-dd kk:mm:ss");
+    
     public static final HashMap<String, Object> CLIENT_PROPERTIES = new HashMap<String, Object>();
+    
+    public static String BROWSER;
+    
+    private static boolean isIE = false;
 
     /**
      * This is the entry point method.
      */
     @Override
     public void onModuleLoad() {
+        BROWSER = getUserAgent();
+        isIE = BROWSER.toLowerCase().contains("msie");
+        
         RootPanel.get().add(new MainPresenter(mDataService, mEventBus, new MainWindow()));
         mDataService.getProperties(new AsyncCallback<String>() {
 
@@ -74,9 +85,17 @@ public class RemoteLogWeb implements EntryPoint {
             }
         });
     }
+    
+    public static native String getUserAgent() /*-{
+    return navigator.userAgent.toLowerCase();
+    }-*/;
 
     public static class Properties{
         public static int PAGE_SIZE = 50;
         public static int AUTO_REFRESH = 5;
+    }
+    
+    public static boolean isIE(){
+        return isIE;
     }
 }
