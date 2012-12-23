@@ -92,7 +92,7 @@ public class RegistrationConnectorTest extends ApplicationTest {
     public void testOnWriteUpdateValues(){
         Application.APP_PROPS.setProperty(SharedParams.CLIENT_UNIQUE_UUID_PER_DEVICE, Boolean.toString(true));
         Device d = DataGenerator.genDevices(1).get(0);
-        
+        d.setDevUUID("288414441ff5157");
         RegistrationConnector rc = new RegistrationConnector();
         Session s = Database.openSession();
         Device[] data = rc.onWrite(s, new Device[] {d});

@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import antlr.collections.List;
@@ -105,13 +106,14 @@ public class RegistrationConnector extends DataConnector<Device> {
         boolean uniqueUuid = Boolean.parseBoolean(Application.APP_PROPS
                 .getProperty(SharedParams.CLIENT_UNIQUE_UUID_PER_DEVICE));
         TableInfo ti = Database.getTable(Device.class);
-        String template = String.format("FROM %s WHERE DevUUID = ", ti.TableName);
+        String template = String.format("FROM %s WHERE DevUUID = :uuid", ti.TableName);
         for(int i = 0, n = data.length;i<n;i++){
             Device d = data[i];
             if (uniqueUuid) {
                 String uuid = d.getDevUUID();
-                String q = template + uuid;
-                java.util.List dbdata = s.createQuery(q).list();
+                Query q = s.createQuery(template);
+                q.setString("uuid", uuid);
+                java.util.List dbdata = q.list();
                 if(dbdata.size() == 1){
                     Device dbDevice = (Device) dbdata.get(0);
                     dbDevice.updateValues(d);
