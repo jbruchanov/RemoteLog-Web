@@ -12,17 +12,26 @@ import javax.servlet.ServletContextListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.scurab.gwt.rlw.server.data.Database;
+import com.scurab.gwt.rlw.server.util.XmlLoader;
 import com.scurab.gwt.rlw.shared.SharedParams;
+import com.scurab.gwt.rlw.shared.model.PushMessage;
 
 public class Application implements ServletContextListener {
 
     public static final Properties APP_PROPS = new Properties();
+    
     public static final HashMap<String, Object> CLIENT_PROPERTIES = new HashMap<String,Object>();
+    
     private static String DT_FORMAT = "yyyy-MM-dd kk:mm:ss.SSS";
+    
     public static SimpleDateFormat DATEFORMAT = new SimpleDateFormat(DT_FORMAT);
+    
     public static final Gson GSON = new GsonBuilder().setDateFormat(DT_FORMAT).create();
+    
     public static int PAGE_SIZE = 50;
 
+    public static PushMessage[] PUSH_MESSAGES;
+    
     @Override
     public void contextDestroyed(ServletContextEvent arg0) {
 
@@ -33,6 +42,7 @@ public class Application implements ServletContextListener {
         System.out.println("Start");
         try {
             loadProperties();
+            loadPushMessages();
             Database.init();
 
         } catch (Exception e) {
@@ -74,6 +84,10 @@ public class Application implements ServletContextListener {
                 e.printStackTrace();
             }
         }
+    }
+    
+    public static void loadPushMessages(){
+        PUSH_MESSAGES = XmlLoader.loadMessages();
     }
 
     public static final class ApplicationPropertyKeys {

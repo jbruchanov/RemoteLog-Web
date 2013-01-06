@@ -6,6 +6,7 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
+import com.scurab.gwt.rlw.shared.model.PushMessage;
 
 /**
  * The client side stub for the RPC service.
@@ -27,4 +28,6 @@ public interface DataService extends RemoteService {
     List<LogItem> getLogs(String jsonParams);
 
     String getProperties();
+    
+    PushMessage[] getPushMessages();
 }

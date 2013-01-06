@@ -9,6 +9,7 @@ import com.scurab.gwt.rlw.client.DataService;
 import com.scurab.gwt.rlw.server.Application;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
+import com.scurab.gwt.rlw.shared.model.PushMessage;
 
 public class DataServiceImpl extends RemoteServiceServlet implements DataService {
 
@@ -65,6 +66,11 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
     @Override
     public String getProperties() {
         return Application.GSON.toJson(Application.CLIENT_PROPERTIES);
+    }
+
+    @Override
+    public PushMessage[] getPushMessages() {
+        return Application.PUSH_MESSAGES;
     }
 
 }

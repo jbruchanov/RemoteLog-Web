@@ -2,6 +2,7 @@ package com.scurab.gwt.rlw.client;
 
 import java.util.HashMap;
 
+import com.google.android.gcm.server.Message;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerManager;
@@ -10,11 +11,13 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.scurab.gwt.rlw.client.presenter.MainPresenter;
 import com.scurab.gwt.rlw.client.view.MainWindow;
 import com.scurab.gwt.rlw.language.Words;
 import com.scurab.gwt.rlw.shared.SharedParams;
+import com.scurab.gwt.rlw.shared.model.PushMessage;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -41,6 +44,8 @@ public class RemoteLogWeb implements EntryPoint {
     
     public static String BROWSER;
     
+    public static PushMessage[] PUSH_MESSAGES;
+    
     private static boolean isIE = false;
 
     /**
@@ -52,6 +57,8 @@ public class RemoteLogWeb implements EntryPoint {
         isIE = BROWSER.toLowerCase().contains("msie");
         
         RootPanel.get().add(new MainPresenter(mDataService, mEventBus, new MainWindow()));
+        
+        //load client properties
         mDataService.getProperties(new AsyncCallback<String>() {
 
             @Override
@@ -81,7 +88,22 @@ public class RemoteLogWeb implements EntryPoint {
 
             @Override
             public void onFailure(Throwable caught) {
-                Window.alert("Unable to download client properties!");
+                RootPanel.get().clear();
+                RootPanel.get().add(new Label("Unable to download client properties! => Unable to open MainWindow"));
+            }
+        });
+        
+        //download push messages
+        mDataService.getPushMessages(new AsyncCallback<PushMessage[]>() {
+            @Override
+            public void onSuccess(PushMessage[] result) {
+                PUSH_MESSAGES = result;
+            }
+            
+            @Override
+            public void onFailure(Throwable caught) {
+                Window.alert("Unable to download push messages definition!");
+                PUSH_MESSAGES = new PushMessage[0];
             }
         });
     }

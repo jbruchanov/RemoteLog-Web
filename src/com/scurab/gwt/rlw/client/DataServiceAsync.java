@@ -5,6 +5,7 @@ import java.util.List;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
+import com.scurab.gwt.rlw.shared.model.PushMessage;
 
 /**
  * The async counterpart of <code>GreetingService</code>.
@@ -20,4 +21,6 @@ public interface DataServiceAsync {
     void getDistinctValues(String appName, String query, AsyncCallback<List<String>> callback);
 
     void getProperties(AsyncCallback<String> callback);
+
+    void getPushMessages(AsyncCallback<PushMessage[]> callback);
 }
