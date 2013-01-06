@@ -6,6 +6,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 import com.scurab.gwt.rlw.shared.model.PushMessage;
+import com.scurab.gwt.rlw.shared.model.PushMessageRequest;
+import com.scurab.gwt.rlw.shared.model.PushMessageRespond;
 
 /**
  * The async counterpart of <code>GreetingService</code>.
@@ -23,4 +25,6 @@ public interface DataServiceAsync {
     void getProperties(AsyncCallback<String> callback);
 
     void getPushMessages(AsyncCallback<PushMessage[]> callback);
+
+    void sendMessage(String json, AsyncCallback<PushMessageRespond> callback);
 }

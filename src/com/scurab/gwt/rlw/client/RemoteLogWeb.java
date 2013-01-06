@@ -2,7 +2,6 @@ package com.scurab.gwt.rlw.client;
 
 import java.util.HashMap;
 
-import com.google.android.gcm.server.Message;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerManager;

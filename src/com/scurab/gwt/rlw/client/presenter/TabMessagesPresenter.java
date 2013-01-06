@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
@@ -15,6 +16,8 @@ import com.scurab.gwt.rlw.client.RemoteLogWeb;
 import com.scurab.gwt.rlw.client.view.PushMessageView;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.PushMessage;
+import com.scurab.gwt.rlw.shared.model.PushMessageRequest;
+import com.scurab.gwt.rlw.shared.model.PushMessageRespond;
 
 public class TabMessagesPresenter extends TabBasePresenter {
 
@@ -94,8 +97,41 @@ public class TabMessagesPresenter extends TabBasePresenter {
     }
     
     protected void onSendClick() {
+        String json = getMessageRequest().toJson().toString();
+        notifyStartDownloading(null);
+        mDisplay.getSendButton().setEnabled(false);
+        mDataService.sendMessage(json, new AsyncCallback<PushMessageRespond>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                mDisplay.getSendButton().setEnabled(true);
+                notifyStopDownloading();
+            }
+
+            @Override
+            public void onSuccess(PushMessageRespond result) {
+                mDisplay.getSendButton().setEnabled(true);
+                notifyStopDownloading();
+                onPushRespond(result);
+            }
+        });
+    }
+    
+    protected void onPushRespond(PushMessageRespond rmd){
+        Window.alert(rmd.getStatus());
+    }
+    
+    private PushMessageRequest getMessageRequest(){
         PushMessage pm = getSelectedMessage();
-        Window.alert(pm != null ? pm.getName() : "null");
+        PushMessageRequest pmr = new PushMessageRequest();
+        pmr.setDeviceID(mDevice.getDeviceID());
+        pmr.setDevicePlatform(mDevice.getPlatform());
+        pmr.setPushToken(mDevice.getPushID());
+        pmr.setMessage(pm);
+        if(pm.hasParams()){
+            pmr.setMessageParams(mDisplay.getMessageParams().getText());
+        }
+        pmr.setWaitForRespond(mDisplay.getWaitCheckBox().getValue());
+        return pmr;
     }
     
     protected void onSelectMessage(PushMessage m){
@@ -104,9 +140,7 @@ public class TabMessagesPresenter extends TabBasePresenter {
             TextArea ta = mDisplay.getMessageParams();
             boolean hasParams = m.hasParams();
             ta.setEnabled(hasParams);
-            if(hasParams){
-                ta.setText(m.getParamExample());
-            }
+            ta.setText(m.getParamExample());
         }
     }
 

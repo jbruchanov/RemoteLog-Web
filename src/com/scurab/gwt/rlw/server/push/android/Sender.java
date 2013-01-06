@@ -1,4 +1,19 @@
-package com.google.android.gcm.server;
+/*
+ * Copyright 2012 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.scurab.gwt.rlw.server.push.android;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -11,15 +26,18 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Map.Entry;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import com.google.android.gcm.server.InvalidRequestException;
-import com.google.android.gcm.server.Message;
-import com.google.android.gcm.server.Result;
-import com.google.android.gcm.server.Constants;
-import com.google.android.gcm.server.Result.Builder;
-import com.scurab.gwt.rlw.server.push.PushSender;
+import com.scurab.gwt.rlw.server.push.android.Result.Builder;
 
-public class AndroidSender extends PushSender {
+import static com.scurab.gwt.rlw.server.push.android.ServerConstants.*;
+
+/**
+ * Helper class to send messages to the GCM service using an API Key.
+ */
+public class Sender {
+
     protected static final String UTF8 = "UTF-8";
 
     /**
@@ -32,7 +50,7 @@ public class AndroidSender extends PushSender {
     protected static final int MAX_BACKOFF_DELAY = 1024000;
 
     protected final Random random = new Random();
-//    protected static final Logger logger = Logger.getLogger(Sender.class.getName());
+    protected static final Logger logger = Logger.getLogger(Sender.class.getName());
 
     private final String key;
 
@@ -43,11 +61,7 @@ public class AndroidSender extends PushSender {
      *            API key obtained through the Google API Console.
      */
 
-    public AndroidSender() {
-        this.key = "AIzaSyC8TBGwFPjeVul9FPs5VlmCkht8zfCVFyM";
-    }
-
-    public AndroidSender(String key) {
+    public Sender(String key) {
         this.key = key;
     }
 
@@ -79,62 +93,62 @@ public class AndroidSender extends PushSender {
      *             if registrationId is {@literal null}.
      */
     public Result sendNoRetry(Message message, String registrationId) throws IOException {
-        StringBuilder body = newBody(Constants.PARAM_REGISTRATION_ID, registrationId);
+        StringBuilder body = newBody(PARAM_REGISTRATION_ID, registrationId);
         Boolean delayWhileIdle = message.isDelayWhileIdle();
         if (delayWhileIdle != null) {
-            addParameter(body, Constants.PARAM_DELAY_WHILE_IDLE, delayWhileIdle ? "1" : "0");
+            addParameter(body, PARAM_DELAY_WHILE_IDLE, delayWhileIdle ? "1" : "0");
         }
         String collapseKey = message.getCollapseKey();
         if (collapseKey != null) {
-            addParameter(body, Constants.PARAM_COLLAPSE_KEY, collapseKey);
+            addParameter(body, PARAM_COLLAPSE_KEY, collapseKey);
         }
         Integer timeToLive = message.getTimeToLive();
         if (timeToLive != null) {
-            addParameter(body, Constants.PARAM_TIME_TO_LIVE, Integer.toString(timeToLive));
+            addParameter(body, PARAM_TIME_TO_LIVE, Integer.toString(timeToLive));
         }
         for (Entry<String, String> entry : message.getData().entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
             if (key == null || value == null) {
-//                logger.warning("Ignoring payload entry thas has null: " + entry);
+                logger.warning("Ignoring payload entry thas has null: " + entry);
             } else {
-                key = Constants.PARAM_PAYLOAD_PREFIX + key;
+                key = PARAM_PAYLOAD_PREFIX + key;
                 addParameter(body, key, URLEncoder.encode(value, UTF8));
             }
         }
         String requestBody = body.toString();
-//        logger.finest("Request body: " + requestBody);
+        logger.finest("Request body: " + requestBody);
         HttpURLConnection conn;
         int status;
         try {
-            conn = post(Constants.GCM_SEND_ENDPOINT, requestBody);
+            conn = post(GCM_SEND_ENDPOINT, requestBody);
             status = conn.getResponseCode();
         } catch (IOException e) {
-//            logger.log(Level.FINE, "IOException posting to GCM", e);
+            logger.log(Level.FINE, "IOException posting to GCM", e);
             return null;
         }
         if (status / 100 == 5) {
-//            logger.fine("GCM service is unavailable (status " + status + ")");
+            logger.fine("GCM service is unavailable (status " + status + ")");
             return null;
         }
         String responseBody;
         if (status != 200) {
             try {
                 responseBody = getAndClose(conn.getErrorStream());
-//                logger.finest("Plain post error response: " + responseBody);
+                logger.finest("Plain post error response: " + responseBody);
             } catch (IOException e) {
                 // ignore the exception since it will thrown an
                 // InvalidRequestException
                 // anyways
                 responseBody = "N/A";
-//                logger.log(Level.FINE, "Exception reading response: ", e);
+                logger.log(Level.FINE, "Exception reading response: ", e);
             }
-            throw new InvalidRequestException(status, responseBody);
+            throw new IOException(status + "\n" + responseBody);
         } else {
             try {
                 responseBody = getAndClose(conn.getInputStream());
             } catch (IOException e) {
-//                logger.log(Level.WARNING, "Exception reading response: ", e);
+                logger.log(Level.WARNING, "Exception reading response: ", e);
                 // return null so it can retry
                 return null;
             }
@@ -147,7 +161,7 @@ public class AndroidSender extends PushSender {
         String[] responseParts = split(firstLine);
         String token = responseParts[0];
         String value = responseParts[1];
-        if (token.equals(Constants.TOKEN_MESSAGE_ID)) {
+        if (token.equals(TOKEN_MESSAGE_ID)) {
             Builder builder = new Result.Builder().messageId(value);
             // check for canonical registration id
             if (lines.length > 1) {
@@ -155,18 +169,18 @@ public class AndroidSender extends PushSender {
                 responseParts = split(secondLine);
                 token = responseParts[0];
                 value = responseParts[1];
-                if (token.equals(Constants.TOKEN_CANONICAL_REG_ID)) {
+                if (token.equals(TOKEN_CANONICAL_REG_ID)) {
                     builder.canonicalRegistrationId(value);
                 } else {
-//                    logger.warning("Invalid response from GCM: " + responseBody);
+                    logger.warning("Invalid response from GCM: " + responseBody);
                 }
             }
             Result result = builder.build();
-//            if (logger.isLoggable(Level.FINE)) {
-//                logger.fine("Message created succesfully (" + result + ")");
-//            }
+            if (logger.isLoggable(Level.FINE)) {
+                logger.fine("Message created succesfully (" + result + ")");
+            }
             return result;
-        } else if (token.equals(Constants.TOKEN_ERROR)) {
+        } else if (token.equals(TOKEN_ERROR)) {
             return new Result.Builder().errorCode(value).build();
         } else {
             throw new IOException("Invalid response from GCM: " + responseBody);
@@ -182,10 +196,10 @@ public class AndroidSender extends PushSender {
             throw new IllegalArgumentException("arguments cannot be null");
         }
         if (!url.startsWith("https://")) {
-//            logger.warning("URL does not use https: " + url);
+            logger.warning("URL does not use https: " + url);
         }
-//        logger.fine("Sending POST to " + url);
-//        logger.finest("POST body: " + body);
+        logger.fine("Sending POST to " + url);
+        logger.finest("POST body: " + body);
         byte[] bytes = body.getBytes();
         HttpURLConnection conn = getConnection(url);
         conn.setDoOutput(true);
@@ -214,7 +228,7 @@ public class AndroidSender extends PushSender {
                 closeable.close();
             } catch (IOException e) {
                 // ignore error
-//                logger.log(Level.FINEST, "IOException closing stream", e);
+                logger.log(Level.FINEST, "IOException closing stream", e);
             }
         }
     }

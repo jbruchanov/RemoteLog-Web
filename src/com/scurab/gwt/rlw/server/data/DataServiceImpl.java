@@ -7,9 +7,12 @@ import java.util.List;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.scurab.gwt.rlw.client.DataService;
 import com.scurab.gwt.rlw.server.Application;
+import com.scurab.gwt.rlw.server.push.AndroidSender;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 import com.scurab.gwt.rlw.shared.model.PushMessage;
+import com.scurab.gwt.rlw.shared.model.PushMessageRequest;
+import com.scurab.gwt.rlw.shared.model.PushMessageRespond;
 
 public class DataServiceImpl extends RemoteServiceServlet implements DataService {
 
@@ -73,4 +76,16 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
         return Application.PUSH_MESSAGES;
     }
 
+    @Override
+    public PushMessageRespond sendMessage(String json) {
+        PushMessageRequest req = Application.GSON.fromJson(json, PushMessageRequest.class);
+        PushMessageRespond res = null;
+        String platform = req.getDevicePlatform().toLowerCase();
+        if(platform.startsWith("android")){
+            res = AndroidSender.send(req);
+        }else{
+            throw new IllegalStateException(String.format("Platform '%s' not implemented!", platform));
+        }
+        return res;
+    }
 }
