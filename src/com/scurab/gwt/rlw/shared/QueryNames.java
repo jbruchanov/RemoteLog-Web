@@ -11,6 +11,9 @@ public final class QueryNames {
 
     public static final String SELECT_PLATFORMS = "SELECT_PLATFORMS";
     public static final String SELECT_PLATFORMS_BY_APPNAME = "SELECT_PLATFORMS_BY_APPNAME";
+    
+    public static final String SELECT_OSVERSIONS = "SELECT_OSVERSIONS";
+    public static final String SELECT_OSVERSIONS_BY_APPNAME = "SELECT_OSVERSIONS_BY_APPNAME";
 
     public static final String SELECT_BRANDS = "SELECT_BRANDS";
     public static final String SELECT_BRANDS_BY_APPNAME = "SELECT_BRANDS_BY_APPNAME";

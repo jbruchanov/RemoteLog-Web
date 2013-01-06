@@ -295,6 +295,15 @@ public interface Words extends com.google.gwt.i18n.client.ConstantsWithLookup {
   String OK();
 
   /**
+   * Translated "OS Version".
+   * 
+   * @return translated "OS Version"
+   */
+  @DefaultStringValue("OS Version")
+  @Key("OSVersion")
+  String OSVersion();
+
+  /**
    * Translated "Open".
    * 
    * @return translated "Open"

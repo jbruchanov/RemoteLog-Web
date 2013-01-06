@@ -51,6 +51,14 @@
 			</g:row>
 			<g:row>
 				<g:customCell>
+					<g:Label text="{res.OSVersion}"/>
+				</g:customCell>
+				<g:customCell>
+					<g:ListBox visibleItemCount="1" width="100%" ui:field="mOSVersion"/>
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
 					<g:Label text="{res.Resolution}"/>
 				</g:customCell>
 				<g:customCell>

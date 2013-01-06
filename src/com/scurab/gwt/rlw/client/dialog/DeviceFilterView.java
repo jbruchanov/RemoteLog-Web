@@ -35,6 +35,8 @@ public class DeviceFilterView extends Composite implements IsFilterWidget {
     Button mCancelButton;
     @UiField
     IntegerBox mDeviceID;
+    
+    @UiField ListBox mOSVersion;
 
     private DataServiceAsync mDataService;
 
@@ -83,6 +85,20 @@ public class DeviceFilterView extends Composite implements IsFilterWidget {
             @Override
             public void onSuccess(List<String> result) {
                 fillListBox(mPlatform, result);
+            }
+
+            @Override
+            public void onFailure(Throwable caught) {
+                Window.alert(caught.getMessage());
+            }
+        });
+        
+        
+        mDataService.getDistinctValues(mApplication, mApplication == null ? QueryNames.SELECT_OSVERSIONS
+                : QueryNames.SELECT_OSVERSIONS_BY_APPNAME, new AsyncCallback<List<String>>() {
+            @Override
+            public void onSuccess(List<String> result) {
+                fillListBox(mOSVersion, result);
             }
 
             @Override

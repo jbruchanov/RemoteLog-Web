@@ -100,6 +100,21 @@
 		ORDER BY Platform; 
 	]]>
 	</Query>
+	<Query name="SELECT_OSVERSIONS" type="SQL">
+	<![CDATA[
+		SELECT DISTINCT Version FROM LogItems INNER JOIN 
+		Devices ON Devices.DeviceID = LogItems.DeviceID 
+		ORDER BY Version;
+	]]>
+	</Query>
+	<Query name="SELECT_OSVERSIONS_BY_APPNAME" type="SQL" parameters="Application">
+	<![CDATA[
+		SELECT DISTINCT Version FROM LogItems INNER JOIN 
+		Devices ON Devices.DeviceID = LogItems.DeviceID
+		WHERE Application = :Application 
+		ORDER BY Version; 
+	]]>
+	</Query>
 	<Query name="SELECT_BRANDS" type="SQL">
 	<![CDATA[
 		SELECT DISTINCT Brand FROM LogItems INNER JOIN 
