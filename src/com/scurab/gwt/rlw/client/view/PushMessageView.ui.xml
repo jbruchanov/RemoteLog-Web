@@ -1,0 +1,46 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:with type="com.scurab.gwt.rlw.language.Words" field="res"/>
+	<ui:style>
+		.important {
+			font-weight: bold;
+		}
+	</ui:style>
+	<g:HTMLPanel>
+		<g:Grid width="100%">
+			<g:row>
+				<g:customCell>
+					<g:Label text="{res.Message}"/>
+				</g:customCell>
+				<g:customCell>
+					<g:ListBox width="100%" ui:field="mMessageListBox" />
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
+					<g:Label text="{res.Params}"/>
+				</g:customCell>
+				<g:customCell>
+					<g:TextArea width="100%" visibleLines="5" ui:field="mMessageParams"/>
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
+					<g:Label text="{res.TryWaitForRespond}"/>
+				</g:customCell>
+				<g:customCell>
+					<g:CheckBox text="" ui:field="mWaitCheckBox"/>
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
+					<g:Label/>
+				</g:customCell>
+				<g:customCell>
+					<g:Button ui:field="mSendButton" text="{res.Send}"/>
+				</g:customCell>
+			</g:row>
+		</g:Grid>
+	</g:HTMLPanel>
+</ui:UiBinder> 

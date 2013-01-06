@@ -13,6 +13,7 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
     private String mApp;
 
     private TabLogPresenter mLogPresenter;
+    private TabDevicesPresenter mDevicesPresenter;
     private TabDevicePresenter mDevicePresenter;
 
     public ContentViewPresenter(DataServiceAsync dataService, HandlerManager eventBus, ContentView display) {
@@ -32,8 +33,9 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
     private void init() {
         mLogPresenter = new TabLogPresenter(mDataService, mEventBus, mApp, mDisplay.getLogsPanel());
         mLogPresenter.onLoadData(0);
-        mDevicePresenter = new TabDevicePresenter(mDataService, mEventBus, mApp, mDisplay.getDevicesPanel());
-        mDevicePresenter.onLoadData(0);
+        mDevicesPresenter = new TabDevicesPresenter(mDataService, mEventBus, mApp, mDisplay.getDevicesPanel());
+        mDevicesPresenter.onLoadData(0);
+        
+        mDevicePresenter = new TabDevicePresenter(mDataService, mEventBus, mApp, mDisplay.getDevicePanel());
     }
-
 }

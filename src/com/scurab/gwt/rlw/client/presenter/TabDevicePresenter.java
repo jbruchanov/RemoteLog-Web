@@ -1,75 +1,39 @@
 package com.scurab.gwt.rlw.client.presenter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
-import com.scurab.gwt.rlw.client.components.DeviceTableWidget;
-import com.scurab.gwt.rlw.client.components.DynamicTableWidget;
-import com.scurab.gwt.rlw.client.dialog.DeviceFilterDialog;
-import com.scurab.gwt.rlw.client.dialog.FilterDialog;
-import com.scurab.gwt.rlw.client.dialog.FilterDialog.OnOkListener;
-import com.scurab.gwt.rlw.shared.TableColumns;
-import com.scurab.gwt.rlw.shared.model.Device;
+import com.scurab.gwt.rlw.client.view.DevicePanel;
 
-public class TabDevicePresenter extends TabDataPresenter<Device> {
+public class TabDevicePresenter extends TabBasePresenter {
 
-    private DynamicTableWidget mDevicesTable;
-    private DeviceFilterDialog mFilterDialog;
     private DataServiceAsync mDataService;
     private HandlerManager mEventBus;
-    private String mApp;
-    private HTMLPanel mLogPanel;
-
+    private HTMLPanel mContainer;
+    private DevicePanel mDevicePanel;
+    private String mAppName;
+    
+    private TabMessagesPresenter mMessagePresenter;
+    
     public TabDevicePresenter(DataServiceAsync dataService, HandlerManager eventBus, String appName, HTMLPanel tabPanel) {
         super(dataService, eventBus, appName, tabPanel);
+        
         mDataService = dataService;
         mEventBus = eventBus;
-        mApp = appName;
-        mLogPanel = tabPanel;
+        mAppName = appName;
+        mContainer = tabPanel;
+        
+        init();
     }
-
-    @Override
-    protected List<HashMap<String, Object>> transformData(List<Device> data) {
-        List<HashMap<String, Object>> rCollection = new ArrayList<HashMap<String, Object>>();
-        for (int i = 0; i < data.size(); i++) {
-            Device d = data.get(i);
-            HashMap<String, Object> result = new HashMap<String, Object>();
-            result.put("UUID_1", d.getDevUUID());
-            result.put("Brand_2", d.getBrand());
-            result.put("Model_3", d.getModel());
-            result.put("Platform_4", d.getPlatform());
-            result.put("OSv_5", d.getVersion());
-            result.put("Resolution_6", d.getResolution());
-            result.put(TableColumns.DeviceID, d.getDeviceID());
-            rCollection.add(result);
-        }
-        return rCollection;
+    
+    private void init(){
+        mDevicePanel = new DevicePanel();
+        mContainer.add(mDevicePanel.asWidget());
+        
+        mMessagePresenter = new TabMessagesPresenter(mDataService, mEventBus, mAppName, mDevicePanel.getMessagesPanel());
     }
-
-    @Override
-    protected DynamicTableWidget onCreateTable() {
-        mDevicesTable = new DeviceTableWidget();
-        return mDevicesTable;
-    }
-
-    @Override
-    protected FilterDialog onCreateFilterDialog(OnOkListener okListener) {
-        mFilterDialog = new DeviceFilterDialog(mApp, mDataService, okListener);
-        return mFilterDialog;
-    }
-
-    @Override
-    protected void onLoadData(int page, AsyncCallback<List<Device>> listener) {
-        mDataService.getDevices(createParams(page).toString(), listener);
-    }
-
-    @Override
-    protected void notifyStartDownloading() {
-        notifyStartDownloading(WORDS.LoadingDevices());
+    
+    public void setDeviceId(){
+        
     }
 }

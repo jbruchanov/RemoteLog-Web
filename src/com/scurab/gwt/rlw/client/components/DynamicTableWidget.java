@@ -129,6 +129,7 @@ public class DynamicTableWidget extends Composite {
         mCellTable.setLoadingIndicator(new Label("Loading").asWidget());
         mCellTable.setPageSize(getPageSize());
         mCellTable.setSelectionModel(getSelectionModel());
+        
 
         // Create a Pager to control the table.
         SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
@@ -220,7 +221,7 @@ public class DynamicTableWidget extends Composite {
      * 
      * @return
      */
-    protected SelectionModel<HashMap<String, Object>> getSelectionModel() {
+    public SelectionModel<HashMap<String, Object>> getSelectionModel() {
         return null;
     }
 

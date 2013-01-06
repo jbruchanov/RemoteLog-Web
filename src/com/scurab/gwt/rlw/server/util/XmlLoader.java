@@ -33,11 +33,24 @@ public class XmlLoader {
                 Node n = messages.item(i);
                 String name = n.getAttributes().getNamedItem("name").getNodeValue();
                 String hasParamStr = n.getAttributes().getNamedItem("param").getNodeValue();
+                //optional platform
+                String platform = null;
+                Node platformNode = n.getAttributes().getNamedItem("platform");
+                if(platformNode != null){
+                    platform = platformNode.getNodeValue(); 
+                }
                 boolean hasParam = Boolean.parseBoolean(hasParamStr);
                 //create object
                 PushMessage pm = new PushMessage();
                 pm.setName(name);
                 pm.setHasParams(hasParam);
+                if(platform != null){
+                    if(platform.contains("|")){
+                        pm.setPlatforms(platform.split("\\|"));
+                    }else{
+                        pm.setPlatforms(new String[] {platform});
+                    }
+                }
                 subResult.add(pm);
             }
         } catch (Exception e) {
@@ -45,5 +58,5 @@ public class XmlLoader {
             e.printStackTrace();
         }
         return subResult.toArray(new PushMessage[subResult.size()]);
-    }
+    }       
 }
