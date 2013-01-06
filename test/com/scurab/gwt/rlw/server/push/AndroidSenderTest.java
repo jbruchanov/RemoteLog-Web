@@ -13,13 +13,13 @@ import com.scurab.gwt.rlw.shared.model.PushMessageRespond;
 public class AndroidSenderTest extends ApplicationTest {
 
     @Test
-    public void testSendZumpaReader() {
+    public void testSend() {
         PushMessage pm = new PushMessage();
         pm.setName("message");
         
         PushMessageRequest pmr = new PushMessageRequest();
-        pmr.setPushToken("APA91bHdakg6HvdPvQerb33AJb-oCcKCqmdmGLyG7krS9OAhec1VgTX5o2BxJwNoDr2kquEXdK5P5TelFiFuQAYXql3eheFPMdL3wktDa7tJYFU90EIVmRG_Yr7xKfDRcqFNlrEhNIOIakw1OUqPOMqBPB4McQsyzg");
-        
+        pmr.setPushToken("APA91bH5gMrR4QaIt3_ejHnbkwpNBhJfvexXaOW4IMeQGbmo1i-Mutrkfb_BzbK0XIRuxezh5G3RbyVM766doIrKy9NY6_joJ6iMphS_eYtb-h1Syhfq5KRjDoOy2RBrlI26z7jufq7Dq_iDGLXCWy7C_ay-OgCOmg");
+                //        APA91bH5gMrR4QaIt3_ejHnbkwpNBhJfvexXaOW4IMeQGbmo1i-Mutrkfb_BzbK0XIRuxezh5G3RbyVM766doIrKy9NY6_joJ6iMphS_eYtb-h1Syhfq5KRjDoOy2RBrlI26z7jufq7Dq_iDGLXCWy7C_ay-OgCOmg
         pmr.setDeviceID(0);
         pmr.setDevicePlatform("android");
         pmr.setMessage(pm);
@@ -31,4 +31,6 @@ public class AndroidSenderTest extends ApplicationTest {
         assertNotNull(respond.getMessageId());
         assertTrue(respond.getRequest() == pmr);
     }
+    
+    
 }

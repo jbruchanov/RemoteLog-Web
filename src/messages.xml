@@ -6,4 +6,5 @@
 	<Message name="Resend registration" param="false"
 		platform="android|windowsphone" />
 	<Message name="Kill app" param="false" platform="android" />
+	<Message name="TakeScreenshot" param="false" platform="android" />
 </Messages>

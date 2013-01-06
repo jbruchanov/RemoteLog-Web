@@ -53,7 +53,7 @@ public class AndroidSender{
     private static Message getMessage(long timestamp, PushMessageRequest pmr){
         Message.Builder b = new Message.Builder();
         b.collapseKey(pmr.getMessage().getName());
-        b.addData("message", pmr.getMessageParams());
+        b.addData("params", pmr.getMessageParams());
         b.addData("timestamp", String.valueOf(timestamp));
         b.delayWhileIdle(true);
         return b.build();
