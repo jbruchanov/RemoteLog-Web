@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Messages>
 	<Message name="Echo" param="false" />
+	<Message name="Notification" param="true" paramExample="{Title:&quot;&quot;, Message:&quot;&quot;}" />
+	<Message name="Question" param="true"/>
 	<Message name="Resend registration" param="false"
 		platform="android|windowsphone" />
 	<Message name="Kill app" param="false" platform="android" />

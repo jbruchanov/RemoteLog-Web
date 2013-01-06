@@ -3,7 +3,9 @@ package com.scurab.gwt.rlw.client.presenter;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
+import com.scurab.gwt.rlw.client.presenter.TabDevicesPresenter.OnDetailClickListener;
 import com.scurab.gwt.rlw.client.view.ContentView;
+import com.scurab.gwt.rlw.shared.model.Device;
 
 public class ContentViewPresenter extends BasePresenter implements IsWidget {
 
@@ -28,6 +30,7 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
         mDisplay = display;
         mApp = appName;
         init();
+        bind();
     }
 
     private void init() {
@@ -37,5 +40,17 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
         mDevicesPresenter.onLoadData(0);
         
         mDevicePresenter = new TabDevicePresenter(mDataService, mEventBus, mApp, mDisplay.getDevicePanel());
+        
+        mDevicesPresenter.setSelectionListener(mDevicePresenter);
+        
+    }
+    
+    private void bind(){
+        mDevicesPresenter.setDetailClickListener(new OnDetailClickListener() {
+            @Override
+            public void onClick(Device d) {
+                mDisplay.setCurrentTab(2);
+            }
+        });
     }
 }

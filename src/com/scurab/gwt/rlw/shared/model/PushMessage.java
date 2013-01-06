@@ -10,6 +10,7 @@ public class PushMessage implements Serializable{
     private String mName;
     private boolean mHasParams;
     private String[] mPlatforms;
+    private String mParamExample;
 
     public String getName() {
         return mName;
@@ -36,7 +37,7 @@ public class PushMessage implements Serializable{
     }
     
     public boolean isPlatformSupported(String platform){
-        boolean result = false;
+        boolean result = mPlatforms == null;
         
         if(mPlatforms != null){
             for(String p : mPlatforms){
@@ -48,5 +49,13 @@ public class PushMessage implements Serializable{
         }
         
         return result;
+    }
+
+    public String getParamExample() {
+        return mParamExample;
+    }
+
+    public void setParamExample(String paramExample) {
+        mParamExample = paramExample;
     }
 }

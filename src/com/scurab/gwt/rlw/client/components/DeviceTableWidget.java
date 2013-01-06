@@ -29,6 +29,8 @@ public class DeviceTableWidget extends DynamicTableWidget {
 
     private SelectionModel<HashMap<String, Object>> mSelectionModel;
     
+    private OnActionCellEventListener mListener;
+    
     public DeviceTableWidget() {
         super();
     }
@@ -41,14 +43,9 @@ public class DeviceTableWidget extends DynamicTableWidget {
     protected Cell<String> getCell(String key, Object dataExample) {
         return new CustomTextCell();
     }
-
-    public static native void createWindow(String text) /*-{
-                                                        var win = window.open("", "win", "width=300,height=200"); // a window object
-                                                        win.document.open("", "replace");
-                                                        win.document.write(text);
-                                                        win.document.close();
-                                                        }-*/;
-
+    
+    
+    
     public class CustomTextCell extends TextCell {
         HashSet<String> mEvents = new HashSet<String>();
 
@@ -57,7 +54,7 @@ public class DeviceTableWidget extends DynamicTableWidget {
                 NativeEvent event, ValueUpdater<String> valueUpdater) {
             super.onBrowserEvent(context, parent, value, event, valueUpdater);
             if (value.startsWith("{") || value.startsWith("[")) {
-                createWindow(value);
+                RemoteLogWeb.createWindow(value);
             }
         }
 
@@ -99,13 +96,15 @@ public class DeviceTableWidget extends DynamicTableWidget {
                 new Delegate<HashMap<String, Object>>() {
             @Override
             public void execute(HashMap<String, Object> object) {
-                String url = "regs/nice/" + object.get(TableColumns.DeviceID);
-                if(RemoteLogWeb.isIE()){
-                    url = "/" + url;
+                if(mListener != null){
+                    mListener.onEvent(this, object);
                 }
-                Window.open(url , "_blank", null);
             }
         });
         return ac;
+    }
+
+    public void setActionCellListener(OnActionCellEventListener listener) {
+        mListener = listener;
     }
 }

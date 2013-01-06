@@ -106,6 +106,15 @@ public interface Words extends com.google.gwt.i18n.client.ConstantsWithLookup {
   String Debug();
 
   /**
+   * Translated "Description".
+   * 
+   * @return translated "Description"
+   */
+  @DefaultStringValue("Description")
+  @Key("Description")
+  String Description();
+
+  /**
    * Translated "Detail".
    * 
    * @return translated "Detail"
@@ -113,6 +122,15 @@ public interface Words extends com.google.gwt.i18n.client.ConstantsWithLookup {
   @DefaultStringValue("Detail")
   @Key("Detail")
   String Detail();
+
+  /**
+   * Translated "Device UUID".
+   * 
+   * @return translated "Device UUID"
+   */
+  @DefaultStringValue("Device UUID")
+  @Key("DevUUID")
+  String DevUUID();
 
   /**
    * Translated "Device".
@@ -169,6 +187,15 @@ public interface Words extends com.google.gwt.i18n.client.ConstantsWithLookup {
   String Filter();
 
   /**
+   * Translated "ID".
+   * 
+   * @return translated "ID"
+   */
+  @DefaultStringValue("ID")
+  @Key("ID")
+  String ID();
+
+  /**
    * Translated "Info".
    * 
    * @return translated "Info"
@@ -223,6 +250,15 @@ public interface Words extends com.google.gwt.i18n.client.ConstantsWithLookup {
   String Message();
 
   /**
+   * Translated "Missing push token".
+   * 
+   * @return translated "Missing push token"
+   */
+  @DefaultStringValue("Missing push token")
+  @Key("MissingPushID")
+  String MissingPushID();
+
+  /**
    * Translated "Model".
    * 
    * @return translated "Model"
@@ -259,6 +295,33 @@ public interface Words extends com.google.gwt.i18n.client.ConstantsWithLookup {
   String OK();
 
   /**
+   * Translated "Open".
+   * 
+   * @return translated "Open"
+   */
+  @DefaultStringValue("Open")
+  @Key("Open")
+  String Open();
+
+  /**
+   * Translated "OS Description".
+   * 
+   * @return translated "OS Description"
+   */
+  @DefaultStringValue("OS Description")
+  @Key("OsDesription")
+  String OsDesription();
+
+  /**
+   * Translated "Owner".
+   * 
+   * @return translated "Owner"
+   */
+  @DefaultStringValue("Owner")
+  @Key("Owner")
+  String Owner();
+
+  /**
    * Translated "Params".
    * 
    * @return translated "Params"
@@ -275,6 +338,33 @@ public interface Words extends com.google.gwt.i18n.client.ConstantsWithLookup {
   @DefaultStringValue("Platform")
   @Key("Platform")
   String Platform();
+
+  /**
+   * Translated "PushID".
+   * 
+   * @return translated "PushID"
+   */
+  @DefaultStringValue("PushID")
+  @Key("PushID")
+  String PushID();
+
+  /**
+   * Translated "Push notification".
+   * 
+   * @return translated "Push notification"
+   */
+  @DefaultStringValue("Push notification")
+  @Key("PushNotifiation")
+  String PushNotifiation();
+
+  /**
+   * Translated "Raw Detail".
+   * 
+   * @return translated "Raw Detail"
+   */
+  @DefaultStringValue("Raw Detail")
+  @Key("RawDetail")
+  String RawDetail();
 
   /**
    * Translated "Really ?".
@@ -329,6 +419,15 @@ public interface Words extends com.google.gwt.i18n.client.ConstantsWithLookup {
   @DefaultStringValue("Try wait for respond")
   @Key("TryWaitForRespond")
   String TryWaitForRespond();
+
+  /**
+   * Translated "Version".
+   * 
+   * @return translated "Version"
+   */
+  @DefaultStringValue("Version")
+  @Key("Version")
+  String Version();
 
   /**
    * Translated "Warning".

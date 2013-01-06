@@ -15,7 +15,7 @@ public class DataGenerator {
     private static final Random sRandom = new Random();
     private static final String[] sBrands = new String[] { "Acer", "Benq", "HTC", "Huawei", "LG", "Microsoft", "Nokia",
         "Samsung", "ZTE" };
-    private static final String[] sPlatforms = new String[] { "Android", "Windows Phone", "iOS", "BlackBerry" };
+    private static final String[] sPlatforms = new String[] { "Android", "WindowsPhone", "iOS", "BlackBerry" };
     private static final String[] sResolutions = new String[] { "480x800", "320x480", "240x480", "800x1280",
     "1080x1920" };
 
@@ -43,6 +43,9 @@ public class DataGenerator {
         d.setVersion(String.valueOf(1 + sRandom.nextInt(6)));
         d.setDevUUID("" + sRandom.nextLong());
         d.setModel(genRandomString(3, 5).toUpperCase() + " " + (100 + sRandom.nextInt(899)));
+        if(sRandom.nextInt() % 3 == 0){
+            d.setPushID("0");
+        }
         return d;
     }
 

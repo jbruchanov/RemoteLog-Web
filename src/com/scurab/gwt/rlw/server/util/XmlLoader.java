@@ -40,6 +40,14 @@ public class XmlLoader {
                     platform = platformNode.getNodeValue(); 
                 }
                 boolean hasParam = Boolean.parseBoolean(hasParamStr);
+                
+                //optional param example
+                Node paramExampleNode = n.getAttributes().getNamedItem("paramExample");
+                String paramExample = null;
+                if(paramExampleNode != null){
+                    paramExample = paramExampleNode.getNodeValue();
+                }
+                
                 //create object
                 PushMessage pm = new PushMessage();
                 pm.setName(name);
@@ -51,6 +59,8 @@ public class XmlLoader {
                         pm.setPlatforms(new String[] {platform});
                     }
                 }
+                pm.setParamExample(paramExample);
+                
                 subResult.add(pm);
             }
         } catch (Exception e) {

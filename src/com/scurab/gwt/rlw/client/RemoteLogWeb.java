@@ -120,4 +120,11 @@ public class RemoteLogWeb implements EntryPoint {
     public static boolean isIE(){
         return isIE;
     }
+    
+    public static native void createWindow(String text) /*-{
+        var win = window.open("", "win", "width=300,height=200"); // a window object
+        win.document.open("", "replace");
+        win.document.write(text);
+        win.document.close();
+        }-*/;
 }

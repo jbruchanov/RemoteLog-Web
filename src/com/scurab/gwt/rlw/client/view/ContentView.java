@@ -40,4 +40,8 @@ public class ContentView extends Composite {
     public HTMLPanel getDevicePanel() {
         return mDevicePanel;
     }
+    
+    public void setCurrentTab(int index){
+        mTabPanel.selectTab(index);
+    }
 }

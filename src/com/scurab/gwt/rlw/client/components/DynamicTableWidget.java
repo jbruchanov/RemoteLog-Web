@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import com.google.gwt.cell.client.ActionCell;
+import com.google.gwt.cell.client.ActionCell.Delegate;
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.Cell.Context;
 import com.google.gwt.cell.client.TextCell;
@@ -39,6 +41,10 @@ import com.scurab.gwt.rlw.client.RemoteLogWeb;
  */
 public class DynamicTableWidget extends Composite {
 
+    public interface OnActionCellEventListener{
+        void onEvent(Delegate<HashMap<String, Object>> delegate, HashMap<String, Object> object);
+    }
+    
     private List<HashMap<String, Object>> mData = null;
 
     private CellTable<HashMap<String, Object>> mCellTable = null;

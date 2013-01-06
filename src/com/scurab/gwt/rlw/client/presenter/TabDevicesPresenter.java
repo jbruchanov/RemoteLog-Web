@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.google.gwt.cell.client.ActionCell.Delegate;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -13,6 +14,7 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
 import com.scurab.gwt.rlw.client.components.DeviceTableWidget;
 import com.scurab.gwt.rlw.client.components.DynamicTableWidget;
+import com.scurab.gwt.rlw.client.components.DynamicTableWidget.OnActionCellEventListener;
 import com.scurab.gwt.rlw.client.dialog.DeviceFilterDialog;
 import com.scurab.gwt.rlw.client.dialog.FilterDialog;
 import com.scurab.gwt.rlw.client.dialog.FilterDialog.OnOkListener;
@@ -29,6 +31,16 @@ public class TabDevicesPresenter extends TabDataPresenter<Device> {
     private HTMLPanel mLogPanel;
     
     private HashMap<Integer, Device> mLoadedData;
+    
+    public interface OnDeviceSelectionChangeListener{
+        void onSelectionChange(Device d);
+    }
+    private OnDeviceSelectionChangeListener mSelectionListener;
+    
+    public interface OnDetailClickListener{
+        void onClick(Device d);
+    }
+    private OnDetailClickListener mDetailClickListener;
 
     public TabDevicesPresenter(DataServiceAsync dataService, HandlerManager eventBus, String appName, HTMLPanel tabPanel) {
         super(dataService, eventBus, appName, tabPanel);
@@ -67,23 +79,32 @@ public class TabDevicesPresenter extends TabDataPresenter<Device> {
             public void onSelectionChange(SelectionChangeEvent event) {
                 SingleSelectionModel<HashMap<String, Object>> selection = (SingleSelectionModel<HashMap<String, Object>>) event.getSource();
                 HashMap<String, Object> selected = selection.getSelectedObject();
-                if(selected != null){
-                    int id = (Integer) selected.get(TableColumns.DeviceID);
-                    Device d = mLoadedData.get(id);
-                    onDeviceSelectionChange(d);
-                }else{
-                    onDeviceSelectionChange(null);
+                onDeviceSelectionChange(selected != null ? getDevice(selected) : null);
+            }
+        });
+        mDevicesTable.setActionCellListener(new OnActionCellEventListener() {
+            @Override
+            public void onEvent(Delegate<HashMap<String, Object>> delegate, HashMap<String, Object> object) {
+                if(mDetailClickListener != null){
+                    mDetailClickListener.onClick(getDevice(object));
                 }
             }
         });
         return mDevicesTable;
     }
     
-    protected void onDeviceSelectionChange(Device d){
-        if(d == null){
-            Window.alert("null");
+    private Device getDevice(HashMap<String, Object> transformed){
+        if(transformed != null){
+            int id = (Integer) transformed.get(TableColumns.DeviceID);
+            return mLoadedData.get(id);
         }else{
-            Window.alert(d.getBrand());
+            return null;
+        }
+    }
+    
+    protected void onDeviceSelectionChange(Device d){
+        if(mSelectionListener != null){
+            mSelectionListener.onSelectionChange(d);
         }
     }
 
@@ -101,5 +122,13 @@ public class TabDevicesPresenter extends TabDataPresenter<Device> {
     @Override
     protected void notifyStartDownloading() {
         notifyStartDownloading(WORDS.LoadingDevices());
+    }
+
+    public void setSelectionListener(OnDeviceSelectionChangeListener listener) {
+        mSelectionListener = listener;
+    }
+    
+    public void setDetailClickListener(OnDetailClickListener listener){
+        mDetailClickListener = listener;    
     }
 }

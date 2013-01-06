@@ -6,28 +6,41 @@
 		.important {
 			font-weight: bold;
 		}
+		
+		.header{
+			font-size : 14px;
+			margin-bottom: 5px;
+	 		font-weight: bold;
+	 		min-width: 150px;
+		}
+		
+		.params{
+	 		min-width: 350px;
+		}
+		
 	</ui:style>
 	<g:HTMLPanel>
-		<g:Grid width="100%">
+		<g:CaptionPanel captionText="{res.PushNotifiation}" >
+			<g:Grid>
 			<g:row>
 				<g:customCell>
-					<g:Label text="{res.Message}"/>
+					<g:Label text="{res.Message}" styleName="{style.header}"/>
 				</g:customCell>
 				<g:customCell>
-					<g:ListBox width="100%" ui:field="mMessageListBox" />
+					<g:ListBox width="90%" ui:field="mMessageListBox" />
 				</g:customCell>
 			</g:row>
 			<g:row>
 				<g:customCell>
-					<g:Label text="{res.Params}"/>
+					<g:Label text="{res.Params}" styleName="{style.header}"/>
 				</g:customCell>
 				<g:customCell>
-					<g:TextArea width="100%" visibleLines="5" ui:field="mMessageParams"/>
+					<g:TextArea width="90%" visibleLines="5" ui:field="mMessageParams" styleName="{style.params}"/>
 				</g:customCell>
 			</g:row>
 			<g:row>
 				<g:customCell>
-					<g:Label text="{res.TryWaitForRespond}"/>
+					<g:Label text="{res.TryWaitForRespond}" styleName="{style.header}"/>
 				</g:customCell>
 				<g:customCell>
 					<g:CheckBox text="" ui:field="mWaitCheckBox"/>
@@ -35,12 +48,13 @@
 			</g:row>
 			<g:row>
 				<g:customCell>
-					<g:Label/>
+					<g:Label ui:field="mErrorMessage"/>
 				</g:customCell>
 				<g:customCell>
 					<g:Button ui:field="mSendButton" text="{res.Send}"/>
 				</g:customCell>
 			</g:row>
 		</g:Grid>
+		</g:CaptionPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 
