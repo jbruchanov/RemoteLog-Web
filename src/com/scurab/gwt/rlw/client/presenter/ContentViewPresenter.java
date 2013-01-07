@@ -2,12 +2,14 @@ package com.scurab.gwt.rlw.client.presenter;
 
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.IsWidget;
+import com.google.gwt.user.client.ui.TabPanel;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
 import com.scurab.gwt.rlw.client.presenter.TabDevicesPresenter.OnDetailClickListener;
+import com.scurab.gwt.rlw.client.presenter.TabDevicesPresenter.OnDeviceSelectionChangeListener;
 import com.scurab.gwt.rlw.client.view.ContentView;
 import com.scurab.gwt.rlw.shared.model.Device;
 
-public class ContentViewPresenter extends BasePresenter implements IsWidget {
+public class ContentViewPresenter extends BasePresenter implements IsWidget, OnDeviceSelectionChangeListener {
 
     private DataServiceAsync mDataService;
     private HandlerManager mEventBus;
@@ -41,7 +43,9 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
         
         mDevicePresenter = new TabDevicePresenter(mDataService, mEventBus, mApp, mDisplay.getDevicePanel());
         
-        mDevicesPresenter.setSelectionListener(mDevicePresenter);
+        TabPanel tb = mDisplay.getTabPanel();
+        tb.getTabBar().setTabEnabled(tb.getWidgetCount()-1, false);
+        mDevicesPresenter.setSelectionListener(this);
         
     }
     
@@ -49,8 +53,25 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget {
         mDevicesPresenter.setDetailClickListener(new OnDetailClickListener() {
             @Override
             public void onClick(Device d) {
-                mDisplay.setCurrentTab(2);
+                enableAndselectDeviceTab(true);
             }
         });
+    }
+    
+    private void enableAndselectDeviceTab(boolean select){
+        TabPanel tb = mDisplay.getTabPanel();
+        int lastTabIndex = tb.getWidgetCount()-1;
+        if(!tb.getTabBar().isTabEnabled(lastTabIndex)){
+            tb.getTabBar().setTabEnabled(lastTabIndex, true); 
+        }
+        if(select){
+            tb.selectTab(tb.getWidgetCount()-1);
+        }
+    }
+
+    @Override
+    public void onSelectionChange(Device d) {
+        mDevicePresenter.onSelectionChange(d);
+        enableAndselectDeviceTab(false);
     }
 }
