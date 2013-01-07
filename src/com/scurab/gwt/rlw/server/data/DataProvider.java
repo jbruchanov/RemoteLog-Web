@@ -18,8 +18,10 @@ import com.scurab.gwt.rlw.server.Queries;
 import com.scurab.gwt.rlw.server.Queries.AppQuery;
 import com.scurab.gwt.rlw.shared.QueryNames;
 import com.scurab.gwt.rlw.shared.SharedParams;
+import com.scurab.gwt.rlw.shared.TableColumns;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
+import com.scurab.gwt.rlw.shared.model.Settings;
 
 public class DataProvider {
 
@@ -284,4 +286,40 @@ public class DataProvider {
         return c.getTime();
     }
 
+    public Settings[] getSettings(String appName, Integer deviceId){
+        if(appName == null){
+            throw new IllegalArgumentException("appName is null!");
+        }
+        
+        AppQuery ap = null;
+        if(deviceId == null){
+            ap = Queries.getQuery(QueryNames.SELECT_SETTINGS_BY_APPNAME);
+        }else{
+            ap = Queries.getQuery(QueryNames.SELECT_SETTINGS_BY_APPNAME_AND_DEVICEID);
+        }
+        
+        Session s = Database.openSession();
+        Query q = s.createSQLQuery(ap.Query).setResultTransformer(
+                Transformers.aliasToBean(Settings.class));
+        //set params
+        q.setString(TableColumns.SettingsAppName, appName);
+        if(deviceId != null){
+            q.setInteger(TableColumns.SettingsDeviceID, deviceId);
+        }
+        
+        List values = q.list();
+        Settings[] result = (Settings[]) q.list().toArray(new Settings[values.size()]);
+        
+        s.close();
+        
+        return result;
+    }
+    
+    public Settings saveSettings(Settings settings){
+        
+        Session s = Database.openSession();
+        s.saveOrUpdate(settings);
+        s.close();
+        return settings;
+    }
 }

@@ -9,6 +9,7 @@ import java.util.Random;
 import com.google.gson.Gson;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
+import com.scurab.gwt.rlw.shared.model.Settings;
 
 public class DataGenerator {
 
@@ -121,5 +122,14 @@ public class DataGenerator {
         li.setMessage(getRandomBrand() + " " + genRandomString());
         li.setDeviceID(devId);
         return li;
+    }
+    
+    
+    public static Settings getRandomSettings(Integer deviceID, String appName){
+        Settings s = new Settings();
+        s.setDeviceID(deviceID);
+        s.setAppName(appName);
+        s.setJsonValue(genRandomJSON(5));
+        return s;
     }
 }

@@ -8,11 +8,13 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.scurab.gwt.rlw.client.DataService;
 import com.scurab.gwt.rlw.server.Application;
 import com.scurab.gwt.rlw.server.push.AndroidSender;
+import com.scurab.gwt.rlw.shared.TableColumns;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 import com.scurab.gwt.rlw.shared.model.PushMessage;
 import com.scurab.gwt.rlw.shared.model.PushMessageRequest;
 import com.scurab.gwt.rlw.shared.model.PushMessageRespond;
+import com.scurab.gwt.rlw.shared.model.Settings;
 
 public class DataServiceImpl extends RemoteServiceServlet implements DataService {
 
@@ -87,5 +89,28 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
             throw new IllegalStateException(String.format("Platform '%s' not implemented!", platform));
         }
         return res;
+    }
+
+    @Override
+    public Settings[] getSettings(String jsonParams) {
+        HashMap<String, Object> params = Application.GSON.fromJson(jsonParams, HashMap.class);
+        
+        String appName = (String) params.get(TableColumns.SettingsAppName);
+        Integer deviceId = (Integer) params.get(TableColumns.SettingsDeviceID);
+        if(appName == null){
+            throw new IllegalArgumentException("Missing " + TableColumns.SettingsAppName);
+        }
+        return new DataProvider().getSettings(appName, deviceId);
+    }
+
+    @Override
+    public Settings saveSettings(String jsonParams) {
+        Settings s = Application.GSON.fromJson(jsonParams, Settings.class);
+        
+        if(s.getAppName() == null){
+            throw new IllegalArgumentException("appName is null!");
+        }
+        
+        return new DataProvider().saveSettings(s);
     }
 }

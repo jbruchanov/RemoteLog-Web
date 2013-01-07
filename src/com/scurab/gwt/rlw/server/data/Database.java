@@ -20,6 +20,7 @@ import com.scurab.gwt.rlw.server.annotation.DefaultOrderString;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 import com.scurab.gwt.rlw.shared.model.LogItemBlob;
+import com.scurab.gwt.rlw.shared.model.Settings;
 
 @SuppressWarnings("serial")
 public class Database {
@@ -88,6 +89,7 @@ public class Database {
         c.addAnnotatedClass(Device.class);
         c.addAnnotatedClass(LogItem.class);
         c.addAnnotatedClass(LogItemBlob.class);
+        c.addAnnotatedClass(Settings.class);
 
         c.setProperties(Application.APP_PROPS);
         c.configure();

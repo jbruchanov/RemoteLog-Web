@@ -8,6 +8,7 @@ import com.scurab.gwt.rlw.shared.model.LogItem;
 import com.scurab.gwt.rlw.shared.model.PushMessage;
 import com.scurab.gwt.rlw.shared.model.PushMessageRequest;
 import com.scurab.gwt.rlw.shared.model.PushMessageRespond;
+import com.scurab.gwt.rlw.shared.model.Settings;
 
 /**
  * The async counterpart of <code>GreetingService</code>.
@@ -27,4 +28,9 @@ public interface DataServiceAsync {
     void getPushMessages(AsyncCallback<PushMessage[]> callback);
 
     void sendMessage(String json, AsyncCallback<PushMessageRespond> callback);
+
+    void getSettings(String jsonParams, AsyncCallback<Settings[]> callback);
+
+    void saveSettings(String jsonParams, AsyncCallback<Settings> callback);
+
 }

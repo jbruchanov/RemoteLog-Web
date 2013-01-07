@@ -53,7 +53,28 @@
 		  PRIMARY KEY (LogItemID),
 		  KEY Fk_LogItems_LogItemBlobs (LogItemID),
 		  CONSTRAINT Fk_LogItems_LogItemBlobs FOREIGN KEY (LogItemID) REFERENCES LogItems (ID) ON DELETE CASCADE ON UPDATE CASCADE
-		) DEFAULT CHARSET=utf8;		
+		) DEFAULT CHARSET=utf8;	
+		
+		DROP TABLE IF EXISTS Settings;
+		CREATE TABLE Settings (
+	        SettingsID integer not null auto_increment,
+	        AppName VARCHAR(255) not null,
+	        DeviceID integer,
+	        JsonValue MediumText not null,
+	        primary key (SettingsID),
+	        unique (AppName, DeviceID)
+		)DEFAULT CHARSET=utf8;
+		
+#		Uncomment this to set Settings be more strict about key references		
+#		ALTER TABLE Settings 
+#  		 ADD CONSTRAINT FK_DeviceID
+#  		 FOREIGN KEY (DeviceID)
+#  		 REFERENCES Devices (DeviceID)
+#  		 ON DELETE NO ACTION
+#  		 ON UPDATE NO ACTION
+#	    , ADD INDEX FK_DeviceID (DeviceID ASC);
+		
+			
 	]]>
 	</Query>
 	<Query name="SELECT_APPS" type="SQL">
@@ -185,6 +206,26 @@
 		SELECT DISTINCT Category FROM LogItems 
 		WHERE Application = :Application 
 		ORDER BY Category; 
+	]]>
+	</Query>
+	
+	<Query name="SELECT_SETTINGS_BY_APPNAME" type="SQL" parameters="AppName">
+	<![CDATA[
+		SELECT SettingsID, AppName, DeviceID, JsonValue FROM Settings
+		WHERE AppName = :AppName And DeviceID IS NULL
+	]]>
+	</Query>
+	<Query name="SELECT_SETTINGS_BY_APPNAME_AND_DEVICEID" type="SQL" parameters="AppName,DeviceID">
+	<![CDATA[
+		Select SettingsID, AppName, DeviceID, JsonValue FROM (
+			SELECT SettingsID, AppName, DeviceID, JsonValue FROM Settings
+			WHERE AppName = :AppName And DeviceID IS NULL
+			
+			UNION ALL
+			
+			SELECT SettingsID, AppName, DeviceID, JsonValue FROM Settings
+			WHERE AppName = :AppName And DeviceID = :DeviceID
+		) as drvTbl
 	]]>
 	</Query>
 </SQLQueries>

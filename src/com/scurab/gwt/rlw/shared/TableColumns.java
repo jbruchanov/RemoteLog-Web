@@ -6,4 +6,7 @@ public final class TableColumns {
     public static final String LogBlobMime = "DataType_8";
     public static final String LogDeviceID = "DevID_9";
     public static final String LogItemID = "ID_1";
+    
+    public static final String SettingsAppName = "AppName";
+    public static final String SettingsDeviceID = "DeviceID";
 }
