@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Messages>
 	<Message name="Echo" param="false" />
-	<Message name="Notification" param="true" paramExample="{Title:&quot;&quot;, Message:&quot;&quot;}" />
+	<Message name="Notification" param="true" paramExample="{&quot;Title&quot;:&quot;&quot;, &quot;Message&quot;:&quot;&quot;}" />
 	<Message name="Question" param="true"/>
-	<Message name="Resend registration" param="false"
-		platform="android|windowsphone" />
-	<Message name="Kill app" param="false" platform="android" forApp="true"/>
+	<Message name="ReloadSettings" param="false" platform="android|windowsphone" />
+	<Message name="ResendRegistration" param="false" platform="android|windowsphone" />
+	<Message name="KillApp" param="false" platform="android" forApp="true"/>
 	<Message name="TakeScreenshot" param="false" platform="android" forApp="true"/>
 </Messages>

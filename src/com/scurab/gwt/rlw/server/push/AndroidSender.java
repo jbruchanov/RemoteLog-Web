@@ -55,6 +55,7 @@ public class AndroidSender{
         b.collapseKey(pmr.getMessage().getName());
         b.addData("params", pmr.getMessageParams());
         b.addData("timestamp", String.valueOf(timestamp));
+        b.addData("context", pmr.getMessageContext());
         b.delayWhileIdle(true);
         return b.build();
     }

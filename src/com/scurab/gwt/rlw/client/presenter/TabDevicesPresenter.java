@@ -8,8 +8,10 @@ import com.google.gwt.cell.client.ActionCell.Delegate;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SelectionModel;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
 import com.scurab.gwt.rlw.client.components.DeviceTableWidget;
@@ -130,5 +132,20 @@ public class TabDevicesPresenter extends TabDataPresenter<Device> {
     
     public void setDetailClickListener(OnDetailClickListener listener){
         mDetailClickListener = listener;    
+    }
+    
+    @Override
+    protected void dispatchReloadData(FocusWidget initiator) {
+        deselectDeviceInTable();
+        super.dispatchReloadData(initiator);
+    }
+    
+    private void deselectDeviceInTable(){
+        SingleSelectionModel<HashMap<String,Object>> sm = (SingleSelectionModel<HashMap<String, Object>>) mDevicesTable.getSelectionModel();
+        HashMap<String,Object> selected = sm.getSelectedObject();
+        if(selected != null){
+            sm.setSelected(selected, false);
+        }
+        onDeviceSelectionChange(null);
     }
 }

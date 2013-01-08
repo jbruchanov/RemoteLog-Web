@@ -79,6 +79,15 @@ public interface Words extends com.google.gwt.i18n.client.ConstantsWithLookup {
   String Category();
 
   /**
+   * Translated "Context".
+   * 
+   * @return translated "Context"
+   */
+  @DefaultStringValue("Context")
+  @Key("Context")
+  String Context();
+
+  /**
    * Translated "DataType".
    * 
    * @return translated "DataType"

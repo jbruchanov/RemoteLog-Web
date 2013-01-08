@@ -134,6 +134,7 @@ public class TabMessagesPresenter extends TabBasePresenter {
         if(pm.hasParams()){
             pmr.setMessageParams(mDisplay.getMessageParams().getText());
         }
+        pmr.setMessageContext(mDisplay.getContext().getValue());
         pmr.setWaitForRespond(mDisplay.getWaitCheckBox().getValue());
         return pmr;
     }
@@ -158,7 +159,8 @@ public class TabMessagesPresenter extends TabBasePresenter {
 
     public void setDevice(Device device) {
         mDevice = device;
-        String pushId = device.getPushID();
+        
+        String pushId = device != null ? device.getPushID() : null;
         initMessages(pushId != null ? device : null);
         mDisplay.getSendButton().setVisible(pushId != null ? true : false);
         Label errMsg = mDisplay.getErrorMessage();

@@ -65,17 +65,15 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget, OnD
         mDevicesPresenter.setDetailClickListener(new OnDetailClickListener() {
             @Override
             public void onClick(Device d) {
-                enableAndselectDeviceTab(true);
+                enableAndselectDeviceTab(true, true);
             }
         });
     }
     
-    private void enableAndselectDeviceTab(boolean select){
+    private void enableAndselectDeviceTab(boolean enable, boolean select){
         TabPanel tb = mDisplay.getTabPanel();
         int lastTabIndex = tb.getWidgetCount()-1;
-        if(!tb.getTabBar().isTabEnabled(lastTabIndex)){
-            tb.getTabBar().setTabEnabled(lastTabIndex, true); 
-        }
+        tb.getTabBar().setTabEnabled(lastTabIndex, enable); 
         if(select){
             tb.selectTab(tb.getWidgetCount()-1);
         }
@@ -84,6 +82,6 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget, OnD
     @Override
     public void onSelectionChange(Device d) {
         mDevicePresenter.onSelectionChange(d);
-        enableAndselectDeviceTab(false);
+        enableAndselectDeviceTab(d != null, false);
     }
 }

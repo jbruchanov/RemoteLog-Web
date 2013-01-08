@@ -29,6 +29,9 @@ public class PushMessageRequest implements Serializable {
 
     @SerializedName("MessageParams")
     private String mMessageParams;
+    
+    @SerializedName("MessageContext")
+    private String mMessageContext;
 
     @SerializedName("WaitForRespond")
     private boolean mWaitForRespond;
@@ -83,6 +86,11 @@ public class PushMessageRequest implements Serializable {
             mMessageParams = "";
         }
         obj.put("MessageParams", new JSONString(mMessageParams));
+        
+        if(mMessageContext == null){
+            mMessageContext = "";
+        }
+        obj.put("MessageContext", new JSONString(mMessageContext));
         obj.put("WaitForRespond", JSONBoolean.getInstance(mWaitForRespond));
         return obj;
     }
@@ -111,5 +119,13 @@ public class PushMessageRequest implements Serializable {
 
     public void setDevicePlatform(String devicePlatform) {
         mDevicePlatform = devicePlatform;
+    }
+
+    public String getMessageContext() {
+        return mMessageContext;
+    }
+
+    public void setMessageContext(String messageContext) {
+        mMessageContext = messageContext;
     }
 }

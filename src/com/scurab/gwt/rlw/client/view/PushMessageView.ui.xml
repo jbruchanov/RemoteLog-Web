@@ -32,6 +32,14 @@
 			</g:row>
 			<g:row>
 				<g:customCell>
+					<g:Label text="{res.Context}" styleName="{style.header}"/>
+				</g:customCell>
+				<g:customCell>
+					<g:TextBox width="90%" ui:field="mContext" styleName="{style.params}"/>
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
 					<g:Label text="{res.Params}" styleName="{style.header}"/>
 				</g:customCell>
 				<g:customCell>

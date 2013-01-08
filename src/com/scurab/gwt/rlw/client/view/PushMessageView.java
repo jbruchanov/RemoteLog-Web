@@ -9,6 +9,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.ListBox;
@@ -23,6 +24,7 @@ public class PushMessageView extends Composite {
     @UiField ListBox mMessageListBox;
     @UiField TextArea mMessageParams;
     @UiField Label mErrorMessage;
+    @UiField TextBox mContext;
 
     interface PushMessageViewUiBinder extends UiBinder<Widget, PushMessageView> {
     }
@@ -49,5 +51,9 @@ public class PushMessageView extends Composite {
 
     public Label getErrorMessage() {
         return mErrorMessage;
+    }
+
+    public TextBox getContext() {
+        return mContext;
     }
 }
