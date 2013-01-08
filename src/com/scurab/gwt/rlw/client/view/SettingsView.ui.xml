@@ -1,0 +1,40 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:with type="com.scurab.gwt.rlw.language.Words" field="res"/>
+	<ui:style>
+		.important {
+			font-weight: bold;
+		}
+		
+		.button{
+			min-width: 150px;
+			padding: 5px;
+			margin:  5px;
+		}
+		
+		.header{
+			font-size : 14px;
+			margin-bottom: 5px;
+	 		font-weight: bold;
+	 		min-width: 150px;
+	 		text-align: left;
+		}
+		
+		.textArea{
+			min-width: 350px;
+		}
+	</ui:style>
+	<g:HTMLPanel>
+		<g:CaptionPanel captionText="{res.Settings}" height="">
+			<g:VerticalPanel width="100%" height="" horizontalAlignment="ALIGN_CENTER">
+				<g:Label text="JSON Value" styleName="{style.header}"/>
+				<g:TextArea height="100%" visibleLines="15" width="97%" ui:field="mTextArea" styleName="{style.textArea}"/>
+				<g:HTMLPanel width="">
+					<g:Button text="{res.DeleteDeviceSettings}" styleName="{style.button}" ui:field="mDeleteDeviceSettings"/>
+					<g:Button text="{res.Save}" styleName="{style.button}" ui:field="mSave"/>
+				</g:HTMLPanel>
+			</g:VerticalPanel>
+		</g:CaptionPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

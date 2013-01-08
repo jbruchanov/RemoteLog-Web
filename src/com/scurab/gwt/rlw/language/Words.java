@@ -106,6 +106,15 @@ public interface Words extends com.google.gwt.i18n.client.ConstantsWithLookup {
   String Debug();
 
   /**
+   * Translated "Delete all device settings".
+   * 
+   * @return translated "Delete all device settings"
+   */
+  @DefaultStringValue("Delete all device settings")
+  @Key("DeleteDeviceSettings")
+  String DeleteDeviceSettings();
+
+  /**
    * Translated "Description".
    * 
    * @return translated "Description"
@@ -403,6 +412,15 @@ public interface Words extends com.google.gwt.i18n.client.ConstantsWithLookup {
   String Resolution();
 
   /**
+   * Translated "Save".
+   * 
+   * @return translated "Save"
+   */
+  @DefaultStringValue("Save")
+  @Key("Save")
+  String Save();
+
+  /**
    * Translated "Send".
    * 
    * @return translated "Send"
@@ -419,6 +437,15 @@ public interface Words extends com.google.gwt.i18n.client.ConstantsWithLookup {
   @DefaultStringValue("SetFilter")
   @Key("SetFilter")
   String SetFilter();
+
+  /**
+   * Translated "Settings".
+   * 
+   * @return translated "Settings"
+   */
+  @DefaultStringValue("Settings")
+  @Key("Settings")
+  String Settings();
 
   /**
    * Translated "Try wait for respond".

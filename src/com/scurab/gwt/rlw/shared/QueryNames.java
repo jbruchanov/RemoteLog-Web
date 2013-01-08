@@ -5,6 +5,8 @@ public final class QueryNames {
     public static final String SELECT_APPS = "SELECT_APPS";
     public static final String SELECT_DEVS = "SELECT_DEVS";
     public static final String SELECT_DEVS_BY_APP = "SELECT_DEVS_BY_APP";
+    public static final String DELETE_DEVICE_SETTINGS_PER_APP = "DELETE_DEVICE_SETTINGS_PER_APP";
+    public static final String SELECT_SETTINGS_FOR_DEVICE = "SELECT_SETTINGS_FOR_DEVICE";
     
     public static final String SELECT_SETTINGS_BY_APPNAME = "SELECT_SETTINGS_BY_APPNAME";
     public static final String SELECT_SETTINGS_BY_APPNAME_AND_DEVICEID = "SELECT_SETTINGS_BY_APPNAME_AND_DEVICEID";

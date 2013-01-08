@@ -18,6 +18,7 @@ public class DevicePanel extends Composite{
     private static DevicePanelUiBinder uiBinder = GWT.create(DevicePanelUiBinder.class);
     @UiField HTMLPanel mDevicePanel;
     @UiField HTMLPanel mMessagesPanel;
+    @UiField HTMLPanel mSettingsPanel;
 
     interface DevicePanelUiBinder extends UiBinder<Widget, DevicePanel> {
     }
@@ -32,5 +33,9 @@ public class DevicePanel extends Composite{
 
     public HTMLPanel getMessagesPanel() {
         return mMessagesPanel;
+    }
+
+    public HTMLPanel getSettingsPanel() {
+        return mSettingsPanel;
     }
 }

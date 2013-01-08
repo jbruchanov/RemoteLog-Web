@@ -286,7 +286,7 @@ public class DataProvider {
         return c.getTime();
     }
 
-    public Settings[] getSettings(String appName, Integer deviceId){
+    public Settings getSettings(String appName, Integer deviceId){
         if(appName == null){
             throw new IllegalArgumentException("appName is null!");
         }
@@ -308,8 +308,7 @@ public class DataProvider {
         }
         
         List values = q.list();
-        Settings[] result = (Settings[]) q.list().toArray(new Settings[values.size()]);
-        
+        Settings result = (Settings) (values.size() > 0 ? values.get(0) : null);        
         s.close();
         
         return result;
@@ -318,8 +317,28 @@ public class DataProvider {
     public Settings saveSettings(Settings settings){
         
         Session s = Database.openSession();
+        s.beginTransaction();
         s.saveOrUpdate(settings);
+        s.getTransaction().commit();
         s.close();
         return settings;
+    }
+    
+    public int deleteDeviceSpecificSettings(String appName){
+        if(appName == null){
+            throw new IllegalArgumentException("appName is null!");
+        }
+        
+        Session s = Database.openSession();
+        s.beginTransaction();
+        AppQuery ap = Queries.getQuery(QueryNames.DELETE_DEVICE_SETTINGS_PER_APP);
+        
+        Query q = s.createSQLQuery(ap.Query);
+        q.setString(TableColumns.SettingsAppName, appName);
+        
+        int v = q.executeUpdate();
+        s.getTransaction().commit();
+        s.close();
+        return v;
     }
 }

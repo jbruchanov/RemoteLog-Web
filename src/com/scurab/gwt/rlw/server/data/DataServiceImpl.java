@@ -92,11 +92,14 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
     }
 
     @Override
-    public Settings[] getSettings(String jsonParams) {
+    public Settings getSettings(String jsonParams) {
         HashMap<String, Object> params = Application.GSON.fromJson(jsonParams, HashMap.class);
         
         String appName = (String) params.get(TableColumns.SettingsAppName);
-        Integer deviceId = (Integer) params.get(TableColumns.SettingsDeviceID);
+        Integer deviceId = null;
+        if(params.containsKey(TableColumns.SettingsDeviceID)){
+            deviceId = ((Number)params.get(TableColumns.SettingsDeviceID)).intValue();
+        }
         if(appName == null){
             throw new IllegalArgumentException("Missing " + TableColumns.SettingsAppName);
         }
@@ -112,5 +115,10 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
         }
         
         return new DataProvider().saveSettings(s);
+    }
+
+    @Override
+    public int deleteDeviceSettings(String appName) {
+        return new DataProvider().deleteDeviceSpecificSettings(appName);
     }
 }

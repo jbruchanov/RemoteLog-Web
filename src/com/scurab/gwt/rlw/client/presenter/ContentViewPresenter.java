@@ -1,5 +1,7 @@
 package com.scurab.gwt.rlw.client.presenter;
 
+import javax.swing.text.TabExpander;
+
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.TabPanel;
@@ -16,6 +18,7 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget, OnD
     private ContentView mDisplay;
     private String mApp;
 
+    private TabSettingsPresenter mSettingsPresenter;
     private TabLogPresenter mLogPresenter;
     private TabDevicesPresenter mDevicesPresenter;
     private TabDevicePresenter mDevicePresenter;
@@ -36,6 +39,11 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget, OnD
     }
 
     private void init() {
+        if(mApp != null){
+            mSettingsPresenter = new TabSettingsPresenter(mDataService, mEventBus, mApp, mDisplay.getSettingsPanel());
+            mSettingsPresenter.onLoadingSettings();
+        }
+        
         mLogPresenter = new TabLogPresenter(mDataService, mEventBus, mApp, mDisplay.getLogsPanel());
         mLogPresenter.onLoadData(0);
         mDevicesPresenter = new TabDevicesPresenter(mDataService, mEventBus, mApp, mDisplay.getDevicesPanel());
@@ -43,10 +51,14 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget, OnD
         
         mDevicePresenter = new TabDevicePresenter(mDataService, mEventBus, mApp, mDisplay.getDevicePanel());
         
+        
         TabPanel tb = mDisplay.getTabPanel();
         tb.getTabBar().setTabEnabled(tb.getWidgetCount()-1, false);
         mDevicesPresenter.setSelectionListener(this);
         
+        if(mApp == null){
+            tb.remove(0);//remove first one, because we are in All tab
+        }
     }
     
     private void bind(){

@@ -217,6 +217,12 @@
 	</Query>
 	<Query name="SELECT_SETTINGS_BY_APPNAME_AND_DEVICEID" type="SQL" parameters="AppName,DeviceID">
 	<![CDATA[
+		SELECT SettingsID, AppName, DeviceID, JsonValue FROM Settings
+		WHERE AppName = :AppName And DeviceID = :DeviceID
+	]]>
+	</Query>
+	<Query name="SELECT_SETTINGS_FOR_DEVICE" type="SQL" parameters="AppName,DeviceID">
+	<![CDATA[
 		Select SettingsID, AppName, DeviceID, JsonValue FROM (
 			SELECT SettingsID, AppName, DeviceID, JsonValue FROM Settings
 			WHERE AppName = :AppName And DeviceID IS NULL
@@ -228,4 +234,10 @@
 		) as drvTbl
 	]]>
 	</Query>
+	<Query name="DELETE_DEVICE_SETTINGS_PER_APP" type="SQL" parameters="DeviceID">
+	<![CDATA[
+		DELETE FROM Settings WHERE AppName = :AppName AND DeviceID IS NOT NULL
+	]]>
+	</Query>
+	
 </SQLQueries>

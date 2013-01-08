@@ -10,6 +10,9 @@
 	</ui:style>
 	<g:HTMLPanel>
 		<g:TabPanel width="100%" height="100%" ui:field="mTabPanel">
+			<g:Tab text="{res.Settings}">
+				<g:HTMLPanel ui:field="mSettingsPanel" />							
+			</g:Tab>
 			<g:Tab text="{res.Logs}">
 				<g:HTMLPanel width="100%" height="100%" ui:field="mLogsPanel" />							
 			</g:Tab>

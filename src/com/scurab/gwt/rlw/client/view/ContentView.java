@@ -13,6 +13,8 @@ public class ContentView extends Composite {
     private static ContentViewUiBinder uiBinder = GWT.create(ContentViewUiBinder.class);
 
     @UiField
+    protected HTMLPanel mSettingsPanel;
+    @UiField
     protected HTMLPanel mDevicesPanel;
     @UiField
     protected HTMLPanel mLogsPanel;
@@ -26,9 +28,13 @@ public class ContentView extends Composite {
 
     public ContentView() {
         initWidget(uiBinder.createAndBindUi(this));
-        mTabPanel.selectTab(0);
+        getTabPanel().selectTab(0);
     }
 
+    public HTMLPanel getSettingsPanel() {
+        return mSettingsPanel;
+    }
+    
     public HTMLPanel getDevicesPanel() {
         return mDevicesPanel;
     }

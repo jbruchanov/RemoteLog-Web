@@ -29,8 +29,10 @@ public interface DataServiceAsync {
 
     void sendMessage(String json, AsyncCallback<PushMessageRespond> callback);
 
-    void getSettings(String jsonParams, AsyncCallback<Settings[]> callback);
+    void getSettings(String jsonParams, AsyncCallback<Settings> callback);
 
     void saveSettings(String jsonParams, AsyncCallback<Settings> callback);
+
+    void deleteDeviceSettings(String appName, AsyncCallback<Integer> callback);
 
 }
