@@ -5,6 +5,6 @@
 	<Message name="Question" param="true"/>
 	<Message name="Resend registration" param="false"
 		platform="android|windowsphone" />
-	<Message name="Kill app" param="false" platform="android" />
-	<Message name="TakeScreenshot" param="false" platform="android" />
+	<Message name="Kill app" param="false" platform="android" forApp="true"/>
+	<Message name="TakeScreenshot" param="false" platform="android" forApp="true"/>
 </Messages>

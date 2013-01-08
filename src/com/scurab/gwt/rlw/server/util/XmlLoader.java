@@ -48,6 +48,13 @@ public class XmlLoader {
                     paramExample = paramExampleNode.getNodeValue();
                 }
                 
+                //optional param onlyForApp
+                Node onlyForAppNode = n.getAttributes().getNamedItem("forApp");
+                boolean onlyForApp = false;
+                if(onlyForAppNode != null){
+                    onlyForApp = Boolean.parseBoolean(onlyForAppNode.getNodeValue());
+                }
+                
                 //create object
                 PushMessage pm = new PushMessage();
                 pm.setName(name);
@@ -60,6 +67,7 @@ public class XmlLoader {
                     }
                 }
                 pm.setParamExample(paramExample);
+                pm.setOnlyForApp(onlyForApp);
                 
                 subResult.add(pm);
             }

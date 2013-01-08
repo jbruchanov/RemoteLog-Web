@@ -24,6 +24,9 @@ public class PushMessage implements Serializable{
     
     @SerializedName("ParamExample")
     private String mParamExample;
+    
+    @SerializedName("OnlyForApp")
+    private boolean mOnlyForApp;
 
     public String getName() {
         return mName;
@@ -91,5 +94,13 @@ public class PushMessage implements Serializable{
         pm.setHasParams(jso.get("HasParams").isBoolean().booleanValue());
         
         return pm;
+    }
+
+    public boolean isOnlyForApp() {
+        return mOnlyForApp;
+    }
+
+    public void setOnlyForApp(boolean onlyForApp) {
+        mOnlyForApp = onlyForApp;
     }
 }

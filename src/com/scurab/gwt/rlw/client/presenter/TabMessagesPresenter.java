@@ -77,9 +77,13 @@ public class TabMessagesPresenter extends TabBasePresenter {
             
             lb.addItem("","");
             for(PushMessage pm : RemoteLogWeb.PUSH_MESSAGES){
-                if(pm.isPlatformSupported(platform)){
-                    lb.addItem(pm.getName());
+                if(!pm.isPlatformSupported(platform)){
+                    continue;
                 }
+                if(pm.isOnlyForApp() && mApp == null){
+                    continue;
+                }
+                lb.addItem(pm.getName());
             }
         }
         
