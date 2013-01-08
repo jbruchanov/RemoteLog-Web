@@ -341,4 +341,29 @@ public class DataProvider {
         s.close();
         return v;
     }
+    
+    public Settings[] getSettingsForDevice(String appName, Integer deviceId){
+        if(appName == null){
+            throw new IllegalArgumentException("appName is null!");
+        }
+        
+        if(deviceId == null){
+            throw new IllegalArgumentException("deviceId is null!");
+        }
+        
+        AppQuery ap = Queries.getQuery(QueryNames.SELECT_SETTINGS_FOR_DEVICE);
+        
+        Session s = Database.openSession();
+        Query q = s.createSQLQuery(ap.Query).setResultTransformer(
+                Transformers.aliasToBean(Settings.class));
+        //set params
+        q.setString(TableColumns.SettingsAppName, appName);
+        q.setInteger(TableColumns.SettingsDeviceID, deviceId);
+        
+        List values = q.list();
+        Settings[] result = (Settings[]) values.toArray(new Settings[values.size()]);    
+        s.close();
+        
+        return result;
+    }
 }
