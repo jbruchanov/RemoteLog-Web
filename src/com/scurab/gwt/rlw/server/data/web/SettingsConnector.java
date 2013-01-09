@@ -27,7 +27,7 @@ public class SettingsConnector extends DataConnector<Void> {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {        
-        // url... /settings/{deviceId}/appname/{appname} - example /1/appname/asbd
+        // url... /{deviceId}/appname/{appname} - example /1/appname/asbd
         Respond<Settings[]> respond = null;
         UrlValues val = null;
         try{
