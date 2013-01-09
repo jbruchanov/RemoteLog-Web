@@ -19,6 +19,7 @@ public final class SharedParams {
     public static final String LOG_APPVERSION = "AppVersion";
     public static final String LOG_DATE = "Date";
     public static final String LOG_CATEGORY = "Category";
+    public static final String LOG_SOURCE = "Source";
     public static final String LOG_MESSAGE = "Message";
     public static final String LOG_DATATYPE = "BlobMime";
     public static final String LOG_DEVICEID = "DeviceID";

@@ -8,13 +8,13 @@
 		}
 	</ui:style>
 	<g:HTMLPanel>
-		<g:Grid>
+		<g:Grid width="350px">
 			<g:row>
 				<g:customCell>
 					<g:Label text="{res.DeviceID}" />
 				</g:customCell>
 				<g:customCell>
-					<g:IntegerBox width="96%" ui:field="mDeviceID" height="26px" />
+					<g:IntegerBox width="98%" ui:field="mDeviceID" height="26px" />
 				</g:customCell>
 			</g:row>
 			<g:row>
@@ -22,7 +22,7 @@
 					<g:Label text="{res.AppBuild}" />
 				</g:customCell>
 				<g:customCell>
-					<g:TextBox ui:field="mAppBuild" />
+					<g:TextBox ui:field="mAppBuild" width="96%" />
 				</g:customCell>
 			</g:row>
 			<g:row>
@@ -30,7 +30,7 @@
 					<g:Label text="{res.AppVersion}" />
 				</g:customCell>
 				<g:customCell>
-					<g:TextBox ui:field="mAppVersion" />
+					<g:TextBox ui:field="mAppVersion" width="96%" />
 				</g:customCell>
 			</g:row>
 			<g:row>
@@ -52,10 +52,19 @@
 			</g:row>
 			<g:row>
 				<g:customCell>
+					<g:Label text="{res.Source}" />
+				</g:customCell>
+				<g:customCell>
+					<g:ListBox visibleItemCount="1"
+						width="100%" ui:field="mSource" />
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
 					<g:Label text="{res.Date}" />
 				</g:customCell>
 				<g:customCell>
-					<p1:DateBox width="94%" ui:field="mDate" />
+					<p1:DateBox width="96%" ui:field="mDate" />
 				</g:customCell>
 			</g:row>
 			<g:row>
@@ -63,7 +72,7 @@
 					<g:Label text="{res.Message}" />
 				</g:customCell>
 				<g:customCell>
-					<g:TextBox ui:field="mMessage" />
+					<g:TextArea ui:field="mMessage" visibleLines="2" width="96%" />
 				</g:customCell>
 			</g:row>
 			<g:row>

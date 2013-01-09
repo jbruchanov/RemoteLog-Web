@@ -48,7 +48,8 @@ public class TabLogPresenter extends TabDataPresenter<LogItem> {
             result.put("Build_4", d.getAppBuild());
             result.put("Date_5", RemoteLogWeb.DATETIMEFORMAT.format(d.getDate()));
             result.put("Category_6", d.getCategory());
-            result.put("Message_7", d.getMessage());
+            result.put("Source_7", d.getSource());
+            result.put("Message_8", d.getMessage());
             result.put(TableColumns.LogBlobMime, d.getBlobMime());
             result.put(TableColumns.LogDeviceID, d.getDeviceID());
             rCollection.add(result);

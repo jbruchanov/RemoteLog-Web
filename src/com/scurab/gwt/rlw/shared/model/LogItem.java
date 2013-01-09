@@ -45,6 +45,10 @@ public class LogItem implements Serializable {
     @Column(name = "Category")
     @SerializedName("Category")
     private String mCategory;
+    
+    @Column(name = "Source")
+    @SerializedName("Source")
+    private String mSource;
 
     @Column(name = "Message")
     @SerializedName("Message")
@@ -128,6 +132,14 @@ public class LogItem implements Serializable {
 
     public void setDeviceID(int deviceID) {
         mDeviceID = deviceID;
+    }
+
+    public String getSource() {
+        return mSource;
+    }
+
+    public void setSource(String source) {
+        mSource = source;
     }
 
 }

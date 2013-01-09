@@ -116,6 +116,7 @@ public class DataGenerator {
         LogItem li = new LogItem();
         li.setAppBuild("" + sRandom.nextInt(256));
         li.setApplication(app);
+        li.setSource("Source" + sRandom.nextInt(10));
         li.setAppVersion("1." + sRandom.nextInt());
         li.setCategory(sCategoryLog[sRandom.nextInt(sCategoryLog.length)]);
         li.setDate(new Date());

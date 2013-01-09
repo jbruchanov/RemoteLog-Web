@@ -30,6 +30,7 @@
 		  Application varchar(128) NOT NULL,
 		  BlobMime varchar(32) DEFAULT NULL,
 		  Category varchar(64) DEFAULT NULL,
+		  Source varchar(255) DEFAULT NULL,
 		  Date datetime NOT NULL,
 		  DeviceID int(11) DEFAULT NULL,
 		  Message varchar(255) DEFAULT NULL,
@@ -164,6 +165,21 @@
 		Devices ON Devices.DeviceID = LogItems.DeviceID
 		WHERE Application = :Application 
 		ORDER BY Model; 
+	]]>
+	</Query>
+	<Query name="SELECT_SOURCES" type="SQL">
+	<![CDATA[
+		SELECT DISTINCT Source FROM LogItems INNER JOIN 
+		Devices ON Devices.DeviceID = LogItems.DeviceID 
+		ORDER BY Source;
+	]]>
+	</Query>
+	<Query name="SELECT_SOURCES_BY_APPNAME" type="SQL" parameters="Application">
+	<![CDATA[
+		SELECT DISTINCT Source FROM LogItems INNER JOIN 
+		Devices ON Devices.DeviceID = LogItems.DeviceID
+		WHERE Application = :Application 
+		ORDER BY Source; 
 	]]>
 	</Query>
 	<Query name="SELECT_RESOLUTIONS" type="SQL">

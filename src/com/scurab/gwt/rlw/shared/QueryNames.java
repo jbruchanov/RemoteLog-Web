@@ -34,4 +34,7 @@ public final class QueryNames {
 
     public static final String SELECT_CATEGORIES = "SELECT_CATEGORIES";
     public static final String SELECT_CATEGORIES_BY_APPNAME = "SELECT_CATEGORIES_BY_APPNAME";
+    
+    public static final String SELECT_SOURCES = "SELECT_SOURCES";
+    public static final String SELECT_SOURCES_BY_APPNAME = "SELECT_SOURCES_BY_APPNAME";
 }

@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DateBox;
@@ -34,11 +35,12 @@ public class LogFilterView extends Composite implements IsFilterWidget {
     @UiField
     DateBox mDate;
     @UiField
-    TextBox mMessage;
+    TextArea mMessage;
     @UiField
     Button mOkButton;
     @UiField
     Button mCancelButton;
+    @UiField ListBox mSource;
 
     interface LogFilterViewUiBinder extends UiBinder<Widget, LogFilterView> {
     }
@@ -74,6 +76,19 @@ public class LogFilterView extends Composite implements IsFilterWidget {
             @Override
             public void onSuccess(List<String> result) {
                 fillListBox(mCategory, result);
+            }
+
+            @Override
+            public void onFailure(Throwable caught) {
+                Window.alert(caught.getMessage());
+            }
+        });
+        
+        mDataService.getDistinctValues(mApplication, mApplication == null ? QueryNames.SELECT_SOURCES
+                : QueryNames.SELECT_SOURCES_BY_APPNAME, new AsyncCallback<List<String>>() {
+            @Override
+            public void onSuccess(List<String> result) {
+                fillListBox(mSource, result);
             }
 
             @Override

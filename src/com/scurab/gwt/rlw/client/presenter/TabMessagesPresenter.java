@@ -5,8 +5,10 @@ import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
@@ -103,7 +105,10 @@ public class TabMessagesPresenter extends TabBasePresenter {
     protected void onSendClick() {
         String json = getMessageRequest().toJson().toString();
         notifyStartDownloading(null);
-        mDisplay.getSendButton().setEnabled(false);
+        final long ts = System.currentTimeMillis();
+        final Button btnSend = mDisplay.getSendButton(); 
+        btnSend.setEnabled(false);
+        btnSend.setText(RemoteLogWeb.WORDS.Sending());
         mDataService.sendMessage(json, new AsyncCallback<PushMessageRespond>() {
             @Override
             public void onFailure(Throwable caught) {
@@ -112,16 +117,30 @@ public class TabMessagesPresenter extends TabBasePresenter {
             }
 
             @Override
-            public void onSuccess(PushMessageRespond result) {
-                mDisplay.getSendButton().setEnabled(true);
-                notifyStopDownloading();
-                onPushRespond(result);
+            public void onSuccess(final PushMessageRespond result) {
+                //notifiaction via button, so if respond is too quick, ill wait for at least 500ms                
+                
+                final long now = System.currentTimeMillis();
+                long diff = now - ts;
+                if (diff < 1000) {
+                    Timer t = new Timer() {
+                        public void run() {
+                            onPushRespond(result);
+                        }
+                    };
+                    t.schedule((int) Math.max(500, 1000 - diff));
+                } else {
+                    onPushRespond(result);
+                }
             }
         });
     }
     
     protected void onPushRespond(PushMessageRespond rmd){
-        Window.alert(rmd.getStatus());
+        final Button btnSend = mDisplay.getSendButton(); 
+        btnSend.setEnabled(true);
+        btnSend.setText(RemoteLogWeb.WORDS.Send());
+        notifyStopDownloading();
     }
     
     private PushMessageRequest getMessageRequest(){
@@ -168,5 +187,6 @@ public class TabMessagesPresenter extends TabBasePresenter {
         if(pushId == null){
             errMsg.setText(RemoteLogWeb.WORDS.MissingPushID());
         }
+        mDisplay.setVisible(pushId != null);
     }
 }

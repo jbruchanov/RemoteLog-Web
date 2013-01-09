@@ -439,6 +439,24 @@ public interface Words extends com.google.gwt.i18n.client.ConstantsWithLookup {
   String Send();
 
   /**
+   * Translated "Sending".
+   * 
+   * @return translated "Sending"
+   */
+  @DefaultStringValue("Sending")
+  @Key("Sending")
+  String Sending();
+
+  /**
+   * Translated "Sent".
+   * 
+   * @return translated "Sent"
+   */
+  @DefaultStringValue("Sent")
+  @Key("Sent")
+  String Sent();
+
+  /**
    * Translated "SetFilter".
    * 
    * @return translated "SetFilter"
@@ -455,6 +473,15 @@ public interface Words extends com.google.gwt.i18n.client.ConstantsWithLookup {
   @DefaultStringValue("Settings")
   @Key("Settings")
   String Settings();
+
+  /**
+   * Translated "Source".
+   * 
+   * @return translated "Source"
+   */
+  @DefaultStringValue("Source")
+  @Key("Source")
+  String Source();
 
   /**
    * Translated "Try wait for respond".

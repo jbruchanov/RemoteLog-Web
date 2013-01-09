@@ -7,6 +7,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.TextBoxBase;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
 
 public abstract class FilterDialog extends DialogBox {
@@ -67,7 +68,7 @@ public abstract class FilterDialog extends DialogBox {
         return result.length() != 0 ? result : null;
     }
 
-    protected String getTextBoxValue(TextBox v) {
+    protected String getTextBoxValue(TextBoxBase v) {
         String result = v.getValue();
         return result.length() != 0 ? result : null;
     }

@@ -29,6 +29,7 @@ public class LogFilterDialog extends FilterDialog {
         insertValue(filters, SharedParams.LOG_APPBUILD, getTextBoxValue(mFilterView.mAppBuild));
         insertValue(filters, SharedParams.LOG_APPVERSION, getTextBoxValue(mFilterView.mAppVersion));
         insertValue(filters, SharedParams.LOG_CATEGORY, getListBoxValue(mFilterView.mCategory));
+        insertValue(filters, SharedParams.LOG_SOURCE, getListBoxValue(mFilterView.mSource));
         insertValue(filters, SharedParams.LOG_DATATYPE, getListBoxValue(mFilterView.mDataType));
         insertValue(filters, SharedParams.LOG_DATE, mFilterView.mDate.getValue());
         insertValue(filters, SharedParams.LOG_DEVICEID, mFilterView.mDeviceID.getValue());

@@ -48,10 +48,10 @@
 			</g:row>
 			<g:row>
 				<g:customCell>
-					<g:Label text="{res.TryWaitForRespond}" styleName="{style.header}"/>
+					<g:Label text="{res.TryWaitForRespond}" styleName="{style.header}" visible="false"/>
 				</g:customCell>
 				<g:customCell>
-					<g:CheckBox text="" ui:field="mWaitCheckBox"/>
+					<g:CheckBox text="" ui:field="mWaitCheckBox" visible="false"/>
 				</g:customCell>
 			</g:row>
 			<g:row>
