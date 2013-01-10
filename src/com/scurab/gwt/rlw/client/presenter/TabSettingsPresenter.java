@@ -164,8 +164,8 @@ public class TabSettingsPresenter extends TabBasePresenter {
     }
     
     public void onLoadSettings(Settings result){
+        mSettings = result;
         if(result != null){
-            mSettings = result;
             mDisplay.getTextArea().setText(mSettings.getJsonValue());
         }else{
             mDisplay.getTextArea().setText(null);

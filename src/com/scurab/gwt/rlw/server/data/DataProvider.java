@@ -318,7 +318,14 @@ public class DataProvider {
         
         Session s = Database.openSession();
         s.beginTransaction();
-        s.saveOrUpdate(settings);
+        
+        String jsonValue = settings.getJsonValue();
+        if(jsonValue == null || jsonValue.trim().length() == 0){
+            s.delete(settings);
+            settings = null;
+        }else{
+            s.saveOrUpdate(settings);
+        }
         s.getTransaction().commit();
         s.close();
         return settings;
