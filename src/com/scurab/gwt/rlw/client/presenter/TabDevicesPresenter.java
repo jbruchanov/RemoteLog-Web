@@ -60,11 +60,12 @@ public class TabDevicesPresenter extends TabDataPresenter<Device> {
             Device d = data.get(i);
             HashMap<String, Object> result = new HashMap<String, Object>();
             result.put("UUID_1", d.getDevUUID());
-            result.put("Brand_2", d.getBrand());
-            result.put("Model_3", d.getModel());
-            result.put("Platform_4", d.getPlatform());
-            result.put("OSv_5", d.getVersion());
-            result.put("Resolution_6", d.getResolution());
+            result.put("Owner_2", d.getOwner());
+            result.put("Brand_3", d.getBrand());
+            result.put("Model_4", d.getModel());
+            result.put("Platform_5", d.getPlatform());
+            result.put("OSv_6", d.getVersion());
+            result.put("Resolution_7", d.getResolution());
             result.put(TableColumns.DeviceID, d.getDeviceID());
             rCollection.add(result);
             

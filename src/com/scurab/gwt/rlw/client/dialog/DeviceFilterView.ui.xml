@@ -27,6 +27,14 @@
 			</g:row>
 			<g:row>
 				<g:customCell>
+					<g:Label text="{res.Owner}"/>
+				</g:customCell>
+				<g:customCell>
+					<g:TextBox width="150px" ui:field="mOwner"/>
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
 					<g:Label text="{res.Brand}"/>
 				</g:customCell>
 				<g:customCell>

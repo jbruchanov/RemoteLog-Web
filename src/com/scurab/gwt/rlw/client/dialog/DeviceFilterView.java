@@ -37,6 +37,7 @@ public class DeviceFilterView extends Composite implements IsFilterWidget {
     IntegerBox mDeviceID;
     
     @UiField ListBox mOSVersion;
+    @UiField TextBox mOwner;
 
     private DataServiceAsync mDataService;
 
@@ -168,5 +169,13 @@ public class DeviceFilterView extends Composite implements IsFilterWidget {
 
     public IntegerBox getDeviceID() {
         return mDeviceID;
+    }
+
+    public TextBox getOwner() {
+        return mOwner;
+    }
+
+    public void setOwner(TextBox owner) {
+        mOwner = owner;
     }
 }

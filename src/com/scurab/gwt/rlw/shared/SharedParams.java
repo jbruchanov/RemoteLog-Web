@@ -10,6 +10,7 @@ public final class SharedParams {
 
     public static final String DEVICE_ID = "DeviceID";
     public static final String DEVICE_UUID = "DevUUID";
+    public static final String DEVICE_OWNER = "Owner";
     public static final String DEVICE_BRAND = "Brand";
     public static final String DEVICE_PLATFORM = "Platform";
     public static final String DEVICE_RESOLUTION = "Resolution";
