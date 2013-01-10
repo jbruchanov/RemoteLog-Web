@@ -113,7 +113,9 @@ public class TabMessagesPresenter extends TabBasePresenter {
             @Override
             public void onFailure(Throwable caught) {
                 mDisplay.getSendButton().setEnabled(true);
+                btnSend.setText(RemoteLogWeb.WORDS.Send());
                 notifyStopDownloading();
+                Window.alert(caught.getMessage());
             }
 
             @Override
