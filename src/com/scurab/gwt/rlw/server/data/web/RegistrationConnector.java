@@ -72,6 +72,46 @@ public class RegistrationConnector extends DataConnector<Device> {
         }
         resp.getOutputStream().close();
     }
+    
+    /**
+     * Update push token
+     */
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Session s = null;
+        Respond<?> dr = null;
+        try {
+            String sid = null;
+            String path = req.getPathInfo();
+            String push = read(req.getInputStream());
+            if (path == null) {
+                throw new IllegalArgumentException("Missing id user /regs/{id}");
+            } else {
+                sid = path.replaceFirst("/", "");
+            }
+
+            s = Database.openSession();
+            int id = Integer.parseInt(sid);
+            Device d = (Device) s.get(Device.class, id);           
+            d.setPushID(push);
+            
+            s.beginTransaction();
+            s.saveOrUpdate(d);
+            s.getTransaction().commit();
+            
+            dr = new Respond<String>(push);
+
+        } catch (Exception e) {
+            dr = new Respond<Exception>(e);
+        } finally {
+            String r = Application.GSON.toJson(dr);
+            resp.getOutputStream().write(r.getBytes());
+            if (s != null && s.isOpen()) {
+                s.close();
+            }
+        }
+        resp.getOutputStream().close();
+    }
 
     private static HashMap convert(Device d) {
         String v = Application.GSON.toJson(d);
