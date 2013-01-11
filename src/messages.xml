@@ -7,4 +7,16 @@
 	<Message name="KillApp" param="false" platform="android" forApp="true"/>
 	<Message name="TakeScreenshot" param="false" platform="android" forApp="true"/>
 	<Message name="LastKnownLocation" param="false" platform="android"/>
+	<Message name="StartIntent" param="true" platform="android" 
+		paramExample="{
+ &quot;Target&quot;:&quot;Activity&quot;,
+ &quot;Action&quot;:&quot;&quot;,
+ &quot;Class&quot;:&quot;&quot;,
+ &quot;Data&quot;:&quot;&quot;,
+ &quot;Bundle&quot;: &quot;&quot;,
+ &quot;Category&quot;: &quot;&quot;,
+ &quot;Component.Package&quot; : &quot;&quot;,
+ &quot;Component.Class&quot; : &quot;&quot;
+}"/>
+	
 </Messages>

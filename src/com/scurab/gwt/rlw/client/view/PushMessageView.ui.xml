@@ -43,7 +43,7 @@
 					<g:Label text="{res.Params}" styleName="{style.header}"/>
 				</g:customCell>
 				<g:customCell>
-					<g:TextArea width="90%" visibleLines="5" ui:field="mMessageParams" styleName="{style.params}"/>
+					<g:TextArea width="90%" visibleLines="10" ui:field="mMessageParams" styleName="{style.params}"/>
 				</g:customCell>
 			</g:row>
 			<g:row>
