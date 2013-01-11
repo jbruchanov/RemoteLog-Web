@@ -22,19 +22,21 @@ public class Application implements ServletContextListener {
     
     public static final HashMap<String, Object> CLIENT_PROPERTIES = new HashMap<String,Object>();
     
+    /** Default format for datetime, must be same like on client! **/
     private static String DT_FORMAT = "yyyy-MM-dd kk:mm:ss.SSS";
     
     public static SimpleDateFormat DATEFORMAT = new SimpleDateFormat(DT_FORMAT);
     
     public static final Gson GSON = new GsonBuilder().setDateFormat(DT_FORMAT).create();
     
+    /** defualt page size **/
     public static int PAGE_SIZE = 50;
 
     public static PushMessage[] PUSH_MESSAGES;
     
     @Override
     public void contextDestroyed(ServletContextEvent arg0) {
-
+        
     }
 
     @Override
@@ -50,6 +52,10 @@ public class Application implements ServletContextListener {
         }
     }
 
+    /**
+     * Load app properties and fill ClientProperties collection
+     * @throws IOException
+     */
     public static void loadProperties() throws IOException {
         String file = "/remotelogweb.properties";
         InputStream inputStream = Application.class.getResourceAsStream(file);

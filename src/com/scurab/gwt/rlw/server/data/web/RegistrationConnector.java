@@ -23,8 +23,18 @@ import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.DeviceRespond;
 import com.scurab.gwt.rlw.shared.model.Respond;
 
+/**
+ * Servlet for handling Registration events<br/>
+ * Supported methods:<br/>
+ * <code>GET</code><br/>
+ * <code>PUT</code> - Put only updates pushToken, input is request just simple value of pushToken
+ * 
+ * @author Joe Scurab
+ *
+ */
 public class RegistrationConnector extends DataConnector<Device> {
 
+    private static final String NICE = "/nice";
     /**
      * 
      */
@@ -39,16 +49,19 @@ public class RegistrationConnector extends DataConnector<Device> {
             boolean nice = false;
             String sid = null;
             String path = req.getPathInfo();
+            
+            //parse id and check if there is "nice" switch to format inner json string
             if (path == null) {
                 throw new IllegalArgumentException("Missing id user /regs/{id}");
             } else {
-                if (path.contains("/nice")) {
+                if (path.contains(NICE)) {
                     nice = true;
-                    path = path.replace("/nice", "");
+                    path = path.replace(NICE, "");
                 }
                 sid = path.replaceFirst("/", "");
             }
 
+            //get data
             s = Database.openSession();
             int id = Integer.parseInt(sid);
             Device d = (Device) s.get(Device.class, id);
@@ -81,6 +94,7 @@ public class RegistrationConnector extends DataConnector<Device> {
         Session s = null;
         Respond<?> dr = null;
         try {
+            //parse path
             String sid = null;
             String path = req.getPathInfo();
             String push = read(req.getInputStream());
@@ -89,7 +103,7 @@ public class RegistrationConnector extends DataConnector<Device> {
             } else {
                 sid = path.replaceFirst("/", "");
             }
-
+            
             s = Database.openSession();
             int id = Integer.parseInt(sid);
             Device d = (Device) s.get(Device.class, id);           

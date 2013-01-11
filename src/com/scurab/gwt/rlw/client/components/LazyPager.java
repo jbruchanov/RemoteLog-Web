@@ -4,6 +4,11 @@ import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.client.Timer;
 import com.scurab.gwt.rlw.client.interfaces.DownloadFinishListener;
 
+/**
+ * Pager implementation for loading on data on demand
+ * @author Joe Scurab
+ *
+ */
 public class LazyPager extends SimplePager {
 
     public interface OnPageLoaderListener {

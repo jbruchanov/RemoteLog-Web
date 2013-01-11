@@ -18,8 +18,8 @@ public class TabDevicePresenter extends TabBasePresenter implements OnDeviceSele
     private Device mDevice;
     
     private TabSettingsPresenter mSettingsPresenter;
-    private TabDeviceDetailPresenter mDeviceDetailPresenter;
-    private TabMessagesPresenter mMessagePresenter;
+    private DeviceDetailPresenter mDeviceDetailPresenter;
+    private PushMessagesPresenter mMessagePresenter;
     
     public TabDevicePresenter(DataServiceAsync dataService, HandlerManager eventBus, String appName, HTMLPanel tabPanel) {
         super(dataService, eventBus, appName, tabPanel);
@@ -39,8 +39,8 @@ public class TabDevicePresenter extends TabBasePresenter implements OnDeviceSele
         if(mAppName != null){
             mSettingsPresenter = new TabSettingsPresenter(mDataService, mEventBus, mAppName, mDevicePanel.getSettingsPanel());
         }
-        mDeviceDetailPresenter = new TabDeviceDetailPresenter(mDataService, mEventBus, mAppName, mDevicePanel.getDevicePanel());
-        mMessagePresenter = new TabMessagesPresenter(mDataService, mEventBus, mAppName, mDevicePanel.getMessagesPanel());
+        mDeviceDetailPresenter = new DeviceDetailPresenter(mDataService, mEventBus, mAppName, mDevicePanel.getDevicePanel());
+        mMessagePresenter = new PushMessagesPresenter(mDataService, mEventBus, mAppName, mDevicePanel.getMessagesPanel());
     }
     
     public void setDevice(Device d){

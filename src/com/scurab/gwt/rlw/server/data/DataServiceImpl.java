@@ -16,6 +16,11 @@ import com.scurab.gwt.rlw.shared.model.PushMessageRequest;
 import com.scurab.gwt.rlw.shared.model.PushMessageRespond;
 import com.scurab.gwt.rlw.shared.model.Settings;
 
+/**
+ * AJAX data service implementation
+ * @author Joe Scurab
+ *
+ */
 public class DataServiceImpl extends RemoteServiceServlet implements DataService {
 
     /**

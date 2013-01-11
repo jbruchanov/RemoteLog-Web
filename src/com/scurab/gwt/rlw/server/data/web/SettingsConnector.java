@@ -17,6 +17,14 @@ import com.scurab.gwt.rlw.shared.model.Respond;
 import com.scurab.gwt.rlw.shared.model.Settings;
 import com.scurab.gwt.rlw.shared.model.SettingsRespond;
 
+/**
+ * Servlet for handling settings<br/>
+ * Supported methods:<br/>
+ * <code>GET</code>
+ * 
+ * @author Joe Scurab
+ *
+ */
 public class SettingsConnector extends DataConnector<Void> {
 
     /**

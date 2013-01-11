@@ -12,6 +12,15 @@ import com.scurab.gwt.rlw.server.data.Database;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 import com.scurab.gwt.rlw.shared.model.LogItemBlob;
 
+/**
+ * Servlet for downloading LogBloblItems<br/>
+ * Just read data from DB and send it to user to show/download base on mimeType
+ * Supported methods:<br/>
+ * <code>GET</code>
+ *   
+ * @author Joe Scurab
+ *
+ */
 public class LogItemBlobsConnector extends DataConnector<Void> {
 
     private static final String FILE_NAME_NOT_DEFINED = "FileNameNotDefined.bin";
@@ -30,11 +39,13 @@ public class LogItemBlobsConnector extends DataConnector<Void> {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {        
         String sid = null;
+        //parse blob id
         if(req.getPathInfo() == null){
             sid = "0";
         }else{
             sid = req.getPathInfo().replaceFirst("/", "");
         }
+        
         Session s = null;
         try{
             s = Database.openSession();
@@ -56,6 +67,7 @@ public class LogItemBlobsConnector extends DataConnector<Void> {
         resp.getOutputStream().close();
     }
 
+    
     protected void onGet(Session s, int id, HttpServletResponse resp) throws IOException{
         //get data from db
         LogItem li = (LogItem) s.get(LogItem.class, id);

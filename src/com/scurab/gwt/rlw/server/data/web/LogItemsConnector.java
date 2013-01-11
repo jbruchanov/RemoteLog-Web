@@ -22,6 +22,15 @@ import com.scurab.gwt.rlw.shared.model.LogItemBlobRespond;
 import com.scurab.gwt.rlw.shared.model.LogItemRespond;
 import com.scurab.gwt.rlw.shared.model.Respond;
 
+/**
+ * Servlet for handling LogItems events<br/>
+ * Supported methods:<br/>
+ * <code>POST</code> - Save logItem<br/>
+ * <code>PUT</code> - Put save blob
+ *  
+ * @author Joe Scurab
+ *
+ */
 public class LogItemsConnector extends DataConnector<LogItem> {
 
     /**
@@ -33,8 +42,10 @@ public class LogItemsConnector extends DataConnector<LogItem> {
     protected Respond<?> onPostRequest(Session s, InputStream is) throws Exception {
         LogItemRespond response = null;
         String json = read(is);
+        //parse
         LogItem[] data = parse(json, json.charAt(0) == '[');
         LogItem[] saved = onWrite(s, data);
+        //save
         if (saved.length == 0) {
             response = new LogItemRespond("Nothing saved!?", 0);
         } else if (saved.length == 1) {
@@ -118,6 +129,7 @@ public class LogItemsConnector extends DataConnector<LogItem> {
         return bytes;
     }
 
+    /** save blob **/
     private int onWrite(int logItemId, String mime, String fileName, InputStream is) throws IOException{
         Session s = Database.openSession();
         //get LogItem

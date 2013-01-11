@@ -15,6 +15,12 @@ import org.hibernate.Session;
 import com.scurab.gwt.rlw.server.data.Database;
 import com.scurab.gwt.rlw.shared.model.Respond;
 
+/**
+ * Class for base Post handling
+ * @author Joe Scurab
+ *
+ * @param <T>
+ */
 public abstract class DataConnector<T> extends Connector {
 
     /**

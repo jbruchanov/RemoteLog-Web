@@ -34,7 +34,8 @@ import com.google.gwt.view.client.SelectionModel;
 import com.scurab.gwt.rlw.client.RemoteLogWeb;
 
 /**
- * Dynamic table widget setData must be called before is widget attechd into element
+ * Complex component for showing data<br/>
+ * Contains: table, reload,autoreload, filter button, pager
  * 
  * @author Joe Scurab
  * 

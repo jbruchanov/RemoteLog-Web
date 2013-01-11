@@ -21,7 +21,7 @@ import com.scurab.gwt.rlw.shared.model.PushMessage;
 import com.scurab.gwt.rlw.shared.model.PushMessageRequest;
 import com.scurab.gwt.rlw.shared.model.PushMessageRespond;
 
-public class TabMessagesPresenter extends TabBasePresenter {
+public class PushMessagesPresenter extends TabBasePresenter {
 
     private DataServiceAsync mDataService;
     private HandlerManager mEventBus;
@@ -31,7 +31,7 @@ public class TabMessagesPresenter extends TabBasePresenter {
     
     private Device mDevice;
     
-    public TabMessagesPresenter(DataServiceAsync dataService, HandlerManager eventBus, String appName,
+    public PushMessagesPresenter(DataServiceAsync dataService, HandlerManager eventBus, String appName,
             HTMLPanel tabPanel) {
         super(dataService, eventBus, appName, tabPanel);
         

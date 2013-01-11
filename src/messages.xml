@@ -4,7 +4,6 @@
 	<Message name="Notification" param="true" paramExample="{&quot;Title&quot;:&quot;&quot;, &quot;Message&quot;:&quot;&quot;}" />
 	<Message name="Question" param="true" paramExample="{&quot;Title&quot;:&quot;&quot;, &quot;Message&quot;:&quot;&quot;, &quot;Actions&quot;: [&quot;Yes&quot;, &quot;No&quot;, &quot;Cancel&quot;]}"/>
 	<Message name="ReloadSettings" param="false" platform="android|windowsphone" />
-	<Message name="ResendRegistration" param="false" platform="android|windowsphone" />
 	<Message name="KillApp" param="false" platform="android" forApp="true"/>
 	<Message name="TakeScreenshot" param="false" platform="android" forApp="true"/>
 	<Message name="LastKnownLocation" param="false" platform="android"/>

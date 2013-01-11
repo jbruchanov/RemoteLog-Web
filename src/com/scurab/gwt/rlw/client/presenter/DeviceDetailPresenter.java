@@ -10,17 +10,15 @@ import com.scurab.gwt.rlw.client.RemoteLogWeb;
 import com.scurab.gwt.rlw.client.view.DeviceDetailView;
 import com.scurab.gwt.rlw.shared.model.Device;
 
-public class TabDeviceDetailPresenter extends TabBasePresenter {
+public class DeviceDetailPresenter extends TabBasePresenter {
 
     private static final int MAX_LENGTH = 64;
     private Device mDevice;
-    private DataServiceAsync mDataService;
-    private HandlerManager mEventBus;
     private DeviceDetailView mDisplay;
     private String mApp;
     private HTMLPanel mContainer;
     
-    public TabDeviceDetailPresenter(DataServiceAsync dataService, HandlerManager eventBus, String appName,
+    public DeviceDetailPresenter(DataServiceAsync dataService, HandlerManager eventBus, String appName,
             HTMLPanel tabPanel) {
         super(dataService, eventBus, appName, tabPanel); mDataService = dataService;
         

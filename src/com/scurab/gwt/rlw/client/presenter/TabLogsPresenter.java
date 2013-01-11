@@ -17,7 +17,7 @@ import com.scurab.gwt.rlw.client.dialog.LogFilterDialog;
 import com.scurab.gwt.rlw.shared.TableColumns;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 
-public class TabLogPresenter extends TabDataPresenter<LogItem> {
+public class TabLogsPresenter extends TabDataPresenter<LogItem> {
 
     private DynamicTableWidget mLogTable;
     private LogFilterDialog mFilterDialog;
@@ -26,7 +26,7 @@ public class TabLogPresenter extends TabDataPresenter<LogItem> {
     private String mApp;
     private HTMLPanel mLogPanel;
 
-    public TabLogPresenter(DataServiceAsync dataService, HandlerManager eventBus, String appName, HTMLPanel tabPanel) {
+    public TabLogsPresenter(DataServiceAsync dataService, HandlerManager eventBus, String appName, HTMLPanel tabPanel) {
         super(dataService, eventBus, appName, tabPanel);
         mDataService = dataService;
         mEventBus = eventBus;

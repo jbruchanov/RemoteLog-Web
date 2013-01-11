@@ -23,6 +23,11 @@ import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 import com.scurab.gwt.rlw.shared.model.Settings;
 
+/**
+ * Data handling
+ * @author Joe Scurab
+ *
+ */
 public class DataProvider {
 
     private static final String AND = " AND ";// put rather space on both sides

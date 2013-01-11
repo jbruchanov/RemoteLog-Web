@@ -30,6 +30,9 @@ public class Database {
         return factory.openSession();
     }
 
+    /**
+     * Init DB connection
+     */
     public static void init() {
         if (factory == null) {
             Queries.init();
@@ -39,6 +42,9 @@ public class Database {
         }
     }
 
+    /**
+     * Check tables, if there is 0 tables, create them
+     */
     private static void checkTables() {
         Session s = openSession();
         int size = s.createSQLQuery("SHOW TABLES;").list().size();
@@ -102,6 +108,11 @@ public class Database {
         public String DefaultOrderString;
     }
 
+    /**
+     * Get table info based on class annotations
+     * @param object
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public static <T> TableInfo getTable(Class<T> object) {
         Class<T> c;

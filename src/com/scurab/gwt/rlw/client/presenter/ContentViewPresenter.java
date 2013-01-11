@@ -19,7 +19,7 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget, OnD
     private String mApp;
 
     private TabSettingsPresenter mSettingsPresenter;
-    private TabLogPresenter mLogPresenter;
+    private TabLogsPresenter mLogPresenter;
     private TabDevicesPresenter mDevicesPresenter;
     private TabDevicePresenter mDevicePresenter;
 
@@ -44,7 +44,7 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget, OnD
             mSettingsPresenter.onLoadingSettings();
         }
         
-        mLogPresenter = new TabLogPresenter(mDataService, mEventBus, mApp, mDisplay.getLogsPanel());
+        mLogPresenter = new TabLogsPresenter(mDataService, mEventBus, mApp, mDisplay.getLogsPanel());
         mLogPresenter.onLoadData(0);
         mDevicesPresenter = new TabDevicesPresenter(mDataService, mEventBus, mApp, mDisplay.getDevicesPanel());
         mDevicesPresenter.onLoadData(0);
