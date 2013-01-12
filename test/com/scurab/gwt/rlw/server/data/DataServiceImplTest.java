@@ -1,9 +1,17 @@
 package com.scurab.gwt.rlw.server.data;
 
+import org.junit.Test;
+
 import com.scurab.gwt.rlw.ApplicationTest;
+import com.scurab.gwt.rlw.shared.SharedParams;
 
 public class DataServiceImplTest extends ApplicationTest {
 
+    @Test
+    public void testA(){
+        DataServiceImpl dsi = new DataServiceImpl();
+        dsi.getLogs("{}");
+    }
     // @Test
     // public void testGetDevices() {
     // DataServiceImpl dsi = new DataServiceImpl();

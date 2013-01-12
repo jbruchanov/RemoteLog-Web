@@ -8,9 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import com.google.gson.annotations.SerializedName;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 @Entity(name = "Devices")
-public class Device implements Serializable {
+public class Device implements Serializable, IsSerializable {
 
     /**
      * 

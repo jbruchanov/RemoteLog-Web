@@ -9,11 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import com.google.gson.annotations.SerializedName;
+import com.google.gwt.user.client.rpc.IsSerializable;
 import com.scurab.gwt.rlw.server.annotation.DefaultOrderString;
 
 @Entity(name = "LogItems")
 @DefaultOrderString(value = "ID DESC")
-public class LogItem implements Serializable {
+public class LogItem implements Serializable, IsSerializable {
 
     /**
      * 
@@ -99,7 +100,11 @@ public class LogItem implements Serializable {
     }
 
     public void setDate(Date date) {
-        mDate = date;
+        if(date.getClass() == Date.class){
+            mDate = date;
+        }else{
+            mDate = new Date(date.getTime());
+        }
     }
 
     public String getCategory() {
@@ -119,6 +124,7 @@ public class LogItem implements Serializable {
     }
 
     public String getBlobMime() {
+        
         return mBlobMime;
     }
 

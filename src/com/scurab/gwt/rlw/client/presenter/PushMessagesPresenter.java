@@ -1,5 +1,6 @@
 package com.scurab.gwt.rlw.client.presenter;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -17,8 +18,8 @@ import com.scurab.gwt.rlw.client.DataServiceAsync;
 import com.scurab.gwt.rlw.client.RemoteLogWeb;
 import com.scurab.gwt.rlw.client.view.PushMessageView;
 import com.scurab.gwt.rlw.shared.model.Device;
+import com.scurab.gwt.rlw.shared.model.GWTJsonHelper;
 import com.scurab.gwt.rlw.shared.model.PushMessage;
-import com.scurab.gwt.rlw.shared.model.PushMessageGWT;
 import com.scurab.gwt.rlw.shared.model.PushMessageRequest;
 import com.scurab.gwt.rlw.shared.model.PushMessageRespond;
 
@@ -93,24 +94,24 @@ public class PushMessagesPresenter extends TabBasePresenter {
         onSelectMessage(null);//simulate null value selection
     }
     
-    protected PushMessageGWT getSelectedMessage(){
+    protected PushMessage getSelectedMessage(){
         ListBox lb = mDisplay.getMessageListBox();
         int index = lb.getSelectedIndex()-1;//null values is first
         PushMessage m = null;
         if(index > -1){
             m = RemoteLogWeb.PUSH_MESSAGES[index];
         }
-        return new PushMessageGWT(m);
+        return m;
     }
     
     protected void onSendClick() {
-        String json = getMessageRequest().toJson().toString();
+        String json = GWTJsonHelper.toJson(getMessageRequest()).toString();
         notifyStartDownloading(null);
         final long ts = System.currentTimeMillis();
         final Button btnSend = mDisplay.getSendButton(); 
         btnSend.setEnabled(false);
         btnSend.setText(RemoteLogWeb.WORDS.Sending());
-        mDataService.sendMessage(json, new AsyncCallback<PushMessageRespond>() {
+        mDataService.sendMessage(getMessageRequest(), new AsyncCallback<PushMessageRespond>() {
             @Override
             public void onFailure(Throwable caught) {
                 mDisplay.getSendButton().setEnabled(true);

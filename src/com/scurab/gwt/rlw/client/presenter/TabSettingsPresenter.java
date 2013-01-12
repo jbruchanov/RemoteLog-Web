@@ -15,8 +15,8 @@ import com.scurab.gwt.rlw.client.RemoteLogWeb;
 import com.scurab.gwt.rlw.client.view.SettingsView;
 import com.scurab.gwt.rlw.shared.TableColumns;
 import com.scurab.gwt.rlw.shared.model.Device;
+import com.scurab.gwt.rlw.shared.model.GWTJsonHelper;
 import com.scurab.gwt.rlw.shared.model.Settings;
-import com.scurab.gwt.rlw.shared.model.SettingsGWT;
 
 public class TabSettingsPresenter extends TabBasePresenter {
 
@@ -27,7 +27,7 @@ public class TabSettingsPresenter extends TabBasePresenter {
     private Device mDevice;
     private SettingsView mDisplay;
     
-    private SettingsGWT mSettings;
+    private Settings mSettings;
     
     public TabSettingsPresenter(DataServiceAsync dataService, HandlerManager eventBus, String appName, HTMLPanel tabPanel) {
         super(dataService, eventBus, appName, tabPanel);
@@ -68,23 +68,22 @@ public class TabSettingsPresenter extends TabBasePresenter {
         }
         
         if(mSettings == null){//create settings object if necessary
-            mSettings = new SettingsGWT();
+            mSettings = new Settings();
             mSettings.setAppName(mApp);
             if(mDevice != null){
                 mSettings.setDeviceID(mDevice.getDeviceID());
             }
         }
         mSettings.setJsonValue(text);
-        String jsonParams = mSettings.toJson().toString();
         //start notify
         notifyStartDownloading(RemoteLogWeb.WORDS.Save());
         mDisplay.getSave().setEnabled(false);        
         //save
-        mDataService.saveSettings(jsonParams, new AsyncCallback<Settings>() {
+        mDataService.saveSettings(mSettings, new AsyncCallback<Settings>() {
             
             @Override
             public void onSuccess(Settings result) {
-                mSettings = result != null ? new SettingsGWT(result): null; 
+                mSettings = result; 
                 notifyStopDownloading();
                 mDisplay.getSave().setEnabled(true);
             }
@@ -163,7 +162,7 @@ public class TabSettingsPresenter extends TabBasePresenter {
     }
     
     public void onLoadSettings(Settings result){
-        mSettings = result != null ? new SettingsGWT(result): null;
+        mSettings = result;
         if(result != null){
             mDisplay.getTextArea().setText(mSettings.getJsonValue());
         }else{

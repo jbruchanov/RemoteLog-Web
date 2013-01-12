@@ -5,8 +5,9 @@ import java.io.Serializable;
 import com.google.gson.annotations.SerializedName;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class PushMessageRespond implements Serializable {
+public class PushMessageRespond implements Serializable, IsSerializable {
 
     /**
      * 
@@ -65,18 +66,5 @@ public class PushMessageRespond implements Serializable {
         mTimestamp = timestamp;
     }
     
-    public static PushMessageRespond fromJson(String json) {
-        JSONObject jso = JSONParser.parseStrict(json).isObject();
-        return fromJson(jso);
-    }
-    
-    public static PushMessageRespond fromJson(JSONObject jso) {
-        PushMessageRespond pmr = new PushMessageRespond();
-        
-        pmr.setRequest(PushMessageRequest.fromJson(jso.get("Request").isObject()));
-        pmr.setMessageId(jso.get("MessageID").isString().stringValue());
-        pmr.setStatus(jso.get("Status").isString().stringValue());
-        pmr.setTimestamp(jso.get("Timestamp").isString().stringValue());
-        return pmr;
-    }
+   
 }

@@ -10,10 +10,11 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import com.google.gson.annotations.SerializedName;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 @Entity(name = "Settings")
 @Table(uniqueConstraints={@UniqueConstraint(columnNames={"AppName","DeviceID"},name="IX_AppNameDevice")})
-public class Settings implements Serializable {
+public class Settings implements Serializable, IsSerializable {
 
     /**
      * 

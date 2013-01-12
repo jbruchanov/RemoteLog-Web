@@ -75,10 +75,7 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
 
     @Override
     public String getProperties() {
-        System.out.println("getProperties()");
-        String json =  Application.GSON.toJson(Application.CLIENT_PROPERTIES);
-        System.out.println("Got:" + json);
-        return json;
+        return Application.GSON.toJson(Application.CLIENT_PROPERTIES);
     }
 
     @Override
@@ -87,8 +84,8 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
     }
 
     @Override
-    public PushMessageRespond sendMessage(String json) {
-        PushMessageRequest req = Application.GSON.fromJson(json, PushMessageRequest.class);
+    public PushMessageRespond sendMessage(PushMessageRequest json) {
+        PushMessageRequest req = json;//.GSON.fromJson(json, PushMessageRequest.class);
         PushMessageRespond res = null;
         String platform = req.getDevicePlatform().toLowerCase();
         if(platform.startsWith("android")){
@@ -115,8 +112,8 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
     }
 
     @Override
-    public Settings saveSettings(String jsonParams) {
-        Settings s = Application.GSON.fromJson(jsonParams, Settings.class);
+    public Settings saveSettings(Settings s) {
+//        Settings s = Application.GSON.fromJson(jsonParams, Settings.class);
         
         if(s.getAppName() == null){
             throw new IllegalArgumentException("appName is null!");
@@ -128,5 +125,23 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
     @Override
     public int deleteDeviceSettings(String appName) {
         return new DataProvider().deleteDeviceSpecificSettings(appName);
+    }
+
+    /**
+     * Ignore this to set policy GWT stupidity
+     */
+    @Override
+    public Settings policySettings() {
+        return null;
+    }
+
+    @Override
+    public LogItem policyLogItem() {
+        return null;
+    }
+
+    @Override
+    public Device policyDevice() {
+        return null;
     }
 }

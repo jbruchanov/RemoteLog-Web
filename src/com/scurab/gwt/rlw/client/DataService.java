@@ -7,6 +7,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 import com.scurab.gwt.rlw.shared.model.PushMessage;
+import com.scurab.gwt.rlw.shared.model.PushMessageRequest;
 import com.scurab.gwt.rlw.shared.model.PushMessageRespond;
 import com.scurab.gwt.rlw.shared.model.Settings;
 
@@ -33,15 +34,23 @@ public interface DataService extends RemoteService {
     
     PushMessage[] getPushMessages();
     
-    PushMessageRespond sendMessage(String json);
+    PushMessageRespond sendMessage(PushMessageRequest json);
     
     Settings getSettings(String jsonParams);
     
-    Settings saveSettings(String jsonParams);
+    Settings saveSettings(Settings settings);
     
     /**
      * Delete any custom device settings for app
      * @param appName
      */
     int deleteDeviceSettings(String appName);
+    
+    
+    /**
+     * Stupid GWT policy
+     */
+    Settings policySettings();
+    LogItem policyLogItem();
+    Device policyDevice();
 }

@@ -6,8 +6,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 @Entity(name = "LogItemBlobs")
-public class LogItemBlob implements Serializable {
+public class LogItemBlob implements Serializable, IsSerializable {
 
     private static final long serialVersionUID = 897695906066127214L;
 

@@ -1,8 +1,9 @@
 package com.scurab.gwt.rlw.shared.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class Respond<T> {
+public class Respond<T> implements IsSerializable {
 
     @SerializedName("Type")
     private String mType;

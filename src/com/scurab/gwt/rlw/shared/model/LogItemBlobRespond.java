@@ -1,6 +1,6 @@
 package com.scurab.gwt.rlw.shared.model;
 
-public class LogItemBlobRespond extends Respond<LogItemBlobRequest> {
+public class LogItemBlobRespond extends Respond<LogItemBlobRequest>  {
 
     public LogItemBlobRespond() {
         super();

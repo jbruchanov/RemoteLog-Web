@@ -3,8 +3,9 @@ package com.scurab.gwt.rlw.shared.model;
 import java.io.Serializable;
 
 import com.google.gson.annotations.SerializedName;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class PushMessage implements Serializable{
+public class PushMessage implements Serializable, IsSerializable{
     /**
      * 
      */

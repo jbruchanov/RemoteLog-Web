@@ -6,6 +6,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 import com.scurab.gwt.rlw.shared.model.PushMessage;
+import com.scurab.gwt.rlw.shared.model.PushMessageRequest;
 import com.scurab.gwt.rlw.shared.model.PushMessageRespond;
 import com.scurab.gwt.rlw.shared.model.Settings;
 
@@ -26,12 +27,18 @@ public interface DataServiceAsync {
 
     void getPushMessages(AsyncCallback<PushMessage[]> callback);
 
-    void sendMessage(String json, AsyncCallback<PushMessageRespond> callback);
+    void sendMessage(PushMessageRequest json, AsyncCallback<PushMessageRespond> callback);
 
     void getSettings(String jsonParams, AsyncCallback<Settings> callback);
 
-    void saveSettings(String jsonParams, AsyncCallback<Settings> callback);
+    void saveSettings(Settings settings, AsyncCallback<Settings> callback);
 
     void deleteDeviceSettings(String appName, AsyncCallback<Integer> callback);
+
+    void policyLogItem(AsyncCallback<LogItem> callback);
+
+    void policySettings(AsyncCallback<Settings> callback);
+
+    void policyDevice(AsyncCallback<Device> callback);
 
 }
