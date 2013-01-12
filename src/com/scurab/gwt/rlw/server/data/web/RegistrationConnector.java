@@ -12,13 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-import antlr.collections.List;
-
 import com.scurab.gwt.rlw.server.Application;
 import com.scurab.gwt.rlw.server.data.Database;
 import com.scurab.gwt.rlw.server.data.Database.TableInfo;
 import com.scurab.gwt.rlw.shared.SharedParams;
-import com.scurab.gwt.rlw.shared.TableColumns;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.DeviceRespond;
 import com.scurab.gwt.rlw.shared.model.Respond;

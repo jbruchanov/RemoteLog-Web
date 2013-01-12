@@ -10,9 +10,6 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import com.google.gson.annotations.SerializedName;
-import com.google.gwt.json.client.JSONNumber;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONString;
 
 @Entity(name = "Settings")
 @Table(uniqueConstraints={@UniqueConstraint(columnNames={"AppName","DeviceID"},name="IX_AppNameDevice")})
@@ -73,16 +70,5 @@ public class Settings implements Serializable {
         mJsonValue = jsonValue;
     }
     
-    public JSONObject toJson(){
-        JSONObject obj = new JSONObject();
-        obj.put("SettingsID", new JSONNumber(mSettingsID));
-        if(mAppName != null){
-            obj.put("AppName", new JSONString(mAppName));
-        }
-        if(mDeviceID != null){
-            obj.put("DeviceID", new JSONNumber(mDeviceID));
-        }
-        obj.put("JsonValue", new JSONString(mJsonValue));
-        return obj;
-    }
+   
 }

@@ -75,7 +75,10 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
 
     @Override
     public String getProperties() {
-        return Application.GSON.toJson(Application.CLIENT_PROPERTIES);
+        System.out.println("getProperties()");
+        String json =  Application.GSON.toJson(Application.CLIENT_PROPERTIES);
+        System.out.println("Got:" + json);
+        return json;
     }
 
     @Override

@@ -1,7 +1,5 @@
 package com.scurab.gwt.rlw.server.push;
 
-import java.io.IOException;
-
 import com.scurab.gwt.rlw.server.Application;
 import com.scurab.gwt.rlw.server.push.android.Message;
 import com.scurab.gwt.rlw.server.push.android.Result;

@@ -6,13 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.hibernate.Session;
-
 import com.scurab.gwt.rlw.server.Application;
 import com.scurab.gwt.rlw.server.data.DataProvider;
-import com.scurab.gwt.rlw.server.data.Database;
-import com.scurab.gwt.rlw.shared.model.LogItem;
-import com.scurab.gwt.rlw.shared.model.LogItemBlob;
 import com.scurab.gwt.rlw.shared.model.Respond;
 import com.scurab.gwt.rlw.shared.model.Settings;
 import com.scurab.gwt.rlw.shared.model.SettingsRespond;

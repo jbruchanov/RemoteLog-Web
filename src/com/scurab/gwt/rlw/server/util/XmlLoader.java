@@ -10,6 +10,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.scurab.gwt.rlw.server.Application;
 import com.scurab.gwt.rlw.server.Queries;
 import com.scurab.gwt.rlw.shared.model.PushMessage;
 
@@ -19,6 +20,7 @@ public class XmlLoader {
         List<PushMessage> subResult = new ArrayList<PushMessage>();
         
         String file = "/messages.xml";
+        System.out.println("Start loading PushMessages");
         try {
             InputStream inputStream = Queries.class.getResourceAsStream(file);
     
@@ -70,11 +72,13 @@ public class XmlLoader {
                 pm.setOnlyForApp(onlyForApp);
                 
                 subResult.add(pm);
+                System.out.println("Loaded PushMessage:" + Application.GSON.toJson(pm));
             }
         } catch (Exception e) {
             System.err.println("UNABLE TO LOAD messages.xml!");
             e.printStackTrace();
         }
+        System.out.println("Finish loading PushMessages");
         return subResult.toArray(new PushMessage[subResult.size()]);
     }       
 }

@@ -81,7 +81,7 @@ public class PushMessageRequest implements Serializable {
         obj.put("DeviceID", new JSONNumber(mDeviceID));
         obj.put("DevicePlatform", new JSONString(getDevicePlatform()));
         obj.put("PushToken", new JSONString(mPushToken));
-        obj.put("Message", mMessage.toJson());
+        obj.put("Message", PushMessageGWT.toJson(mMessage));
         if(mMessageParams == null){
             mMessageParams = "";
         }
@@ -105,7 +105,7 @@ public class PushMessageRequest implements Serializable {
         
         pmr.mDeviceID = ((int)jso.get("DeviceID").isNumber().doubleValue());
         pmr.setDevicePlatform((jso.get("DevicePlatform").isString().stringValue()));
-        pmr.mMessage = (PushMessage.fromJson(jso.get("Message").isObject()));
+        pmr.mMessage = (PushMessageGWT.fromJson(jso.get("Message").isObject()));
         pmr.mMessageParams = (jso.get("MessageParams").isString().stringValue());
         pmr.mPushToken = (jso.get("PushToken").isString().stringValue());
         pmr.mWaitForRespond = (jso.get("WaitForRespond").isBoolean().booleanValue());

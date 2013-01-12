@@ -1,7 +1,5 @@
 package com.scurab.gwt.rlw.client.presenter;
 
-import java.util.HashMap;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerManager;
@@ -18,6 +16,7 @@ import com.scurab.gwt.rlw.client.view.SettingsView;
 import com.scurab.gwt.rlw.shared.TableColumns;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.Settings;
+import com.scurab.gwt.rlw.shared.model.SettingsGWT;
 
 public class TabSettingsPresenter extends TabBasePresenter {
 
@@ -28,7 +27,7 @@ public class TabSettingsPresenter extends TabBasePresenter {
     private Device mDevice;
     private SettingsView mDisplay;
     
-    private Settings mSettings;
+    private SettingsGWT mSettings;
     
     public TabSettingsPresenter(DataServiceAsync dataService, HandlerManager eventBus, String appName, HTMLPanel tabPanel) {
         super(dataService, eventBus, appName, tabPanel);
@@ -69,7 +68,7 @@ public class TabSettingsPresenter extends TabBasePresenter {
         }
         
         if(mSettings == null){//create settings object if necessary
-            mSettings = new Settings();
+            mSettings = new SettingsGWT();
             mSettings.setAppName(mApp);
             if(mDevice != null){
                 mSettings.setDeviceID(mDevice.getDeviceID());
@@ -85,7 +84,7 @@ public class TabSettingsPresenter extends TabBasePresenter {
             
             @Override
             public void onSuccess(Settings result) {
-                mSettings = result;
+                mSettings = result != null ? new SettingsGWT(result): null; 
                 notifyStopDownloading();
                 mDisplay.getSave().setEnabled(true);
             }
@@ -164,7 +163,7 @@ public class TabSettingsPresenter extends TabBasePresenter {
     }
     
     public void onLoadSettings(Settings result){
-        mSettings = result;
+        mSettings = result != null ? new SettingsGWT(result): null;
         if(result != null){
             mDisplay.getTextArea().setText(mSettings.getJsonValue());
         }else{

@@ -1,7 +1,5 @@
 package com.scurab.gwt.rlw.client.presenter;
 
-import javax.swing.text.TabExpander;
-
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.TabPanel;

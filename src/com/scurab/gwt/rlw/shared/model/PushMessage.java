@@ -3,10 +3,6 @@ package com.scurab.gwt.rlw.shared.model;
 import java.io.Serializable;
 
 import com.google.gson.annotations.SerializedName;
-import com.google.gwt.json.client.JSONBoolean;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONParser;
-import com.google.gwt.json.client.JSONString;
 
 public class PushMessage implements Serializable{
     /**
@@ -63,7 +59,6 @@ public class PushMessage implements Serializable{
                 }
             }
         }
-        
         return result;
     }
 
@@ -73,27 +68,6 @@ public class PushMessage implements Serializable{
 
     public void setParamExample(String paramExample) {
         mParamExample = paramExample;
-    }
-    
-    
-    public JSONObject toJson(){
-        JSONObject obj = new JSONObject();
-        obj.put("Name", new JSONString(mName));
-        obj.put("HasParams", JSONBoolean.getInstance(mHasParams));
-        return obj;
-    }
-    
-    public static PushMessage fromJson(String json){
-        JSONObject jso = JSONParser.parseStrict(json).isObject();
-        return fromJson(jso);
-    }
-    
-    public static PushMessage fromJson(JSONObject jso){
-        PushMessage pm = new PushMessage();
-        pm.setName(jso.get("Name").isString().stringValue());
-        pm.setHasParams(jso.get("HasParams").isBoolean().booleanValue());
-        
-        return pm;
     }
 
     public boolean isOnlyForApp() {

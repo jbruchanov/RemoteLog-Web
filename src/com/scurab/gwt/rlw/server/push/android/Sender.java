@@ -15,6 +15,16 @@
  */
 package com.scurab.gwt.rlw.server.push.android;
 
+import static com.scurab.gwt.rlw.server.push.android.ServerConstants.GCM_SEND_ENDPOINT;
+import static com.scurab.gwt.rlw.server.push.android.ServerConstants.PARAM_COLLAPSE_KEY;
+import static com.scurab.gwt.rlw.server.push.android.ServerConstants.PARAM_DELAY_WHILE_IDLE;
+import static com.scurab.gwt.rlw.server.push.android.ServerConstants.PARAM_PAYLOAD_PREFIX;
+import static com.scurab.gwt.rlw.server.push.android.ServerConstants.PARAM_REGISTRATION_ID;
+import static com.scurab.gwt.rlw.server.push.android.ServerConstants.PARAM_TIME_TO_LIVE;
+import static com.scurab.gwt.rlw.server.push.android.ServerConstants.TOKEN_CANONICAL_REG_ID;
+import static com.scurab.gwt.rlw.server.push.android.ServerConstants.TOKEN_ERROR;
+import static com.scurab.gwt.rlw.server.push.android.ServerConstants.TOKEN_MESSAGE_ID;
+
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.IOException;
@@ -30,8 +40,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.scurab.gwt.rlw.server.push.android.Result.Builder;
-
-import static com.scurab.gwt.rlw.server.push.android.ServerConstants.*;
 
 /**
  * Helper class to send messages to the GCM service using an API Key.

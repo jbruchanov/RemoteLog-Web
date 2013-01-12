@@ -18,6 +18,7 @@ import com.scurab.gwt.rlw.client.RemoteLogWeb;
 import com.scurab.gwt.rlw.client.view.PushMessageView;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.PushMessage;
+import com.scurab.gwt.rlw.shared.model.PushMessageGWT;
 import com.scurab.gwt.rlw.shared.model.PushMessageRequest;
 import com.scurab.gwt.rlw.shared.model.PushMessageRespond;
 
@@ -92,14 +93,14 @@ public class PushMessagesPresenter extends TabBasePresenter {
         onSelectMessage(null);//simulate null value selection
     }
     
-    protected PushMessage getSelectedMessage(){
+    protected PushMessageGWT getSelectedMessage(){
         ListBox lb = mDisplay.getMessageListBox();
         int index = lb.getSelectedIndex()-1;//null values is first
         PushMessage m = null;
         if(index > -1){
             m = RemoteLogWeb.PUSH_MESSAGES[index];
         }
-        return m;
+        return new PushMessageGWT(m);
     }
     
     protected void onSendClick() {

@@ -85,6 +85,9 @@ public abstract class TabDataPresenter<T> extends TabBasePresenter {
 
     protected void onLoadFinish(List<T> data) {
         List<HashMap<String, Object>> transformed = transformData(data);
+        if(data.size() == 0){
+            return;
+        }
         if (mTable == null) {
             // init table
             mTable = onCreateTable();
