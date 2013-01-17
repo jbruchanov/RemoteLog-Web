@@ -8,7 +8,6 @@ import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
-import com.scurab.gwt.rlw.client.RemoteLogWeb;
 import com.scurab.gwt.rlw.client.components.DynamicTableWidget;
 import com.scurab.gwt.rlw.client.components.LogItemTableWidget;
 import com.scurab.gwt.rlw.client.dialog.FilterDialog;
@@ -46,7 +45,8 @@ public class TabLogsPresenter extends TabDataPresenter<LogItem> {
             }
             result.put("Version_3", d.getAppVersion());
             result.put("Build_4", d.getAppBuild());
-            result.put("Date_5", RemoteLogWeb.DATETIMEFORMAT.format(d.getDate()));
+//            result.put("Date_5", RemoteLogWeb.DATETIMEFORMAT.format(d.getDate()));
+            result.put("Date_5", d.getDateText());
             result.put("Category_6", d.getCategory());
             result.put("Source_7", d.getSource());
             result.put("Message_8", d.getMessage());

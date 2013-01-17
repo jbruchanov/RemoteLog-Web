@@ -17,6 +17,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DateBox;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
+import com.scurab.gwt.rlw.client.RemoteLogWeb;
 import com.scurab.gwt.rlw.shared.QueryNames;
 
 public class LogFilterView extends Composite implements IsFilterWidget {
@@ -53,7 +54,7 @@ public class LogFilterView extends Composite implements IsFilterWidget {
         initWidget(uiBinder.createAndBindUi(this));
         mDataService = dataService;
         mApplication = appName;
-        mDate.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getFormat("yyyy-MM-dd")));
+        mDate.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getFormat(RemoteLogWeb.DATETIMEFORMAT.getPattern().split(" ")[0])));
         initData();
     }
 

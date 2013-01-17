@@ -37,7 +37,7 @@ public class RemoteLogWeb implements EntryPoint {
     
     public static final Words WORDS = GWT.create(Words.class);
     
-    public static DateTimeFormat DATETIMEFORMAT = DateTimeFormat.getFormat("yyyy-MM-dd kk:mm:ss");
+    public static DateTimeFormat DATETIMEFORMAT = DateTimeFormat.getFormat("yyyy-MM-dd HH:mm:ss.SSS");
     
     public static final HashMap<String, Object> CLIENT_PROPERTIES = new HashMap<String, Object>();
     

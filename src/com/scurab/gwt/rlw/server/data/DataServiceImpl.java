@@ -23,11 +23,15 @@ import com.scurab.gwt.rlw.shared.model.Settings;
  */
 public class DataServiceImpl extends RemoteServiceServlet implements DataService {
 
+    
     /**
      * 
      */
     private static final long serialVersionUID = -4187117132460121962L;
 
+    
+    
+    
     @Override
     public List<String> getApplications() throws Exception {
         return new DataProvider().getApplications();
@@ -40,7 +44,12 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
 
     @Override
     public List<LogItem> getLogs(String jsonParams) {
-        return new DataProvider().getLogs(parseParams(jsonParams));
+        List<LogItem> items = new DataProvider().getLogs(parseParams(jsonParams));
+        for(LogItem li : items){
+            //fill data for client
+            li.setDateText(Application.DATEFORMAT.format(li.getDate()));
+        }
+        return items;
     }
 
     @Override

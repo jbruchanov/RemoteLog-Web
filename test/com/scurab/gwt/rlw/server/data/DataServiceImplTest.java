@@ -3,7 +3,6 @@ package com.scurab.gwt.rlw.server.data;
 import org.junit.Test;
 
 import com.scurab.gwt.rlw.ApplicationTest;
-import com.scurab.gwt.rlw.shared.SharedParams;
 
 public class DataServiceImplTest extends ApplicationTest {
 

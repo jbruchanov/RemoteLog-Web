@@ -15,7 +15,6 @@ import com.scurab.gwt.rlw.client.RemoteLogWeb;
 import com.scurab.gwt.rlw.client.view.SettingsView;
 import com.scurab.gwt.rlw.shared.TableColumns;
 import com.scurab.gwt.rlw.shared.model.Device;
-import com.scurab.gwt.rlw.shared.model.GWTJsonHelper;
 import com.scurab.gwt.rlw.shared.model.Settings;
 
 public class TabSettingsPresenter extends TabBasePresenter {

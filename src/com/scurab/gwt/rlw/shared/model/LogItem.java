@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import com.google.gson.annotations.SerializedName;
 import com.google.gwt.user.client.rpc.IsSerializable;
@@ -42,7 +43,7 @@ public class LogItem implements Serializable, IsSerializable {
     @Column(name = "Date", nullable = false)
     @SerializedName("Date")
     private Date mDate;
-
+        
     @Column(name = "Category")
     @SerializedName("Category")
     private String mCategory;
@@ -62,6 +63,13 @@ public class LogItem implements Serializable, IsSerializable {
     @Column(name = "DeviceID")
     @SerializedName("DeviceID")
     private int mDeviceID;
+        
+    /**
+     * Just stupid workaround for stupid GWT  
+     */
+    @Transient
+    @SerializedName("DateText")
+    private String mDateText;
 
     public int getID() {
         return mID;
@@ -148,4 +156,11 @@ public class LogItem implements Serializable, IsSerializable {
         mSource = source;
     }
 
+    public String getDateText() {
+        return mDateText;
+    }
+
+    public void setDateText(String dateText) {
+        mDateText = dateText;
+    }
 }

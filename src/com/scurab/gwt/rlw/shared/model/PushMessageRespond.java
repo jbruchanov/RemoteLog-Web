@@ -3,8 +3,6 @@ package com.scurab.gwt.rlw.shared.model;
 import java.io.Serializable;
 
 import com.google.gson.annotations.SerializedName;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class PushMessageRespond implements Serializable, IsSerializable {
