@@ -44,6 +44,7 @@
        <wp:Toast>
           <wp:Text1>string</wp:Text1>
           <wp:Text2>string</wp:Text2>
+          <wp:Param>/MainPage.xaml?someParam=someID</wp:Param>
        </wp:Toast>
     </wp:Notification>
 	]]>
@@ -52,11 +53,14 @@
 	<![CDATA[
 	<?xml version="1.0" encoding="utf-8"?>
     <wp:Notification xmlns:wp=\"WPNotification\">
-       <wp:Tile>
-          <wp:BackgroundImage>background image path</wp:BackgroundImage>
-          <wp:Count>count</wp:Count>
-          <wp:Title>count</wp:Title>
-       </wp:Tile>
+       <wp:Tile ID="/MainPage.xaml?someParam=someID">
+   		<wp:BackgroundImage>someURI<wp:BackgroundImage>
+   		<wp:Count>XX</wp:Count>
+   		<wp:Title>someTitle</wp:Title>
+   		<wp:BackBackgroundImage>someURI</wp:BackBackgroundImage>
+   		<wp:BackContent>someContent</wp:BackContent>
+   		<wp:BackTitle>someTitle</wp:BackTitle>
+ 	   </wp:Tile>
     </wp:Notification>
 	]]>
 	</Message>

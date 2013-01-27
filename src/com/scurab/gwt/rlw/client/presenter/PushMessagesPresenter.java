@@ -193,6 +193,6 @@ public class PushMessagesPresenter extends TabBasePresenter {
         if(pushId == null){
             errMsg.setText(RemoteLogWeb.WORDS.MissingPushID());
         }
-        mDisplay.setVisible(pushId != null);
+        mDisplay.setVisible(pushId != null && pushId.length() > 0);
     }
 }
