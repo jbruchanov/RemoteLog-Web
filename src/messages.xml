@@ -17,9 +17,9 @@
 	]]> 	
 	</Message>
 	<Message name="ReloadSettings" param="false" platform="android" />
-	<Message name="KillApp" param="false" platform="android" forApp="true"/>
-	<Message name="TakeScreenshot" param="false" platform="android" forApp="true"/>
-	<Message name="LastKnownLocation" param="false" platform="android"/>
+	<Message name="KillApp" param="false" platform="android|windowsphone" forApp="true"/>
+	<Message name="TakeScreenshot" param="false" platform="android|windowsphone" forApp="true"/>
+	<Message name="LastKnownLocation" param="false" platform="android|windowsphone"/>
 	<Message name="StartIntent" param="true" platform="android">
 	<![CDATA[
 	{"Target":"Activity", 
@@ -45,6 +45,18 @@
           <wp:Text1>string</wp:Text1>
           <wp:Text2>string</wp:Text2>
        </wp:Toast>
+    </wp:Notification>
+	]]>
+	</Message>
+	<Message name="TileNotification" param="true" platform="WindowsPhone">
+	<![CDATA[
+	<?xml version="1.0" encoding="utf-8"?>
+    <wp:Notification xmlns:wp=\"WPNotification\">
+       <wp:Tile>
+          <wp:BackgroundImage>background image path</wp:BackgroundImage>
+          <wp:Count>count</wp:Count>
+          <wp:Title>count</wp:Title>
+       </wp:Tile>
     </wp:Notification>
 	]]>
 	</Message>

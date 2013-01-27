@@ -8,6 +8,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.scurab.gwt.rlw.client.DataService;
 import com.scurab.gwt.rlw.server.Application;
 import com.scurab.gwt.rlw.server.push.AndroidSender;
+import com.scurab.gwt.rlw.server.push.WinPhoneSender;
 import com.scurab.gwt.rlw.shared.TableColumns;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
@@ -99,6 +100,8 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
         String platform = req.getDevicePlatform().toLowerCase();
         if(platform.startsWith("android")){
             res = AndroidSender.send(req);
+        }else if(platform.startsWith("windowsphone")){
+            res = WinPhoneSender.send(req);
         }else{
             throw new IllegalStateException(String.format("Platform '%s' not implemented!", platform));
         }
