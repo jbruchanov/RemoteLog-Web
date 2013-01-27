@@ -17,7 +17,8 @@ public class PushMessage implements Serializable, IsSerializable{
     @SerializedName ("HasParams")
     private boolean mHasParams;
     
-    private transient String[] mPlatforms;
+    @SerializedName ("Platforms")
+    private String[] mPlatforms;
     
     @SerializedName("ParamExample")
     private String mParamExample;

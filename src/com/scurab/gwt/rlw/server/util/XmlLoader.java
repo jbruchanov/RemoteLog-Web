@@ -43,11 +43,10 @@ public class XmlLoader {
                 }
                 boolean hasParam = Boolean.parseBoolean(hasParamStr);
                 
-                //optional param example
-                Node paramExampleNode = n.getAttributes().getNamedItem("paramExample");
-                String paramExample = null;
-                if(paramExampleNode != null){
-                    paramExample = paramExampleNode.getNodeValue();
+                String content = null;
+                if(hasParam){
+                    //optional param example
+                    content = n.getTextContent().trim();                
                 }
                 
                 //optional param onlyForApp
@@ -68,7 +67,7 @@ public class XmlLoader {
                         pm.setPlatforms(new String[] {platform});
                     }
                 }
-                pm.setParamExample(paramExample);
+                pm.setParamExample(content);
                 pm.setOnlyForApp(onlyForApp);
                 
                 subResult.add(pm);

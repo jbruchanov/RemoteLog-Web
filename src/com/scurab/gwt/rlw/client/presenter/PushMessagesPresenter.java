@@ -79,14 +79,15 @@ public class PushMessagesPresenter extends TabBasePresenter {
             String platform = d.getPlatform();
             
             lb.addItem("","");
-            for(PushMessage pm : RemoteLogWeb.PUSH_MESSAGES){
+            for(int i = 0, n = RemoteLogWeb.PUSH_MESSAGES.length;i<n;i++){
+                PushMessage pm = RemoteLogWeb.PUSH_MESSAGES[i];
                 if(!pm.isPlatformSupported(platform)){
                     continue;
                 }
                 if(pm.isOnlyForApp() && mApp == null){
                     continue;
                 }
-                lb.addItem(pm.getName());
+                lb.addItem(pm.getName(), String.valueOf(i));
             }
         }
         
@@ -95,12 +96,14 @@ public class PushMessagesPresenter extends TabBasePresenter {
     
     protected PushMessage getSelectedMessage(){
         ListBox lb = mDisplay.getMessageListBox();
-        int index = lb.getSelectedIndex()-1;//null values is first
-        PushMessage m = null;
-        if(index > -1){
-            m = RemoteLogWeb.PUSH_MESSAGES[index];
+        int index = lb.getSelectedIndex();//null values is first
+        if(index > 0){
+            String name = lb.getItemText(index);
+            String value = lb.getValue(index);
+            int arrIndex = Integer.parseInt(value);
+            return RemoteLogWeb.PUSH_MESSAGES[arrIndex];            
         }
-        return m;
+        return null;
     }
     
     protected void onSendClick() {

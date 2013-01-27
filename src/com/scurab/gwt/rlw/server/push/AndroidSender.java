@@ -20,7 +20,6 @@ public class AndroidSender{
         }
     }
     
-    
     public static PushMessageRespond send(PushMessageRequest req) {
         final long timestamp = System.currentTimeMillis();
         Result result = null;

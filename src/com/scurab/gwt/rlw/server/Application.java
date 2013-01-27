@@ -23,7 +23,7 @@ public class Application implements ServletContextListener {
     public static final HashMap<String, Object> CLIENT_PROPERTIES = new HashMap<String,Object>();
     
     /** Default format for datetime, must be same like on client! **/
-    private static String DT_FORMAT = "yyyy-MM-dd kk:mm:ss.SSS";
+    private static String DT_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
     
     public static SimpleDateFormat DATEFORMAT = new SimpleDateFormat(DT_FORMAT);
     

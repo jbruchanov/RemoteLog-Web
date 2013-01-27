@@ -1,13 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Messages>
-	<Message name="Echo" param="false" />
-	<Message name="Notification" param="true" paramExample="{&quot;Title&quot;:&quot;&quot;, &quot;Message&quot;:&quot;&quot;}" />
-	<Message name="Question" param="true" paramExample="{&quot;Title&quot;:&quot;&quot;, &quot;Message&quot;:&quot;&quot;, &quot;Actions&quot;: [&quot;Yes&quot;, &quot;No&quot;, &quot;Cancel&quot;]}"/>
-	<Message name="ReloadSettings" param="false" platform="android|windowsphone" />
+<Messages>	
+	<Message name="Echo" param="false" platform="android"/>
+	<Message name="Notification" param="true" platform="android">
+	<![CDATA[
+		 {
+		 "Title":"", 
+		 "Message":""
+		 }
+	]]>
+	</Message> paramExample="{&quot;Title&quot;:&quot;&quot;, &quot;Message&quot;:&quot;&quot;}" />
+	<Message name="Question" param="true" platform="android">
+	<![CDATA[
+		 {"Title":"", 
+		 "Message":"", 
+		 "Actions": ["Yes", "No", "Cancel"]}
+	]]> 	
+	</Message>
+	<Message name="ReloadSettings" param="false" platform="android" />
 	<Message name="KillApp" param="false" platform="android" forApp="true"/>
 	<Message name="TakeScreenshot" param="false" platform="android" forApp="true"/>
 	<Message name="LastKnownLocation" param="false" platform="android"/>
-	<Message name="StartIntent" param="true" platform="android" 
-		paramExample="{&quot;Target&quot;:&quot;Activity&quot;, &quot;Action&quot;:&quot;&quot;, &quot;Class&quot;:&quot;&quot;, &quot;Data&quot;:&quot;&quot;, &quot;Bundle&quot;: &quot;&quot;, &quot;Category&quot;: &quot;&quot;, &quot;Component.Package&quot; : &quot;&quot;, &quot;Component.Class&quot; : &quot;&quot;}"/>
+	<Message name="StartIntent" param="true" platform="android">
+	<![CDATA[
+	{"Target":"Activity", 
+	"Action":"", 
+	"Class":"", 
+	"Data":"", 
+	"Bundle": "", 
+	"Category": "", 
+	"Component.Package" : "", 
+	"Component.Class" : ""}
+	]]> 		
+	</Message>
 	
+	
+	<!--  winphone -->
+	
+	<!-- don't change the name, otherwise check WinPhoneSender.java -->
+	<Message name="ToastNotification" param="true" platform="WindowsPhone">
+	<![CDATA[
+	<?xml version="1.0" encoding="utf-8"?>
+    <wp:Notification xmlns:wp="WPNotification">
+       <wp:Toast>
+          <wp:Text1>string</wp:Text1>
+          <wp:Text2>string</wp:Text2>
+       </wp:Toast>
+    </wp:Notification>
+	]]>
+	</Message>
 </Messages>
