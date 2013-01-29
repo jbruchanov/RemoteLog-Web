@@ -77,13 +77,13 @@ public class GWTJsonHelper {
         return pmr;
     }
     
-    public static PushMessageRespond fromJsonPushMessageRespond(String json) {
+    public static PushMessageResponse fromJsonPushMessageRespond(String json) {
         JSONObject jso = JSONParser.parseStrict(json).isObject();
         return fromJsonPushMessageRespond(jso);
     }
     
-    public static PushMessageRespond fromJsonPushMessageRespond(JSONObject jso) {
-        PushMessageRespond pmr = new PushMessageRespond();
+    public static PushMessageResponse fromJsonPushMessageRespond(JSONObject jso) {
+        PushMessageResponse pmr = new PushMessageResponse();
         
         pmr.setRequest(fromJsonPushMessageRequest(jso.get("Request").isObject()));
         pmr.setMessageId(jso.get("MessageID").isString().stringValue());

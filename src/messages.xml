@@ -52,10 +52,10 @@
 	<Message name="TileNotification" param="true" platform="WindowsPhone">
 	<![CDATA[
 	<?xml version="1.0" encoding="utf-8"?>
-    <wp:Notification xmlns:wp=\"WPNotification\">
-       <wp:Tile ID="/MainPage.xaml?someParam=someID">
+    <wp:Notification xmlns:wp="WPNotification">
+       <wp:Tile Id="/MainPage.xaml?someParam=someID">
    		<wp:BackgroundImage>someURI<wp:BackgroundImage>
-   		<wp:Count>XX</wp:Count>
+   		<wp:Count>1</wp:Count>
    		<wp:Title>someTitle</wp:Title>
    		<wp:BackBackgroundImage>someURI</wp:BackBackgroundImage>
    		<wp:BackContent>someContent</wp:BackContent>

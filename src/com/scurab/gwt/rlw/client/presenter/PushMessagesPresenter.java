@@ -20,7 +20,7 @@ import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.GWTJsonHelper;
 import com.scurab.gwt.rlw.shared.model.PushMessage;
 import com.scurab.gwt.rlw.shared.model.PushMessageRequest;
-import com.scurab.gwt.rlw.shared.model.PushMessageRespond;
+import com.scurab.gwt.rlw.shared.model.PushMessageResponse;
 
 public class PushMessagesPresenter extends TabBasePresenter {
 
@@ -113,7 +113,7 @@ public class PushMessagesPresenter extends TabBasePresenter {
         final Button btnSend = mDisplay.getSendButton(); 
         btnSend.setEnabled(false);
         btnSend.setText(RemoteLogWeb.WORDS.Sending());
-        mDataService.sendMessage(getMessageRequest(), new AsyncCallback<PushMessageRespond>() {
+        mDataService.sendMessage(getMessageRequest(), new AsyncCallback<PushMessageResponse>() {
             @Override
             public void onFailure(Throwable caught) {
                 mDisplay.getSendButton().setEnabled(true);
@@ -123,7 +123,7 @@ public class PushMessagesPresenter extends TabBasePresenter {
             }
 
             @Override
-            public void onSuccess(final PushMessageRespond result) {
+            public void onSuccess(final PushMessageResponse result) {
                 //notifiaction via button, so if respond is too quick, ill wait for at least 500ms                
                 
                 final long now = System.currentTimeMillis();
@@ -142,11 +142,18 @@ public class PushMessagesPresenter extends TabBasePresenter {
         });
     }
     
-    protected void onPushRespond(PushMessageRespond rmd){
+    protected void onPushRespond(PushMessageResponse rmd){
         final Button btnSend = mDisplay.getSendButton(); 
         btnSend.setEnabled(true);
         btnSend.setText(RemoteLogWeb.WORDS.Send());
         notifyStopDownloading();
+        if(rmd.getRequest().getDevicePlatform().equalsIgnoreCase("windowsphone")){
+            String status = rmd.getStatus();
+            //default OK response for winphone
+            if(!"[200] Notification:Received Subscription:Active Device:Connected".equals(status)){
+                Window.alert(rmd.getStatus());
+            }
+        }
     }
     
     private PushMessageRequest getMessageRequest(){

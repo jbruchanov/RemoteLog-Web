@@ -5,7 +5,7 @@ import com.scurab.gwt.rlw.server.push.android.Message;
 import com.scurab.gwt.rlw.server.push.android.Result;
 import com.scurab.gwt.rlw.server.push.android.Sender;
 import com.scurab.gwt.rlw.shared.model.PushMessageRequest;
-import com.scurab.gwt.rlw.shared.model.PushMessageRespond;
+import com.scurab.gwt.rlw.shared.model.PushMessageResponse;
 
 public class AndroidSender{
 
@@ -20,7 +20,7 @@ public class AndroidSender{
         }
     }
     
-    public static PushMessageRespond send(PushMessageRequest req) {
+    public static PushMessageResponse send(PushMessageRequest req) {
         final long timestamp = System.currentTimeMillis();
         Result result = null;
         Exception err = null;
@@ -36,7 +36,7 @@ public class AndroidSender{
             e.printStackTrace();
         }
         
-        PushMessageRespond pmr = new PushMessageRespond(req, String.valueOf(timestamp));
+        PushMessageResponse pmr = new PushMessageResponse(req, String.valueOf(timestamp));
         String gErr = result.getErrorCodeName();
         if(gErr != null){
             pmr.setStatus("[nOK]\n" + gErr);

@@ -8,7 +8,7 @@ import org.junit.Test;
 import com.scurab.gwt.rlw.ApplicationTest;
 import com.scurab.gwt.rlw.shared.model.PushMessage;
 import com.scurab.gwt.rlw.shared.model.PushMessageRequest;
-import com.scurab.gwt.rlw.shared.model.PushMessageRespond;
+import com.scurab.gwt.rlw.shared.model.PushMessageResponse;
 
 public class AndroidSenderTest extends ApplicationTest {
 
@@ -25,7 +25,7 @@ public class AndroidSenderTest extends ApplicationTest {
         pmr.setMessage(pm);
         pmr.setMessageParams("HelloThere");
         
-        PushMessageRespond respond = AndroidSender.send(pmr);
+        PushMessageResponse respond = AndroidSender.send(pmr);
         
         assertNotNull(respond);
         assertNotNull(respond.getMessageId());

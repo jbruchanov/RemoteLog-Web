@@ -12,7 +12,7 @@ import com.scurab.gwt.rlw.shared.model.PushMessageRequest;
 public class WinPhoneSenderTest {
 
     
-    private static final String PUSH_EMU = "http://db3.notify.live.net/throttledthirdparty/01.00/AAE6eTlurGk5RbLCbdVboP9_AgAAAAADAQAAAAQUZm52OjIzOEQ2NDJDRkI5MEVFMEQ";
+    private static final String PUSH_EMU = "http://db3.notify.live.net/throttledthirdparty/01.00/AAFbc87n_MycRrzZi8QkVnWXAgAAAAADAQAAAAQUZm52OjIzOEQ2NDJDRkI5MEVFMEQ";
     private static final String PUSH_DEV = "http://db3.notify.live.net/throttledthirdparty/01.00/AAE6YV-nPPXBR6T_7QPLLT8pAgAAAAADDAAAAAQUZm52OkJCMjg1QTg1QkZDMkUxREQ";
     @Test
     public void testSendToast() {
@@ -82,5 +82,5 @@ public class WinPhoneSenderTest {
 
     
     private static final String toast = "<?xml version=\"1.0\" encoding=\"utf-8\"?><wp:Notification xmlns:wp=\"WPNotification\"><wp:Toast><wp:Text1>string</wp:Text1><wp:Text2>string</wp:Text2></wp:Toast></wp:Notification>";
-    private static final String tile = "<?xml version=\"1.0\" encoding=\"utf-8\"?> <wp:Notification xmlns:wp=\"WPNotification\"> <wp:Tile><wp:BackgroundImage>http://android.scurab.com/style/android.png</wp:BackgroundImage><wp:Count>1</wp:Count><wp:Title>Test</wp:Title></wp:Tile> </wp:Notification>";
+    private static final String tile = "<?xml version=\"1.0\" encoding=\"utf-8\"?><wp:Notification xmlns:wp=\"WPNotification\"><wp:Tile><wp:Count>12</wp:Count><wp:Title>Test</wp:Title></wp:Tile></wp:Notification>";
 }

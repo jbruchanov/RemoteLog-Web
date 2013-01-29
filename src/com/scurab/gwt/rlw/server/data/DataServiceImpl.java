@@ -14,7 +14,7 @@ import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 import com.scurab.gwt.rlw.shared.model.PushMessage;
 import com.scurab.gwt.rlw.shared.model.PushMessageRequest;
-import com.scurab.gwt.rlw.shared.model.PushMessageRespond;
+import com.scurab.gwt.rlw.shared.model.PushMessageResponse;
 import com.scurab.gwt.rlw.shared.model.Settings;
 
 /**
@@ -94,9 +94,9 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
     }
 
     @Override
-    public PushMessageRespond sendMessage(PushMessageRequest json) {
+    public PushMessageResponse sendMessage(PushMessageRequest json) {
         PushMessageRequest req = json;//.GSON.fromJson(json, PushMessageRequest.class);
-        PushMessageRespond res = null;
+        PushMessageResponse res = null;
         String platform = req.getDevicePlatform().toLowerCase();
         if(platform.startsWith("android")){
             res = AndroidSender.send(req);

@@ -5,7 +5,7 @@ import java.io.Serializable;
 import com.google.gson.annotations.SerializedName;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class PushMessageRespond implements Serializable, IsSerializable {
+public class PushMessageResponse implements Serializable, IsSerializable {
 
     /**
      * 
@@ -24,10 +24,10 @@ public class PushMessageRespond implements Serializable, IsSerializable {
     @SerializedName("Timestamp")
     private String mTimestamp;
     
-    protected PushMessageRespond(){
+    protected PushMessageResponse(){
     }
     
-    public PushMessageRespond(PushMessageRequest req, String timestamp){
+    public PushMessageResponse(PushMessageRequest req, String timestamp){
         mRequest = req;
         mTimestamp = timestamp;
     }

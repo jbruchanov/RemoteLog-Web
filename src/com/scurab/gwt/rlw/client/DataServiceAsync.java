@@ -7,7 +7,7 @@ import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 import com.scurab.gwt.rlw.shared.model.PushMessage;
 import com.scurab.gwt.rlw.shared.model.PushMessageRequest;
-import com.scurab.gwt.rlw.shared.model.PushMessageRespond;
+import com.scurab.gwt.rlw.shared.model.PushMessageResponse;
 import com.scurab.gwt.rlw.shared.model.Settings;
 
 /**
@@ -27,7 +27,7 @@ public interface DataServiceAsync {
 
     void getPushMessages(AsyncCallback<PushMessage[]> callback);
 
-    void sendMessage(PushMessageRequest json, AsyncCallback<PushMessageRespond> callback);
+    void sendMessage(PushMessageRequest json, AsyncCallback<PushMessageResponse> callback);
 
     void getSettings(String jsonParams, AsyncCallback<Settings> callback);
 
