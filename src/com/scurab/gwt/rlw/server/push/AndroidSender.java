@@ -9,24 +9,28 @@ import com.scurab.gwt.rlw.shared.model.PushMessageResponse;
 
 public class AndroidSender{
 
-    private static final Sender mSender;
-    
-    static{
-        String id = Application.APP_PROPS.getProperty("push_android");
-        if(id != null && id.length() > 0){
-            mSender = new Sender(id);
-        }else{
-            throw new IllegalStateException("push_android key not found in remotelogweb.properties!");
-        }
-    }
-    
+    private static final String DEFAULT_APP_NAME = "RemoteLog";
+    private static final String PLATFORM = "Android";
+
     public static PushMessageResponse send(PushMessageRequest req) {
         final long timestamp = System.currentTimeMillis();
         Result result = null;
         Exception err = null;
         
         try
-        {
+        {            
+            //get key for platform and app
+            String key = Application.SERVER_PUSH_KEYS.get(PLATFORM, req.getAppName());
+            if(key == null || key.length() == 0){
+                key = Application.SERVER_PUSH_KEYS.get(PLATFORM, DEFAULT_APP_NAME);
+            }
+            if(key == null || key.length() == 0){
+                throw new IllegalStateException(
+                        String.format("Unable to find default push key for server nor default one Platform:%s App:%s", PLATFORM,
+                        req.getAppName()));
+            }
+            //send
+            Sender mSender = new Sender(key);
             Message m = getMessage(timestamp, req);
             String token = req.getPushToken();
             result = mSender.sendNoRetry(m, token);

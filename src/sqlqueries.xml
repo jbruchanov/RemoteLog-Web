@@ -19,6 +19,7 @@
 		  PushID varchar(255) DEFAULT NULL,
 		  Resolution varchar(10) DEFAULT NULL,
 		  Version varchar(10) DEFAULT NULL,
+		  App varchar(255) NOT NULL,
 		  PRIMARY KEY (DeviceID)		  
 		) DEFAULT CHARSET=utf8;
 		

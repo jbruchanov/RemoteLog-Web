@@ -12,6 +12,7 @@ import javax.servlet.ServletContextListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.scurab.gwt.rlw.server.data.Database;
+import com.scurab.gwt.rlw.server.util.DoubleHashMap;
 import com.scurab.gwt.rlw.server.util.XmlLoader;
 import com.scurab.gwt.rlw.shared.SharedParams;
 import com.scurab.gwt.rlw.shared.model.PushMessage;
@@ -34,6 +35,8 @@ public class Application implements ServletContextListener {
 
     public static PushMessage[] PUSH_MESSAGES;
     
+    public static DoubleHashMap<String, String, String> SERVER_PUSH_KEYS;
+    
     @Override
     public void contextDestroyed(ServletContextEvent arg0) {
         
@@ -45,11 +48,16 @@ public class Application implements ServletContextListener {
         try {
             loadProperties();
             loadPushMessages();
+            loadPushServerKeys();
             Database.init();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void loadPushServerKeys() {
+        SERVER_PUSH_KEYS = XmlLoader.loadServerPushTokens();
     }
 
     /**

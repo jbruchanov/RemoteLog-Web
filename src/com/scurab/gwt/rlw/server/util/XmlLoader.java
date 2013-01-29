@@ -79,5 +79,36 @@ public class XmlLoader {
         }
         System.out.println("Finish loading PushMessages");
         return subResult.toArray(new PushMessage[subResult.size()]);
-    }       
+    }
+    
+    public static DoubleHashMap<String, String, String> loadServerPushTokens(){
+        DoubleHashMap<String, String, String> result = new DoubleHashMap<String, String, String>();
+        
+        String file = "/pushnotification.xml";
+        System.out.println("Start loading pushnotification.xml");
+        try {
+            InputStream inputStream = Queries.class.getResourceAsStream(file);
+    
+            DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder;
+        
+            docBuilder = docBuilderFactory.newDocumentBuilder();
+            org.w3c.dom.Document doc = docBuilder.parse(inputStream);
+            NodeList messages = doc.getElementsByTagName("Registration");
+            for (int i = 0; i < messages.getLength(); i++) {
+                //parse 
+                Node n = messages.item(i);
+                String platform = n.getAttributes().getNamedItem("platform").getNodeValue();
+                String name = n.getAttributes().getNamedItem("appName").getNodeValue();
+                String value = n.getTextContent().trim(); 
+                result.put(platform, name, value);
+                System.out.println(String.format("Loaded pushtoken P:%s App:%s", platform, name));
+            }
+        } catch (Exception e) {
+            System.err.println("UNABLE TO LOAD pushnotification.xml!");
+            e.printStackTrace();
+        }
+        System.out.println("Finish loading pushnotification");
+        return result;
+    }
 }

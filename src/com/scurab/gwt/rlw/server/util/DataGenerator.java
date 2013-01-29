@@ -47,6 +47,7 @@ public class DataGenerator {
         if(sRandom.nextInt() % 3 == 0){
             d.setPushID("0");
         }
+        d.setApp("Test");
         return d;
     }
 

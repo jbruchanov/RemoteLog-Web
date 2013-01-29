@@ -68,6 +68,10 @@ public class Device implements Serializable, IsSerializable {
     @Column(name = "Model")
     @SerializedName("Model")
     private String mModel;
+    
+    @Column(name = "App", nullable = false)
+    @SerializedName("App")
+    private String mApp;
 
     public int getDeviceID() {
         return mDeviceID;
@@ -178,5 +182,14 @@ public class Device implements Serializable, IsSerializable {
         mPushID = other.mPushID;
         mResolution = other.mResolution;
         mVersion = other.mVersion;
+        mApp = other.mApp;
+    }
+
+    public String getApp() {
+        return mApp;
+    }
+
+    public void setApp(String app) {
+        mApp = app;
     }
 }

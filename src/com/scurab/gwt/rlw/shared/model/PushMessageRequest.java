@@ -31,6 +31,9 @@ public class PushMessageRequest implements Serializable, IsSerializable {
 
     @SerializedName("WaitForRespond")
     private boolean mWaitForRespond;
+    
+    @SerializedName("AppName")
+    private String mAppName;
 
     public int getDeviceID() {
         return mDeviceID;
@@ -86,5 +89,13 @@ public class PushMessageRequest implements Serializable, IsSerializable {
 
     public void setMessageContext(String messageContext) {
         mMessageContext = messageContext;
+    }
+
+    public String getAppName() {
+        return mAppName;
+    }
+
+    public void setAppName(String appName) {
+        mAppName = appName;
     }
 }

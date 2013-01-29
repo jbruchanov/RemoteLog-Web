@@ -168,6 +168,7 @@ public class PushMessagesPresenter extends TabBasePresenter {
         }
         pmr.setMessageContext(mDisplay.getContext().getValue());
         pmr.setWaitForRespond(mDisplay.getWaitCheckBox().getValue());
+        pmr.setAppName(mApp);
         return pmr;
     }
     
