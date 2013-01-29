@@ -82,6 +82,7 @@ public class WinPhoneSender {
                             conn.getHeaderField("X-NotificationStatus"), conn.getHeaderField("X-SubscriptionStatus"),
                             conn.getHeaderField("X-DeviceConnectionStatus"));
                     response.setStatus(status);
+                    System.err.println(status);
                 }
                 close(out);
                 close(is);
