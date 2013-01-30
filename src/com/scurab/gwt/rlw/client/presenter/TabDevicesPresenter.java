@@ -57,6 +57,7 @@ public class TabDevicesPresenter extends TabDataPresenter<Device> {
         for (int i = 0; i < data.size(); i++) {
             Device d = data.get(i);
             HashMap<String, Object> result = new HashMap<String, Object>();
+            result.put(TableColumns.DeviceID, d.getDeviceID());
             result.put("UUID_1", d.getDevUUID());
             result.put("Owner_2", d.getOwner());
             result.put("Brand_3", d.getBrand());
@@ -64,7 +65,9 @@ public class TabDevicesPresenter extends TabDataPresenter<Device> {
             result.put("Platform_5", d.getPlatform());
             result.put("OSv_6", d.getVersion());
             result.put("Resolution_7", d.getResolution());
-            result.put(TableColumns.DeviceID, d.getDeviceID());
+            if(mApp == null){
+                result.put("App_8", d.getApp());
+            }
             rCollection.add(result);
             
             mLoadedData.put(d.getDeviceID(), d);
