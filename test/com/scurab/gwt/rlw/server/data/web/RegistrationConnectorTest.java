@@ -100,7 +100,12 @@ public class RegistrationConnectorTest extends ApplicationTest {
         assertTrue(saved.getDeviceID() > 0);
         
         saved.setModel("UPDATED TEST abcd");
-        data = rc.onWrite(s, new Device[] {saved});
+
+        Device test = new Device();
+        test.updateValues(saved);
+        test.setDevUUID(d.getDevUUID());
+        test.setDeviceID(0);
+        data = rc.onWrite(s, new Device[] {test});
         
         Device updated = data[0];
         

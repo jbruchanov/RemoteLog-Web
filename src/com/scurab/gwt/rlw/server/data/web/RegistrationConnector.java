@@ -157,19 +157,24 @@ public class RegistrationConnector extends DataConnector<Device> {
         boolean uniqueUuid = Boolean.parseBoolean(Application.APP_PROPS
                 .getProperty(SharedParams.CLIENT_UNIQUE_UUID_PER_DEVICE));
         TableInfo ti = Database.getTable(Device.class);
-        String template = String.format("FROM %s WHERE DevUUID = :uuid", ti.TableName);
+        String template = String.format("FROM %s WHERE DevUUID = :uuid AND App = :app", ti.TableName);
         for(int i = 0, n = data.length;i<n;i++){
             Device d = data[i];
             if (uniqueUuid) {
-                String uuid = d.getDevUUID();
                 Query q = s.createQuery(template);
-                q.setString("uuid", uuid);
+                q.setString("uuid", d.getDevUUID());
+                q.setString("app", d.getApp());
                 java.util.List dbdata = q.list();
-                if(dbdata.size() == 1){
+                final int size = dbdata.size();
+                if(size == 1){
                     Device dbDevice = (Device) dbdata.get(0);
                     dbDevice.updateValues(d);
                     d = dbDevice;
                     data[i] = d;
+                }else if (size > 1){
+                    System.err
+                            .printf("----!!! Multiple Device detected for UUID:%s and App:%s\n\tPlz fix it, because UniqueUIID property is enabled!",
+                                    d.getDevUUID(), d.getApp());
                 }
             }
             s.saveOrUpdate(d);
