@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SQLQueries>
+	<Query name="CREATE_TABLES" type="SQL">
+	<![CDATA[
+	
+		SET GLOBAL max_allowed_packet=20000000;
+		
+		DROP TABLE IF EXISTS Devices;
+		CREATE TABLE Devices (
+		  DeviceID int(11) NOT NULL AUTO_INCREMENT,
+		  Brand varchar(32) DEFAULT NULL,
+		  Description varchar(255) DEFAULT NULL,
+		  Detail varchar(4096) DEFAULT NULL,
+		  DevUUID varchar(255) NOT NULL,
+		  Model varchar(32) DEFAULT NULL,
+		  OSDescription varchar(255) DEFAULT NULL,
+		  Owner varchar(64) DEFAULT NULL,
+		  Platform varchar(32) NOT NULL,
+		  PushID varchar(255) DEFAULT NULL,
+		  Resolution varchar(10) DEFAULT NULL,
+		  Version varchar(10) DEFAULT NULL,
+		  App varchar(255) NOT NULL,
+		  PRIMARY KEY (DeviceID)		  
+		) DEFAULT CHARSET=utf8;
+		
+		DROP TABLE IF EXISTS LogItems;
+		CREATE TABLE LogItems (
+		  ID int(11) NOT NULL AUTO_INCREMENT,
+		  AppBuild varchar(16) DEFAULT NULL,
+		  AppVersion varchar(16) DEFAULT NULL,
+		  Application varchar(128) NOT NULL,
+		  BlobMime varchar(32) DEFAULT NULL,
+		  Category varchar(64) DEFAULT NULL,
+		  Source varchar(255) DEFAULT NULL,
+		  Date datetime NOT NULL,
+		  DeviceID int(11) DEFAULT NULL,
+		  Message varchar(255) DEFAULT NULL,
+		  PRIMARY KEY (ID)		  
+		) DEFAULT CHARSET=utf8;
+		
+#		Uncomment this to set LogItems be more strict about key references
+#		ALTER TABLE LogItems 
+#		  ADD CONSTRAINT FK_LogItems_Devices
+#		  FOREIGN KEY (DeviceID)
+#		  REFERENCES Devices (DeviceID)
+#		  ON DELETE NO ACTION
+#		  ON UPDATE CASCADE
+#		, ADD INDEX FK_LogItems_1 (DeviceID ASC) ;
+			
+		DROP TABLE IF EXISTS LogItemBlobs;
+		CREATE TABLE LogItemBlobs (
+		  LogItemID int(11) NOT NULL,
+		  Data mediumblob,
+		  FileName varchar(64) NOT NULL,
+		  PRIMARY KEY (LogItemID),
+		  KEY Fk_LogItems_LogItemBlobs (LogItemID),
+		  CONSTRAINT Fk_LogItems_LogItemBlobs FOREIGN KEY (LogItemID) REFERENCES LogItems (ID) ON DELETE CASCADE ON UPDATE CASCADE
+		) DEFAULT CHARSET=utf8;	
+		
+		DROP TABLE IF EXISTS Settings;
+		CREATE TABLE Settings (
+	        SettingsID integer not null auto_increment,
+	        AppName VARCHAR(255) not null,
+	        DeviceID integer,
+	        JsonValue MediumText not null,
+	        primary key (SettingsID),
+	        unique (AppName, DeviceID)
+		)DEFAULT CHARSET=utf8;
+		
+#		Uncomment this to set Settings be more strict about key references		
+#		ALTER TABLE Settings 
+#  		 ADD CONSTRAINT FK_DeviceID
+#  		 FOREIGN KEY (DeviceID)
+#  		 REFERENCES Devices (DeviceID)
+#  		 ON DELETE NO ACTION
+#  		 ON UPDATE NO ACTION
+#	    , ADD INDEX FK_DeviceID (DeviceID ASC);
+		
+			
+	]]>
+	</Query>
+	<Query name="SELECT_APPS" type="SQL">
+	<![CDATA[
+		SELECT DISTINCT Application FROM LogItems ORDER BY Application;
+	]]>
+	</Query>
+	<Query name="SELECT_DEVS" type="SQL">
+	<![CDATA[
+		SELECT * FROM Devices ORDER BY DeviceID DESC;
+	]]>
+	</Query>
+	<Query name="SELECT_DEVS_BY_APP" type="SQL" parameters="Application">
+	<![CDATA[
+		Select * FROM Devices WHERE App = :Application
+			ORDER BY DeviceID DESC
+	]]>
+	</Query>
+	<Query name="SELECT_LOGS" type="SQL">
+	<![CDATA[
+		SELECT * FROM LogItems ORDER BY ID DESC;
+	]]>
+	</Query>
+	<Query name="SELECT_LOGS_BY_APP" type="SQL" parameters="Application">
+	<![CDATA[
+		Select * FROM LogItems WHERE Application = :Application ORDER BY ID DESC;
+	]]>
+	</Query>
+	<Query name="SELECT_PLATFORMS" type="SQL">
+	<![CDATA[
+		SELECT DISTINCT Platform FROM LogItems INNER JOIN 
+		Devices ON Devices.DeviceID = LogItems.DeviceID 
+		ORDER BY Platform;
+	]]>
+	</Query>
+	<Query name="SELECT_PLATFORMS_BY_APPNAME" type="SQL" parameters="Application">
+	<![CDATA[
+		SELECT DISTINCT Platform FROM LogItems INNER JOIN 
+		Devices ON Devices.DeviceID = LogItems.DeviceID
+		WHERE Application = :Application 
+		ORDER BY Platform; 
+	]]>
+	</Query>
+	<Query name="SELECT_OSVERSIONS" type="SQL">
+	<![CDATA[
+		SELECT DISTINCT Version FROM LogItems INNER JOIN 
+		Devices ON Devices.DeviceID = LogItems.DeviceID 
+		ORDER BY Version;
+	]]>
+	</Query>
+	<Query name="SELECT_OSVERSIONS_BY_APPNAME" type="SQL" parameters="Application">
+	<![CDATA[
+		SELECT DISTINCT Version FROM LogItems INNER JOIN 
+		Devices ON Devices.DeviceID = LogItems.DeviceID
+		WHERE Application = :Application 
+		ORDER BY Version; 
+	]]>
+	</Query>
+	<Query name="SELECT_BRANDS" type="SQL">
+	<![CDATA[
+		SELECT DISTINCT Brand FROM LogItems INNER JOIN 
+		Devices ON Devices.DeviceID = LogItems.DeviceID 
+		ORDER BY Brand;
+	]]>
+	</Query>
+	<Query name="SELECT_BRANDS_BY_APPNAME" type="SQL" parameters="Application">
+	<![CDATA[
+		SELECT DISTINCT Brand FROM LogItems INNER JOIN 
+		Devices ON Devices.DeviceID = LogItems.DeviceID
+		WHERE Application = :Application 
+		ORDER BY Brand; 
+	]]>
+	</Query>
+	<Query name="SELECT_MODELS" type="SQL">
+	<![CDATA[
+		SELECT DISTINCT Model FROM LogItems INNER JOIN 
+		Devices ON Devices.DeviceID = LogItems.DeviceID 
+		ORDER BY Model;
+	]]>
+	</Query>
+	<Query name="SELECT_MODELS_BY_APPNAME" type="SQL" parameters="Application">
+	<![CDATA[
+		SELECT DISTINCT Model FROM LogItems INNER JOIN 
+		Devices ON Devices.DeviceID = LogItems.DeviceID
+		WHERE Application = :Application 
+		ORDER BY Model; 
+	]]>
+	</Query>
+	<Query name="SELECT_SOURCES" type="SQL">
+	<![CDATA[
+		SELECT DISTINCT Source FROM LogItems INNER JOIN 
+		Devices ON Devices.DeviceID = LogItems.DeviceID 
+		ORDER BY Source;
+	]]>
+	</Query>
+	<Query name="SELECT_SOURCES_BY_APPNAME" type="SQL" parameters="Application">
+	<![CDATA[
+		SELECT DISTINCT Source FROM LogItems INNER JOIN 
+		Devices ON Devices.DeviceID = LogItems.DeviceID
+		WHERE Application = :Application 
+		ORDER BY Source; 
+	]]>
+	</Query>
+	<Query name="SELECT_RESOLUTIONS" type="SQL">
+	<![CDATA[
+		SELECT DISTINCT Resolution FROM LogItems INNER JOIN 
+		Devices ON Devices.DeviceID = LogItems.DeviceID 
+		ORDER BY Resolution;
+	]]>
+	</Query>
+	<Query name="SELECT_RESOLUTIONS_BY_APPNAME" type="SQL"
+		parameters="Application">
+	<![CDATA[
+		SELECT DISTINCT Resolution FROM LogItems INNER JOIN 
+		Devices ON Devices.DeviceID = LogItems.DeviceID
+		WHERE Application = :Application 
+		ORDER BY Resolution; 
+	]]>
+	</Query>
+	<Query name="SELECT_DATATYPES" type="SQL">
+	<![CDATA[
+		SELECT DISTINCT BlobMime FROM LogItems 
+		ORDER BY BlobMime;
+	]]>
+	</Query>
+	<Query name="SELECT_DATATYPES_BY_APPNAME" type="SQL" parameters="Application">
+	<![CDATA[
+		SELECT DISTINCT BlobMime FROM LogItems 
+		WHERE Application = :Application 
+		ORDER BY BlobMime; 
+	]]>
+	</Query>
+	<Query name="SELECT_CATEGORIES" type="SQL">
+	<![CDATA[
+		SELECT DISTINCT Category FROM LogItems 
+		ORDER BY Category;
+	]]>
+	</Query>
+	<Query name="SELECT_CATEGORIES_BY_APPNAME" type="SQL" parameters="Application">
+	<![CDATA[
+		SELECT DISTINCT Category FROM LogItems 
+		WHERE Application = :Application 
+		ORDER BY Category; 
+	]]>
+	</Query>
+	
+	<Query name="SELECT_SETTINGS_BY_APPNAME" type="SQL" parameters="AppName">
+	<![CDATA[
+		SELECT SettingsID, AppName, DeviceID, JsonValue FROM Settings
+		WHERE AppName = :AppName And DeviceID IS NULL
+	]]>
+	</Query>
+	<Query name="SELECT_SETTINGS_BY_APPNAME_AND_DEVICEID" type="SQL" parameters="AppName,DeviceID">
+	<![CDATA[
+		SELECT SettingsID, AppName, DeviceID, JsonValue FROM Settings
+		WHERE AppName = :AppName And DeviceID = :DeviceID
+	]]>
+	</Query>
+	<Query name="SELECT_SETTINGS_FOR_DEVICE" type="SQL" parameters="AppName,DeviceID">
+	<![CDATA[
+		Select SettingsID, AppName, DeviceID, JsonValue FROM (
+			SELECT SettingsID, AppName, DeviceID, JsonValue FROM Settings
+			WHERE AppName = :AppName And DeviceID IS NULL
+			
+			UNION ALL
+			
+			SELECT SettingsID, AppName, DeviceID, JsonValue FROM Settings
+			WHERE AppName = :AppName And DeviceID = :DeviceID
+		) as drvTbl
+	]]>
+	</Query>
+	<Query name="DELETE_DEVICE_SETTINGS_PER_APP" type="SQL" parameters="DeviceID">
+	<![CDATA[
+		DELETE FROM Settings WHERE AppName = :AppName AND DeviceID IS NOT NULL
+	]]>
+	</Query>
+	
+</SQLQueries>

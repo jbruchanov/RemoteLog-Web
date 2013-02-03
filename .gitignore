@@ -2,7 +2,6 @@
 /.settings
 /gwt-unitCache
 /test-classes
-/war/WEB-INF/classes
 /war/WEB-INF/deploy
 /war/WEB-INF/lib
 /*.classpath
@@ -10,3 +9,4 @@
 /war/remotelogweb
 remotelogweb
 ProjectLibs
+com
