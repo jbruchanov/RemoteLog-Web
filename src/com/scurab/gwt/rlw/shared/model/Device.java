@@ -1,11 +1,13 @@
 package com.scurab.gwt.rlw.shared.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import com.google.gson.annotations.SerializedName;
 import com.google.gwt.user.client.rpc.IsSerializable;
@@ -72,6 +74,15 @@ public class Device implements Serializable, IsSerializable {
     @Column(name = "App", nullable = false)
     @SerializedName("App")
     private String mApp;
+    
+    @Column(name = "Created")
+    @SerializedName("Created")
+    private Date mCreated;
+    
+    @Transient
+    @Column(name = "CreatedText")
+    @SerializedName("CreatedText")
+    private String mCreatedText;
 
     public int getDeviceID() {
         return mDeviceID;
@@ -191,5 +202,21 @@ public class Device implements Serializable, IsSerializable {
 
     public void setApp(String app) {
         mApp = app;
+    }
+
+    public Date getCreated() {
+        return mCreated;
+    }
+
+    public void setCreated(Date created) {
+        mCreated = created;
+    }
+
+    public String getCreatedText() {
+        return mCreatedText;
+    }
+
+    public void setCreatedText(String createdText) {
+        mCreatedText = createdText;
     }
 }

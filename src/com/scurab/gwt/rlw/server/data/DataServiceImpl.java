@@ -40,7 +40,12 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
 
     @Override
     public List<Device> getDevices(String jsonParams) {
-        return new DataProvider().getDevices(parseParams(jsonParams));
+        List<Device> items = new DataProvider().getDevices(parseParams(jsonParams));
+        for(Device li : items){
+            //fill data for client
+            li.setCreatedText(Application.DATEFORMAT.format(li.getCreated()));
+        }
+        return items;
     }
 
     @Override

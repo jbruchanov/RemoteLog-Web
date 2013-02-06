@@ -20,6 +20,7 @@
 		  Resolution varchar(10) DEFAULT NULL,
 		  Version varchar(10) DEFAULT NULL,
 		  App varchar(255) NOT NULL,
+		  Created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,		  
 		  PRIMARY KEY (DeviceID)		  
 		) DEFAULT CHARSET=utf8;
 		

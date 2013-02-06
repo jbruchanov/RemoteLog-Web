@@ -65,8 +65,9 @@ public class TabDevicesPresenter extends TabDataPresenter<Device> {
             result.put("Platform_5", d.getPlatform());
             result.put("OSv_6", d.getVersion());
             result.put("Resolution_7", d.getResolution());
+            result.put("Created_8", d.getCreatedText());
             if(mApp == null){
-                result.put("App_8", d.getApp());
+                result.put("App_9", d.getApp());
             }
             rCollection.add(result);
             

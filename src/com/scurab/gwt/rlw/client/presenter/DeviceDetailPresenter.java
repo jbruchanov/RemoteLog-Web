@@ -75,6 +75,8 @@ public class DeviceDetailPresenter extends TabBasePresenter {
         d.getPushID().setText(getStringValue(v.getPushID()));
         d.getResolution().setText(getStringValue(v.getResolution()));
         d.getVersion().setText(getStringValue(v.getVersion()));
+        d.getApp().setText(getStringValue(v.getApp()));
+        d.getCreated().setText(getStringValue(v.getCreatedText()));
     }
     
     private String getStringValue(Object o){

@@ -32,6 +32,8 @@ public class DeviceDetailView extends Composite{
     @UiField Label mPushID;
     @UiField Label mResolution;
     @UiField Label mVersion;
+    @UiField Label mApp;
+    @UiField Label mCreated;
     
     public Button getRawDetailButton() {
         return mRawDetailButton;
@@ -71,6 +73,15 @@ public class DeviceDetailView extends Composite{
     }
     public Label getVersion() {
         return mVersion;
+    }
+    public static DeviceDetailViewUiBinder getUiBinder() {
+        return uiBinder;
+    }
+    public Label getApp() {
+        return mApp;
+    }
+    public Label getCreated() {
+        return mCreated;
     }
 
 }

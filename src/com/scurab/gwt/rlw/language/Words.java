@@ -16,6 +16,15 @@ public interface Words extends com.google.gwt.i18n.client.ConstantsWithLookup {
   String All();
 
   /**
+   * Translated "App".
+   * 
+   * @return translated "App"
+   */
+  @DefaultStringValue("App")
+  @Key("App")
+  String App();
+
+  /**
    * Translated "AppBuild".
    * 
    * @return translated "AppBuild"
@@ -401,6 +410,15 @@ public interface Words extends com.google.gwt.i18n.client.ConstantsWithLookup {
   @DefaultStringValue("Really ?")
   @Key("ReallyQstn")
   String ReallyQstn();
+
+  /**
+   * Translated "Registered".
+   * 
+   * @return translated "Registered"
+   */
+  @DefaultStringValue("Registered")
+  @Key("Registered")
+  String Registered();
 
   /**
    * Translated "Reload".

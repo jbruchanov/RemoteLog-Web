@@ -115,6 +115,22 @@
 				</g:row>
 				<g:row>
 					<g:customCell>
+						<g:Label text="{res.App}" styleName="{style.header}" />
+					</g:customCell>
+					<g:customCell>
+						<g:Label ui:field="mApp"  />
+					</g:customCell>
+				</g:row>
+				<g:row>
+					<g:customCell>
+						<g:Label text="{res.Registered}" styleName="{style.header}" />
+					</g:customCell>
+					<g:customCell>
+						<g:Label ui:field="mCreated"  />
+					</g:customCell>
+				</g:row>
+				<g:row>
+					<g:customCell>
 						<g:Label text="{res.RawDetail}" styleName="{style.header}" />
 					</g:customCell>
 					<g:customCell>
