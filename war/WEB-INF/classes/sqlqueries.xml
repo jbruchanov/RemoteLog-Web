@@ -92,10 +92,8 @@
 	</Query>
 	<Query name="SELECT_DEVS_BY_APP" type="SQL" parameters="Application">
 	<![CDATA[
-		Select * FROM Devices WHERE DeviceID IN( 
-			SELECT Devices.DeviceID FROM Devices INNER JOIN LogItems 
-			ON Devices.DeviceID = LogItems.DeviceID 
-			WHERE Application = :Application)
+		Select * FROM Devices 
+			WHERE App = :Application
 			ORDER BY DeviceID DESC
 	]]>
 	</Query>
