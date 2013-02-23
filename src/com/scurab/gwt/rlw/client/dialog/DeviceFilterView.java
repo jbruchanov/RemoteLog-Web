@@ -3,6 +3,7 @@ package com.scurab.gwt.rlw.client.dialog;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
@@ -14,7 +15,10 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
+import com.scurab.gwt.rlw.client.RemoteLogWeb;
 import com.scurab.gwt.rlw.shared.QueryNames;
+import com.google.gwt.user.datepicker.client.DateBox;
+import com.google.gwt.user.datepicker.client.DateBox.DefaultFormat;
 
 public class DeviceFilterView extends Composite implements IsFilterWidget {
 
@@ -38,6 +42,9 @@ public class DeviceFilterView extends Composite implements IsFilterWidget {
     
     @UiField ListBox mOSVersion;
     @UiField TextBox mOwner;
+    @UiField TextBox mAppVersion;
+    @UiField DateBox mCreated;
+    @UiField DateBox mUpdated;
 
     private DataServiceAsync mDataService;
 
@@ -51,6 +58,10 @@ public class DeviceFilterView extends Composite implements IsFilterWidget {
         mDataService = dataService;
         mApplication = appName;
         initData();
+        
+        DefaultFormat df = new DateBox.DefaultFormat(DateTimeFormat.getFormat(RemoteLogWeb.DATETIMEFORMAT.getPattern().split(" ")[0]));
+        mCreated.setFormat(df);
+        mUpdated.setFormat(df);
     }
 
     private void initData() {
@@ -175,7 +186,23 @@ public class DeviceFilterView extends Composite implements IsFilterWidget {
         return mOwner;
     }
 
-    public void setOwner(TextBox owner) {
-        mOwner = owner;
+    public TextBox getAppVersion() {
+        return mAppVersion;
+    }
+
+    public static DeviceFilterViewUiBinder getUiBinder() {
+        return uiBinder;
+    }
+
+    public ListBox getOSVersion() {
+        return mOSVersion;
+    }
+
+    public DateBox getCreated() {
+        return mCreated;
+    }
+
+    public DateBox getUpdated() {
+        return mUpdated;
     }
 }

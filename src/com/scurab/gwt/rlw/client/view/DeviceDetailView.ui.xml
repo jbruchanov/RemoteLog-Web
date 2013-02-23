@@ -123,10 +123,26 @@
 				</g:row>
 				<g:row>
 					<g:customCell>
+						<g:Label text="{res.AppVersion}" styleName="{style.header}" />
+					</g:customCell>
+					<g:customCell>
+						<g:Label ui:field="mAppVersion" />
+					</g:customCell>
+				</g:row>
+				<g:row>
+					<g:customCell>
 						<g:Label text="{res.Registered}" styleName="{style.header}" />
 					</g:customCell>
 					<g:customCell>
 						<g:Label ui:field="mCreated"  />
+					</g:customCell>
+				</g:row>
+				<g:row>
+					<g:customCell>
+						<g:Label text="{res.Updated}" styleName="{style.header}" />
+					</g:customCell>
+					<g:customCell>
+						<g:Label ui:field="mUpdated" />
 					</g:customCell>
 				</g:row>
 				<g:row>

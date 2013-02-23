@@ -44,6 +44,10 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
         for(Device li : items){
             //fill data for client
             li.setCreatedText(Application.DATEFORMAT.format(li.getCreated()));
+            Date d = li.getUpdated();
+            if(d != null){
+                li.setUpdatedText(Application.DATEFORMAT.format(d));
+            }
         }
         return items;
     }
@@ -72,7 +76,7 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
     private HashMap<String, Object> parseParams(String json) {
         HashMap<String, Object> params = Application.GSON.fromJson(json, HashMap.class);
         for (String key : params.keySet()) {
-            if (key.toLowerCase().contains("date")) {
+            if (canBeDate(key)) {
                 Object o = params.get(key);
                 if (o != null) {
                     String v = String.valueOf(o);
@@ -80,12 +84,17 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
                         Date d = Application.DATEFORMAT.parse(v);
                         params.put(key, d);
                     } catch (Exception e) {
-                        // ignore it
+                        // ignore it and keep default value
                     }
                 }
             }
         }
         return params;
+    }
+    
+    private boolean canBeDate(String key){
+        key = key.toLowerCase();
+        return key.contains("date") || key.contains("register") || key.contains("udpate") || key.contains("create");
     }
 
     @Override

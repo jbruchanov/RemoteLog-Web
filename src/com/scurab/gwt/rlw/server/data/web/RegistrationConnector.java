@@ -2,6 +2,7 @@ package com.scurab.gwt.rlw.server.data.web;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.TreeMap;
 
@@ -105,6 +106,7 @@ public class RegistrationConnector extends DataConnector<Device> {
             int id = Integer.parseInt(sid);
             Device d = (Device) s.get(Device.class, id);           
             d.setPushID(push);
+            d.setUpdated(new Date(System.currentTimeMillis()));
             
             s.beginTransaction();
             s.saveOrUpdate(d);
@@ -160,6 +162,7 @@ public class RegistrationConnector extends DataConnector<Device> {
         String template = String.format("FROM %s WHERE DevUUID = :uuid AND App = :app", ti.TableName);
         for(int i = 0, n = data.length;i<n;i++){
             Device d = data[i];
+            d.setUpdated(new Date(System.currentTimeMillis()));
             if (uniqueUuid) {
                 Query q = s.createQuery(template);
                 q.setString("uuid", d.getDevUUID());

@@ -1,6 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:p1="urn:import:com.google.gwt.user.datepicker.client">
 	<ui:with type="com.scurab.gwt.rlw.language.Words" field="res"/>
 	<ui:style>
 		.important {
@@ -15,6 +16,14 @@
 				</g:customCell>
 				<g:customCell>
 					<g:IntegerBox ui:field="mDeviceID" width="150px"/>
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
+					<g:Label text="{res.AppVersion}" />
+				</g:customCell>
+				<g:customCell>
+					<g:TextBox ui:field="mAppVersion" width="150px"/>
 				</g:customCell>
 			</g:row>
 			<g:row>
@@ -71,6 +80,22 @@
 				</g:customCell>
 				<g:customCell>
 					<g:ListBox visibleItemCount="1" ui:field="mResolution" width="100%"/>
+				</g:customCell>
+			</g:row>			
+			<g:row>
+				<g:customCell>
+					<g:Label text="{res.Registered}" />
+				</g:customCell>
+				<g:customCell>
+					<p1:DateBox width="96%" ui:field="mCreated"  />
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
+					<g:Label text="{res.Updated}" />
+				</g:customCell>
+				<g:customCell>
+					<p1:DateBox width="96%" ui:field="mUpdated"  />
 				</g:customCell>
 			</g:row>
 			<g:row>

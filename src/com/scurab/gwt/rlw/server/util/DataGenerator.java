@@ -48,6 +48,7 @@ public class DataGenerator {
             d.setPushID("0");
         }
         d.setApp("Test");
+        d.setAppVersion(String.valueOf(1 + sRandom.nextInt(6)));        
         return d;
     }
 

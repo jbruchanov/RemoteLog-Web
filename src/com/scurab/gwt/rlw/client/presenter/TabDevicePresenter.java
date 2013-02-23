@@ -60,4 +60,9 @@ public class TabDevicePresenter extends TabBasePresenter implements OnDeviceSele
     public void onSelectionChange(Device d) {
         setDevice(d);
     }
+
+    @Override
+    public void onSelectionChange(int id) {
+        //ignore here
+    }
 }

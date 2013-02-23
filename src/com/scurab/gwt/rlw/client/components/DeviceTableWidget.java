@@ -74,7 +74,6 @@ public class DeviceTableWidget extends DynamicTableWidget {
             CellTable<HashMap<String, Object>> cellTable, ListHandler<HashMap<String, Object>> sortHandler) {
         super.onFinishCreatingColumns(mData, cellTable, sortHandler);
 
-        // password column
         Column<HashMap<String, Object>, HashMap<String, Object>> column = new Column<HashMap<String, Object>, HashMap<String, Object>>(
                 getActionCell()) {
             @Override

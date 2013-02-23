@@ -4,26 +4,30 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.google.gwt.cell.client.ActionCell.Delegate;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
 import com.scurab.gwt.rlw.client.components.DynamicTableWidget;
 import com.scurab.gwt.rlw.client.components.LogItemTableWidget;
+import com.scurab.gwt.rlw.client.components.DynamicTableWidget.OnActionCellEventListener;
 import com.scurab.gwt.rlw.client.dialog.FilterDialog;
 import com.scurab.gwt.rlw.client.dialog.FilterDialog.OnOkListener;
 import com.scurab.gwt.rlw.client.dialog.LogFilterDialog;
+import com.scurab.gwt.rlw.client.presenter.TabDevicesPresenter.OnDeviceSelectionChangeListener;
 import com.scurab.gwt.rlw.shared.TableColumns;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 
 public class TabLogsPresenter extends TabDataPresenter<LogItem> {
 
-    private DynamicTableWidget mLogTable;
+    private LogItemTableWidget mLogTable;
     private LogFilterDialog mFilterDialog;
     private DataServiceAsync mDataService;
     private HandlerManager mEventBus;
     private String mApp;
     private HTMLPanel mLogPanel;
+    private OnDeviceSelectionChangeListener mListener;
 
     public TabLogsPresenter(DataServiceAsync dataService, HandlerManager eventBus, String appName, HTMLPanel tabPanel) {
         super(dataService, eventBus, appName, tabPanel);
@@ -60,6 +64,18 @@ public class TabLogsPresenter extends TabDataPresenter<LogItem> {
     @Override
     protected DynamicTableWidget onCreateTable() {
         mLogTable = new LogItemTableWidget();
+        mLogTable.setDeviceButtonListener(new OnActionCellEventListener() {
+            @Override
+            public void onEvent(Delegate<HashMap<String, Object>> delegate, HashMap<String, Object> object) {
+                try{
+                    Integer id  = (Integer)object.get(TableColumns.LogDeviceID);
+                    onOpenDevice(id);
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
         return mLogTable;
     }
 
@@ -77,5 +93,15 @@ public class TabLogsPresenter extends TabDataPresenter<LogItem> {
     @Override
     protected void notifyStartDownloading() {
         notifyStartDownloading(WORDS.LoadingLogItems());
+    }
+    
+    public void onOpenDevice(int id){
+        if(mListener != null){
+            mListener.onSelectionChange(id);
+        }
+    }
+    
+    public void setDeviceButtonListener(OnDeviceSelectionChangeListener listener) {
+        mListener = listener;
     }
 }

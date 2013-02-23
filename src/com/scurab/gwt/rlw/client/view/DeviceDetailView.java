@@ -34,6 +34,8 @@ public class DeviceDetailView extends Composite{
     @UiField Label mVersion;
     @UiField Label mApp;
     @UiField Label mCreated;
+    @UiField Label mAppVersion;
+    @UiField Label mUpdated;
     
     public Button getRawDetailButton() {
         return mRawDetailButton;
@@ -82,6 +84,12 @@ public class DeviceDetailView extends Composite{
     }
     public Label getCreated() {
         return mCreated;
+    }
+    public Label getAppVersion() {
+        return mAppVersion;
+    }
+    public Label getUpdated() {
+        return mUpdated;
     }
 
 }

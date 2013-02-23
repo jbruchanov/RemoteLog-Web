@@ -511,6 +511,15 @@ public interface Words extends com.google.gwt.i18n.client.ConstantsWithLookup {
   String TryWaitForRespond();
 
   /**
+   * Translated "Updated".
+   * 
+   * @return translated "Updated"
+   */
+  @DefaultStringValue("Updated")
+  @Key("Updated")
+  String Updated();
+
+  /**
    * Translated "Version".
    * 
    * @return translated "Version"

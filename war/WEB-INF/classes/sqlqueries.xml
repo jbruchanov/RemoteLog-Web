@@ -21,6 +21,8 @@
 		  Version varchar(10) DEFAULT NULL,
 		  App varchar(255) NOT NULL,
 		  Created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,		  
+		  Updated TIMESTAMP DEFAULT NULL,
+		  AppVersion varchar(16) DEFAULT NULL,
 		  PRIMARY KEY (DeviceID)		  
 		) DEFAULT CHARSET=utf8;
 		
@@ -92,8 +94,10 @@
 	</Query>
 	<Query name="SELECT_DEVS_BY_APP" type="SQL" parameters="Application">
 	<![CDATA[
-		Select * FROM Devices 
-			WHERE App = :Application
+		Select * FROM Devices WHERE DeviceID IN( 
+			SELECT Devices.DeviceID FROM Devices INNER JOIN LogItems 
+			ON Devices.DeviceID = LogItems.DeviceID 
+			WHERE Application = :Application)
 			ORDER BY DeviceID DESC
 	]]>
 	</Query>

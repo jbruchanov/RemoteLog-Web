@@ -21,6 +21,8 @@
 		  Version varchar(10) DEFAULT NULL,
 		  App varchar(255) NOT NULL,
 		  Created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,		  
+		  Updated TIMESTAMP DEFAULT NULL,
+		  AppVersion varchar(16) DEFAULT NULL,
 		  PRIMARY KEY (DeviceID)		  
 		) DEFAULT CHARSET=utf8;
 		

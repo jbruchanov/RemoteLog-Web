@@ -83,6 +83,19 @@ public class Device implements Serializable, IsSerializable {
     @Column(name = "CreatedText")
     @SerializedName("CreatedText")
     private String mCreatedText;
+    
+    @Column(name = "AppVersion")
+    @SerializedName("AppVersion")
+    private String mAppVersion;
+    
+    @Column(name = "Updated")
+    @SerializedName("Updated")
+    private Date mUpdated;
+    
+    @Transient
+    @Column(name = "UpdatedText")
+    @SerializedName("UpdatedText")
+    private String mUpdatedText;
 
     public int getDeviceID() {
         return mDeviceID;
@@ -218,5 +231,29 @@ public class Device implements Serializable, IsSerializable {
 
     public void setCreatedText(String createdText) {
         mCreatedText = createdText;
+    }
+
+    public String getAppVersion() {
+        return mAppVersion;
+    }
+
+    public void setAppVersion(String appVersion) {
+        mAppVersion = appVersion;
+    }
+
+    public Date getUpdated() {
+        return mUpdated;
+    }
+
+    public void setUpdated(Date updated) {
+        mUpdated = updated;
+    }
+
+    public String getUpdatedText() {
+        return mUpdatedText;
+    }
+
+    public void setUpdatedText(String updatedText) {
+        mUpdatedText = updatedText;
     }
 }

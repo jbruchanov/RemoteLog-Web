@@ -1,12 +1,19 @@
 package com.scurab.gwt.rlw.client.presenter;
 
+import java.util.List;
+
 import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.json.client.JSONNumber;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.TabPanel;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
 import com.scurab.gwt.rlw.client.presenter.TabDevicesPresenter.OnDetailClickListener;
 import com.scurab.gwt.rlw.client.presenter.TabDevicesPresenter.OnDeviceSelectionChangeListener;
 import com.scurab.gwt.rlw.client.view.ContentView;
+import com.scurab.gwt.rlw.shared.SharedParams;
+import com.scurab.gwt.rlw.shared.TableColumns;
 import com.scurab.gwt.rlw.shared.model.Device;
 
 public class ContentViewPresenter extends BasePresenter implements IsWidget, OnDeviceSelectionChangeListener {
@@ -44,6 +51,8 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget, OnD
         
         mLogPresenter = new TabLogsPresenter(mDataService, mEventBus, mApp, mDisplay.getLogsPanel());
         mLogPresenter.onLoadData(0);
+        
+        
         mDevicesPresenter = new TabDevicesPresenter(mDataService, mEventBus, mApp, mDisplay.getDevicesPanel());
         mDevicesPresenter.onLoadData(0);
         
@@ -52,7 +61,7 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget, OnD
         
         TabPanel tb = mDisplay.getTabPanel();
         tb.getTabBar().setTabEnabled(tb.getWidgetCount()-1, false);
-        mDevicesPresenter.setSelectionListener(this);
+        
         
         if(mApp == null){
             tb.remove(0);//remove first one, because we are in All tab
@@ -60,6 +69,8 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget, OnD
     }
     
     private void bind(){
+        mDevicesPresenter.setSelectionListener(this);
+        mLogPresenter.setDeviceButtonListener(this);
         mDevicesPresenter.setDetailClickListener(new OnDetailClickListener() {
             @Override
             public void onClick(Device d) {
@@ -81,5 +92,34 @@ public class ContentViewPresenter extends BasePresenter implements IsWidget, OnD
     public void onSelectionChange(Device d) {
         mDevicePresenter.onSelectionChange(d);
         enableAndselectDeviceTab(d != null, false);
+    }
+
+    @Override
+    public void onSelectionChange(int id) {
+        Device d = mDevicesPresenter.getDevice(id);
+        if(d != null){
+            mDevicePresenter.onSelectionChange(d);
+            enableAndselectDeviceTab(true, true);
+        }else{
+            //load device from server
+            JSONObject obj = createParams(0);
+            obj.put(SharedParams.DEVICE_ID, new JSONNumber(id));
+            mDataService.getDevices(obj.toString(), new AsyncCallback<List<Device>>() {
+                
+                @Override
+                public void onSuccess(List<Device> result) {
+                    if(result != null && result.size() == 1){
+                        onSelectionChange(result.get(0));
+                        enableAndselectDeviceTab(true, true);
+                    }
+                }
+                
+                @Override
+                public void onFailure(Throwable caught) {
+                    onSelectionChange(null);
+                    enableAndselectDeviceTab(false, false);
+                }
+            });
+        }
     }
 }

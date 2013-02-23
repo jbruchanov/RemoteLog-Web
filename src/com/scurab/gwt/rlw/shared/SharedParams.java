@@ -9,12 +9,15 @@ public final class SharedParams {
     public static final String APP_NAME = "Application";
 
     public static final String DEVICE_ID = "DeviceID";
+    public static final String DEVICE_APPVERSION = "AppVersion";
     public static final String DEVICE_UUID = "DevUUID";
     public static final String DEVICE_OWNER = "Owner";
     public static final String DEVICE_BRAND = "Brand";
     public static final String DEVICE_PLATFORM = "Platform";
     public static final String DEVICE_RESOLUTION = "Resolution";
     public static final String DEVICE_MODEL = "Model";
+    public static final String DEVICE_CREATED = "Created";
+    public static final String DEVICE_UPDATED = "Updated";
 
     public static final String LOG_APPBUILD = "AppBuild";
     public static final String LOG_APPVERSION = "AppVersion";

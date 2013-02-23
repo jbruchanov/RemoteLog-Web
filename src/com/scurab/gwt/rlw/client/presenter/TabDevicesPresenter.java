@@ -34,6 +34,7 @@ public class TabDevicesPresenter extends TabDataPresenter<Device> {
     
     public interface OnDeviceSelectionChangeListener{
         void onSelectionChange(Device d);
+        void onSelectionChange(int id);
     }
     private OnDeviceSelectionChangeListener mSelectionListener;
     
@@ -58,16 +59,18 @@ public class TabDevicesPresenter extends TabDataPresenter<Device> {
             Device d = data.get(i);
             HashMap<String, Object> result = new HashMap<String, Object>();
             result.put(TableColumns.DeviceID, d.getDeviceID());
-            result.put("UUID_1", d.getDevUUID());
-            result.put("Owner_2", d.getOwner());
-            result.put("Brand_3", d.getBrand());
-            result.put("Model_4", d.getModel());
-            result.put("Platform_5", d.getPlatform());
-            result.put("OSv_6", d.getVersion());
-            result.put("Resolution_7", d.getResolution());
-            result.put("Created_8", d.getCreatedText());
+            result.put("AppV_01", d.getAppVersion());
+            result.put("UUID_02", d.getDevUUID());
+            result.put("Owner_03", d.getOwner());
+            result.put("Brand_04", d.getBrand());
+            result.put("Model_05", d.getModel());
+            result.put("Platform_06", d.getPlatform());
+            result.put("OSv_07", d.getVersion());
+            result.put("Resolution_08", d.getResolution());
+            result.put("Created_09", d.getCreatedText());
+            result.put("Updated_10", d.getUpdatedText());
             if(mApp == null){
-                result.put("App_9", d.getApp());
+                result.put("App_11", d.getApp());
             }
             rCollection.add(result);
             
@@ -150,5 +153,12 @@ public class TabDevicesPresenter extends TabDataPresenter<Device> {
             sm.setSelected(selected, false);
         }
         onDeviceSelectionChange(null);
+    }
+    
+    public Device getDevice(Integer id){
+        if(id != null){
+            return mLoadedData.get(id);
+        }
+        return null;
     }
 }

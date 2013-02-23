@@ -12,9 +12,15 @@ import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
 import com.google.gwt.user.client.Window;
 import com.scurab.gwt.rlw.client.RemoteLogWeb;
+import com.scurab.gwt.rlw.client.components.DynamicTableWidget.OnActionCellEventListener;
 import com.scurab.gwt.rlw.shared.TableColumns;
 
 public class LogItemTableWidget extends DynamicTableWidget {
+    
+    private static final String TXT_DEVICE = RemoteLogWeb.WORDS.Device();
+    
+    private OnActionCellEventListener mListener;
+    
     public LogItemTableWidget() {
         super();
     }
@@ -28,9 +34,15 @@ public class LogItemTableWidget extends DynamicTableWidget {
             CellTable<HashMap<String, Object>> cellTable, ListHandler<HashMap<String, Object>> sortHandler) {
         super.onFinishCreatingColumns(mData, cellTable, sortHandler);
 
-        // password column
+        onCreateBlobColumn(mData, cellTable, sortHandler);
+        onDeviceButtonColumn(mData, cellTable, sortHandler);
+    }
+    
+    private void onCreateBlobColumn(List<HashMap<String, Object>> mData,
+            CellTable<HashMap<String, Object>> cellTable, ListHandler<HashMap<String, Object>> sortHandler){
+     // password column
         Column<HashMap<String, Object>, HashMap<String, Object>> column = new Column<HashMap<String, Object>, HashMap<String, Object>>(
-                getActionCell()) {
+                getBlobActionCell()) {
             @Override
             public HashMap<String, Object> getValue(HashMap<String, Object> object) {
                 return object;
@@ -46,8 +58,21 @@ public class LogItemTableWidget extends DynamicTableWidget {
         };
         cellTable.addColumn(column);
     }
+    
+    private void onDeviceButtonColumn(List<HashMap<String, Object>> mData,
+            CellTable<HashMap<String, Object>> cellTable, ListHandler<HashMap<String, Object>> sortHandler){
+     // password column
+        Column<HashMap<String, Object>, HashMap<String, Object>> column = new Column<HashMap<String, Object>, HashMap<String, Object>>(
+                getDeviceActionCell()) {
+            @Override
+            public HashMap<String, Object> getValue(HashMap<String, Object> object) {
+                return object;
+            }
+        };
+        cellTable.addColumn(column);
+    }
 
-    private ActionCell<HashMap<String, Object>> getActionCell() {
+    private ActionCell<HashMap<String, Object>> getBlobActionCell() {
         ActionCell<HashMap<String, Object>> ac = new ActionCell<HashMap<String, Object>>(RemoteLogWeb.WORDS.Download(),
                 new Delegate<HashMap<String, Object>>() {
             @Override
@@ -60,5 +85,22 @@ public class LogItemTableWidget extends DynamicTableWidget {
             }
         });
         return ac;
+    }
+    
+    private ActionCell<HashMap<String, Object>> getDeviceActionCell() {
+        ActionCell<HashMap<String, Object>> ac = new ActionCell<HashMap<String, Object>>(RemoteLogWeb.WORDS.Device(),
+                new Delegate<HashMap<String, Object>>() {
+            @Override
+            public void execute(HashMap<String, Object> object) {
+                if(mListener != null){
+                    mListener.onEvent(this, object);
+                }
+            }
+        });
+        return ac;
+    }
+
+    public void setDeviceButtonListener(OnActionCellEventListener listener) {
+        mListener = listener;
     }
 }
