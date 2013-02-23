@@ -91,7 +91,7 @@
 	<Query name="SELECT_DEVS" type="SQL">
 	<![CDATA[
 		SELECT 
-			DeviceID, Brand, Description, DevUUID, Model, OSDescription, Owner, Platform
+			DeviceID, Brand, Description, DevUUID, Model, OSDescription, Owner, Platform,
 			PushID, Resolution, Version, App, Created, Updated, AppVersion
 		FROM Devices ORDER BY DeviceID DESC;
 	]]>
@@ -99,7 +99,7 @@
 	<!-- Keep Detail null for big selects to keep fast queries -->
 	<Query name="SELECT_DEVS_BY_APP" type="SQL" parameters="Application">
 	<![CDATA[
-		Select DeviceID, Brand, Description, DevUUID, Model, OSDescription, Owner, Platform
+		Select DeviceID, Brand, Description, DevUUID, Model, OSDescription, Owner, Platform,
 			PushID, Resolution, Version, App, Created, Updated, AppVersion
 			FROM Devices 
 			WHERE App = :Application
