@@ -199,6 +199,7 @@ public class Device implements Serializable, IsSerializable {
         mDetail = other.mDetail;
         //        mDeviceID = other.mDeviceID;
         //        mDevUUID = other.mDevUUID;
+                
         mModel = other.mModel;
         mOSDescription = other.mOSDescription;
         mOwner = other.mOwner;
@@ -207,6 +208,8 @@ public class Device implements Serializable, IsSerializable {
         mResolution = other.mResolution;
         mVersion = other.mVersion;
         mApp = other.mApp;
+        mAppVersion = other.mAppVersion;
+        mUpdated = other.mUpdated;
     }
 
     public String getApp() {

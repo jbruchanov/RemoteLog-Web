@@ -43,8 +43,11 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
         List<Device> items = new DataProvider().getDevices(parseParams(jsonParams));
         for(Device li : items){
             //fill data for client
-            li.setCreatedText(Application.DATEFORMAT.format(li.getCreated()));
-            Date d = li.getUpdated();
+            Date d = li.getCreated();
+            if(d != null){
+                li.setCreatedText(Application.DATEFORMAT.format(d));
+            }
+            d = li.getUpdated();
             if(d != null){
                 li.setUpdatedText(Application.DATEFORMAT.format(d));
             }
