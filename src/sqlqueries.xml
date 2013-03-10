@@ -12,7 +12,7 @@
 		  Description varchar(255) DEFAULT NULL,
 		  Detail varchar(4096) DEFAULT NULL,
 		  DevUUID varchar(255) NOT NULL,
-		  Model varchar(32) DEFAULT NULL,
+		  Model varchar(64) DEFAULT NULL,
 		  OSDescription varchar(255) DEFAULT NULL,
 		  Owner varchar(64) DEFAULT NULL,
 		  Platform varchar(32) NOT NULL,
