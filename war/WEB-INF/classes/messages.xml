@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Messages>	
 	<Message name="Echo" param="false" platform="android"/>
-	<Message name="Notification" param="true" platform="Android">
+	<Message name="Notification" param="true" platform="android">
 	<![CDATA[
 		 {
 		 "Title":"", 
@@ -9,18 +9,18 @@
 		 }
 	]]>
 	</Message> paramExample="{&quot;Title&quot;:&quot;&quot;, &quot;Message&quot;:&quot;&quot;}" />
-	<Message name="Question" param="true" platform="Android">
+	<Message name="Question" param="true" platform="android">
 	<![CDATA[
 		 {"Title":"", 
 		 "Message":"", 
 		 "Actions": ["Yes", "No", "Cancel"]}
 	]]> 	
 	</Message>
-	<Message name="ReloadSettings" param="false" platform="Android" />
-	<Message name="KillApp" param="false" platform="Android|windowsphone" forApp="true"/>
-	<Message name="TakeScreenshot" param="false" platform="Android|windowsphone" forApp="true"/>
-	<Message name="LastKnownLocation" param="false" platform="Android|windowsphone"/>
-	<Message name="StartIntent" param="true" platform="Android">
+	<Message name="ReloadSettings" param="false" platform="android" />
+	<Message name="KillApp" param="false" platform="android|windowsphone" forApp="true"/>
+	<Message name="TakeScreenshot" param="false" platform="android|windowsphone" forApp="true"/>
+	<Message name="LastKnownLocation" param="false" platform="android|windowsphone"/>
+	<Message name="StartIntent" param="true" platform="android">
 	<![CDATA[
 	{"Target":"Activity", 
 	"Action":"", 
