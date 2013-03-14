@@ -83,3 +83,10 @@ a
 	width:100%;		
 }
 
+.datatable td{
+	font-size: 0.9em;
+}
+
+.datatable button{
+	font-size: 0.8em;
+}

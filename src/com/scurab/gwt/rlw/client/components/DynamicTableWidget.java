@@ -138,6 +138,7 @@ public class DynamicTableWidget extends Composite {
         mCellTable.setPageSize(getPageSize());
         mCellTable.setSelectionModel(getSelectionModel());
         mCellTable.setWidth("100%");
+        mCellTable.setStyleName("datatable", true);
         
 
         // Create a Pager to control the table.
