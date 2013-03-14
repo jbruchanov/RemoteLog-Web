@@ -20,12 +20,14 @@ import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.SimplePager.TextLocation;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.ToggleButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
@@ -135,6 +137,7 @@ public class DynamicTableWidget extends Composite {
         mCellTable.setLoadingIndicator(new Label("Loading").asWidget());
         mCellTable.setPageSize(getPageSize());
         mCellTable.setSelectionModel(getSelectionModel());
+        mCellTable.setWidth("100%");
         
 
         // Create a Pager to control the table.
@@ -142,6 +145,7 @@ public class DynamicTableWidget extends Composite {
         pager = new LazyPager(TextLocation.CENTER, pagerResources, false, 0, true);
         pager.setDisplay(mCellTable);
         pager.setPageSize(getPageSize());
+        pager.setWidth("250px");//min width to avoid size jumping
 
         // init columns
         mSortHandler = new ListHandler<HashMap<String, Object>>(
@@ -182,7 +186,15 @@ public class DynamicTableWidget extends Composite {
         VerticalPanel vp = new VerticalPanel();
         vp.setWidth("100%");
         vp.add(hp);
-        vp.add(mCellTable);
+        
+        //add table into scrollable element
+        SimplePanel vpc = new SimplePanel();        
+        vpc.setStyleName("gwt-TableScroll");
+                                                //top - bottom - somethink :)
+        vpc.setHeight((Window.getClientHeight() - 75 - 50 - 45) + "px");
+        vpc.add(mCellTable);
+        
+        vp.add(vpc);
         initWidget(vp);
         mSuccesfullSortByUnderscore = false;
     }

@@ -11,7 +11,7 @@
 			bottom: 0px;
 			background-color: #d7dde8;
 			vertical-align: top;
-			overflow: auto;
+			min-height: 100%;
 		}
 		
 		.important {
@@ -29,7 +29,6 @@
 		.center_panel {
 			background-color: #FFF;
 			padding: 5px;
-			overflow: auto;
 		}
 		
 		.menu {
