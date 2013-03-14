@@ -89,6 +89,12 @@ public class MainPresenter extends BasePresenter implements IsWidget {
                 onLoadApplications(null);
             }
         });
+        
+        String token = History.getToken();
+        if(token != null && token.length() > 0){
+            
+            onLocationChange(History.getToken());
+        }
     }
 
     /**
@@ -173,16 +179,24 @@ public class MainPresenter extends BasePresenter implements IsWidget {
 
         container.add(mml);
 
+        String token = History.getToken();
+        MainMenuLink selectedMenuLink = null;
         // add links
         if (result != null) {
             for (String app : result) {
                 mml = new MainMenuLink();
                 mml.setText(app);
                 mml.setTargetHistoryToken(app);
+                if(app.equals(token)){
+                    selectedMenuLink = mml;
+                }
                 container.add(mml);
                 mMenuLinks.add(mml);
             }
         }
         initMenuClickHandlers();
+        if(selectedMenuLink != null){
+            onMenuItemClick(selectedMenuLink);
+        }
     }
 }
