@@ -43,7 +43,7 @@ public class SettingsConnector extends DataConnector<Void> {
             respond = new Respond<Settings[]>(e);
         }
         finally{
-            String r = Application.GSON.toJson(respond);
+            String r = Application.toJson(respond);
             resp.getOutputStream().write(r.getBytes());
         }
         resp.getOutputStream().close();

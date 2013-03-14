@@ -77,7 +77,7 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
      * @return
      */
     private HashMap<String, Object> parseParams(String json) {
-        HashMap<String, Object> params = Application.GSON.fromJson(json, HashMap.class);
+        HashMap<String, Object> params = Application.fromJson(json, HashMap.class);
         for (String key : params.keySet()) {
             if (canBeDate(key)) {
                 Object o = params.get(key);
@@ -102,7 +102,7 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
 
     @Override
     public String getProperties() {
-        return Application.GSON.toJson(Application.CLIENT_PROPERTIES);
+        return Application.toJson(Application.CLIENT_PROPERTIES);
     }
 
     @Override
@@ -127,7 +127,7 @@ public class DataServiceImpl extends RemoteServiceServlet implements DataService
 
     @Override
     public Settings getSettings(String jsonParams) {
-        HashMap<String, Object> params = Application.GSON.fromJson(jsonParams, HashMap.class);
+        HashMap<String, Object> params = Application.fromJson(jsonParams, HashMap.class);
         
         String appName = (String) params.get(TableColumns.SettingsAppName);
         Integer deviceId = null;

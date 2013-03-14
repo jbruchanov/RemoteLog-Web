@@ -74,7 +74,7 @@ public class LogItemsConnector extends DataConnector<LogItem> {
         } catch (Exception e) {
             respond = new LogItemBlobRespond(e);            
         } finally {
-            String r = mGson.toJson(respond);
+            String r = Application.toJson(respond);
             resp.getOutputStream().write(r.getBytes());
             resp.getOutputStream().close();
         }
@@ -82,7 +82,7 @@ public class LogItemsConnector extends DataConnector<LogItem> {
 
     protected LogItemBlobRespond onPutRequest(HttpServletRequest req) throws IOException{
         String reqJson = URLDecoder.decode(req.getQueryString(),"UTF-8");
-        LogItemBlobRequest libr = mGson.fromJson(reqJson, LogItemBlobRequest.class);
+        LogItemBlobRequest libr = Application.fromJson(reqJson, LogItemBlobRequest.class);
 
         //check id
         int id = libr.getLogItemID();
@@ -120,7 +120,7 @@ public class LogItemsConnector extends DataConnector<LogItem> {
                 throw new IllegalArgumentException("Data for json > 1024?! => wrong request");
             }
         }
-        LogItemBlobRequest item = Application.GSON.fromJson(sb.toString(), LogItemBlobRequest.class);
+        LogItemBlobRequest item = Application.fromJson(sb.toString(), LogItemBlobRequest.class);
         return item;
     }
 

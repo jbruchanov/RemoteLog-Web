@@ -75,7 +75,7 @@ public class RegistrationConnector extends DataConnector<Device> {
         } catch (Exception e) {
             dr = new DeviceRespond(e);
         } finally {
-            String r = Application.GSON.toJson(dr);
+            String r = Application.toJson(dr);
             resp.getOutputStream().write(r.getBytes());
             if (s != null && s.isOpen()) {
                 s.close();
@@ -117,7 +117,7 @@ public class RegistrationConnector extends DataConnector<Device> {
         } catch (Exception e) {
             dr = new Respond<Exception>(e);
         } finally {
-            String r = Application.GSON.toJson(dr);
+            String r = Application.toJson(dr);
             resp.getOutputStream().write(r.getBytes());
             if (s != null && s.isOpen()) {
                 s.close();
@@ -127,12 +127,12 @@ public class RegistrationConnector extends DataConnector<Device> {
     }
 
     private static HashMap convert(Device d) {
-        String v = Application.GSON.toJson(d);
-        HashMap obj = Application.GSON.fromJson(v, HashMap.class);
+        String v = Application.toJson(d);
+        HashMap<String, Object> obj = Application.fromJson(v, HashMap.class);
         String mDetail = d.getDetail();
         if (mDetail != null && mDetail.length() > 0 && mDetail.charAt(0) == '{') {
             obj.remove("Detail");
-            obj.put("Detail", Application.GSON.fromJson(mDetail, TreeMap.class));
+            obj.put("Detail", Application.fromJson(mDetail, TreeMap.class));
         }
         return obj;
     }

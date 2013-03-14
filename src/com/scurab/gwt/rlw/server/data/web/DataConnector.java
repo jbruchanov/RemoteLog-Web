@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.hibernate.Session;
 
+import com.scurab.gwt.rlw.server.Application;
 import com.scurab.gwt.rlw.server.data.Database;
 import com.scurab.gwt.rlw.shared.model.Respond;
 
@@ -43,7 +44,7 @@ public abstract class DataConnector<T> extends Connector {
         } catch (Exception e) {
             respond = new Respond<Void>(e);
         } finally {            
-            String result = mGson.toJson(respond);
+            String result = Application.toJson(respond);
             resp.getOutputStream().write(result.getBytes());
             resp.getOutputStream().close();
             if(s != null && s.isOpen()){
@@ -67,9 +68,9 @@ public abstract class DataConnector<T> extends Connector {
     protected T[] parse(String obj, boolean isArray) {
         T[] toWrite = null;
         if (isArray) {
-            toWrite = (T[]) mGson.fromJson(obj, getArrayGenericClass());
+            toWrite = (T[]) Application.fromJson(obj, getArrayGenericClass());
         } else {
-            T d = (T) mGson.fromJson(obj, getGenericClass());   
+            T d = (T) Application.fromJson(obj, getGenericClass());   
             toWrite = (T[]) Array.newInstance(getGenericClass(),1);
             toWrite[0] = d;
         }

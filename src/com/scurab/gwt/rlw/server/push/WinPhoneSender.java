@@ -105,7 +105,7 @@ public class WinPhoneSender {
         if (pmr.getMessageContext() != null) {
             result.put("context", String.valueOf(pmr.getMessageContext()));
         }
-        return Application.GSON.toJson(result);
+        return Application.toJson(result);
     }
 
     private static void fillForRawNotifiation(HttpURLConnection conn) {

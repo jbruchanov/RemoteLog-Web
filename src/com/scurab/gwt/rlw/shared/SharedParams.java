@@ -32,5 +32,6 @@ public final class SharedParams {
     public static final String CLIENT_PAGE_SIZE = "PAGE_SIZE";
     public static final String CLIENT_AUTO_REFRESH = "AUTO_REFRESH";
     public static final String CLIENT_UNIQUE_UUID_PER_DEVICE = "UNIQUE_UUID_PER_DEVICE";
+    public static final String GSON_VERBOSE = "JSON_VERBOSE";
 
 }

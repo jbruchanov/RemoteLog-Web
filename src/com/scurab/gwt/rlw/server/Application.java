@@ -28,7 +28,7 @@ public class Application implements ServletContextListener {
     
     public static SimpleDateFormat DATEFORMAT = new SimpleDateFormat(DT_FORMAT);
     
-    public static final Gson GSON = new GsonBuilder().setDateFormat(DT_FORMAT).create();
+    private static final Gson GSON = new GsonBuilder().setDateFormat(DT_FORMAT).create();
     
     /** defualt page size **/
     public static int PAGE_SIZE = 50;
@@ -36,6 +36,8 @@ public class Application implements ServletContextListener {
     public static PushMessage[] PUSH_MESSAGES;
     
     public static DoubleHashMap<String, String, String> SERVER_PUSH_KEYS;
+    
+    private static boolean sGsonVerbose = false;
     
     @Override
     public void contextDestroyed(ServletContextEvent arg0) {
@@ -98,6 +100,10 @@ public class Application implements ServletContextListener {
                 e.printStackTrace();
             }
         }
+        
+        if(APP_PROPS.containsKey(SharedParams.GSON_VERBOSE)){
+            sGsonVerbose = Boolean.parseBoolean(APP_PROPS.getProperty(SharedParams.GSON_VERBOSE));
+        }
     }
     
     public static void loadPushMessages(){
@@ -110,4 +116,22 @@ public class Application implements ServletContextListener {
         public static final String connection_password = "hibernate.connection.password";
     }
 
+    public static String toJson(Object o){
+        if(sGsonVerbose){
+            System.out.println(String.format("2Json [%s]:%s", o.getClass().getName(), o));
+        }
+        return GSON.toJson(o);
+    }
+    
+    public static <T> T fromJson(String json, Class <? extends T> type){
+        if(sGsonVerbose){
+            System.out.println("------------FROM JSON----------------");
+            System.out.println(json);
+        }
+        T t = GSON.fromJson(json, type);
+        if(sGsonVerbose){
+            System.out.println("/------------FROM JSON----------------");
+        }
+        return t;
+    }
 }

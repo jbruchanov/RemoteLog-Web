@@ -36,7 +36,7 @@ public class LogItemsConnectorTest extends ApplicationTest {
     @Test
     public void testDoPostHttpServletRequestHttpServletResponseMoreItems() throws IOException, ServletException {
         LogItem[] data = new LogItem[] { DataGenerator.genRandomLogItem(), DataGenerator.genRandomLogItem() };
-        final String reqJson = Application.GSON.toJson(data);
+        final String reqJson = Application.toJson(data);
 
         // prepare mock objects
         LogItemsConnector rc = new LogItemsConnector();
@@ -66,7 +66,7 @@ public class LogItemsConnectorTest extends ApplicationTest {
         // test
         assertNotNull(httpResponse);
 
-        LogItemRespond r = Application.GSON.fromJson(httpResponse, LogItemRespond.class);
+        LogItemRespond r = Application.fromJson(httpResponse, LogItemRespond.class);
 
         assertTrue(r.getMessage().startsWith("OK"));
         assertNull(r.getContext());
@@ -88,7 +88,7 @@ public class LogItemsConnectorTest extends ApplicationTest {
     @Test
     public void testDoPostHttpServletRequestHttpServletResponseOneItem() throws IOException, ServletException {
         LogItem d = DataGenerator.genRandomLogItem();
-        final String reqJson = Application.GSON.toJson(d);
+        final String reqJson = Application.toJson(d);
 
         // prepare mock objects
         LogItemsConnector rc = new LogItemsConnector();
@@ -118,7 +118,7 @@ public class LogItemsConnectorTest extends ApplicationTest {
         // test
         assertNotNull(httpResponse);
 
-        LogItemRespond r = Application.GSON.fromJson(httpResponse, LogItemRespond.class);
+        LogItemRespond r = Application.fromJson(httpResponse, LogItemRespond.class);
 
         assertEquals("OK", r.getMessage());
         assertNotNull(r.getContext());

@@ -14,13 +14,12 @@ public class Connector extends HttpServlet {
      * 
      */
     private static final long serialVersionUID = -6167991750744476029L;
-    protected final Gson mGson = Application.GSON;
 
     protected void doNotImplementedRequest(HttpServletRequest req, HttpServletResponse resp){
         try{
             Respond<?> respond = null;        
             respond = new Respond<Void>(new Exception("Not implemented request"));    
-            String result = mGson.toJson(respond);
+            String result = Application.toJson(respond);
             resp.getOutputStream().write(result.getBytes());
             resp.getOutputStream().close();
         }
@@ -33,7 +32,7 @@ public class Connector extends HttpServlet {
         try{
             Respond<?> respond = null;        
             respond = new Respond<Void>(new Exception("Not implemented request:" + method));    
-            String result = mGson.toJson(respond);
+            String result = Application.toJson(respond);
             resp.getOutputStream().write(result.getBytes());
             resp.getOutputStream().close();
         }

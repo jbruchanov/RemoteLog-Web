@@ -71,7 +71,7 @@ public class XmlLoader {
                 pm.setOnlyForApp(onlyForApp);
                 
                 subResult.add(pm);
-                System.out.println("Loaded PushMessage:" + Application.GSON.toJson(pm));
+                System.out.println("Loaded PushMessage:" + Application.toJson(pm));
             }
         } catch (Exception e) {
             System.err.println("UNABLE TO LOAD messages.xml!");
