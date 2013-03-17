@@ -73,6 +73,7 @@ public class RegistrationConnector extends DataConnector<Device> {
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             dr = new DeviceRespond(e);
         } finally {
             String r = Application.toJson(dr);
@@ -115,6 +116,7 @@ public class RegistrationConnector extends DataConnector<Device> {
             dr = new Respond<String>(push);
 
         } catch (Exception e) {
+            e.printStackTrace();
             dr = new Respond<Exception>(e);
         } finally {
             String r = Application.toJson(dr);
@@ -167,7 +169,7 @@ public class RegistrationConnector extends DataConnector<Device> {
                 Query q = s.createQuery(template);
                 q.setString("uuid", d.getDevUUID());
                 q.setString("app", d.getApp());
-                java.util.List dbdata = q.list();
+                java.util.List<?> dbdata = q.list();
                 final int size = dbdata.size();
                 if(size == 1){
                     Device dbDevice = (Device) dbdata.get(0);

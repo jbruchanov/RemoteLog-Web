@@ -72,6 +72,7 @@ public class LogItemsConnector extends DataConnector<LogItem> {
         try {            
             respond = onPutRequest(req);
         } catch (Exception e) {
+            e.printStackTrace();
             respond = new LogItemBlobRespond(e);            
         } finally {
             String r = Application.toJson(respond);

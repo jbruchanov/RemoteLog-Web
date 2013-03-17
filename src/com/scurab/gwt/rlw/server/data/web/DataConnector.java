@@ -42,6 +42,7 @@ public abstract class DataConnector<T> extends Connector {
             s = Database.openSession();
             respond = onPostRequest(s, req.getInputStream());             
         } catch (Exception e) {
+            e.printStackTrace();
             respond = new Respond<Void>(e);
         } finally {            
             String result = Application.toJson(respond);
