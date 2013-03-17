@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URLDecoder;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +38,8 @@ public class LogItemsConnector extends DataConnector<LogItem> {
      * 
      */
     private static final long serialVersionUID = 1L;
+    
+    public static boolean SERVER_TIME_FOR_LOG_ITEMS = false;
 
     @Override
     protected Respond<?> onPostRequest(Session s, InputStream is) throws Exception {
@@ -104,6 +107,16 @@ public class LogItemsConnector extends DataConnector<LogItem> {
         int written = onWrite(id, mime, fileName, req.getInputStream());
         LogItemBlobRespond res = new LogItemBlobRespond(libr, written);
         return res;
+    }
+    
+    @Override
+    protected LogItem[] onWrite(Session s, LogItem[] data) {
+        if(SERVER_TIME_FOR_LOG_ITEMS){
+            for(LogItem li : data){
+                li.setDate(new Date(System.currentTimeMillis()));
+            }
+        }
+        return super.onWrite(s, data);
     }
 
     private LogItemBlobRequest parse(InputStream is) throws IOException{

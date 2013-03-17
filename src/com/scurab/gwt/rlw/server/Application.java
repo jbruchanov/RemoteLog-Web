@@ -12,6 +12,7 @@ import javax.servlet.ServletContextListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.scurab.gwt.rlw.server.data.Database;
+import com.scurab.gwt.rlw.server.data.web.LogItemsConnector;
 import com.scurab.gwt.rlw.server.util.DoubleHashMap;
 import com.scurab.gwt.rlw.server.util.XmlLoader;
 import com.scurab.gwt.rlw.shared.SharedParams;
@@ -100,9 +101,13 @@ public class Application implements ServletContextListener {
                 e.printStackTrace();
             }
         }
-        
+                
         if(APP_PROPS.containsKey(SharedParams.GSON_VERBOSE)){
             sGsonVerbose = Boolean.parseBoolean(APP_PROPS.getProperty(SharedParams.GSON_VERBOSE));
+        }
+        
+        if(APP_PROPS.containsKey(SharedParams.SERVER_TIME_FOR_LOG_ITEMS)){
+            LogItemsConnector.SERVER_TIME_FOR_LOG_ITEMS = Boolean.parseBoolean(APP_PROPS.getProperty(SharedParams.SERVER_TIME_FOR_LOG_ITEMS));
         }
     }
     

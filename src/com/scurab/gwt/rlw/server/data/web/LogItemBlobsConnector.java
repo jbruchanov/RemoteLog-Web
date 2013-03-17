@@ -54,7 +54,7 @@ public class LogItemBlobsConnector extends DataConnector<Void> {
             onGet(s, id, resp);
         }
         catch(NumberFormatException nfe){
-            e.printStackTrace();
+            nfe.printStackTrace();
             resp.getOutputStream().write(("Invalid logitemid:" + sid).getBytes());
         }
         catch(Exception e){
