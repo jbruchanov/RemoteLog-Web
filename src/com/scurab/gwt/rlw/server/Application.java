@@ -41,12 +41,12 @@ public class Application implements ServletContextListener {
     
     @Override
     public void contextDestroyed(ServletContextEvent arg0) {
-        
+        System.out.println(getTime() + " contextDestroyed");
     }
 
     @Override
     public void contextInitialized(ServletContextEvent arg0) {
-        System.out.println("Start");
+        System.out.println(getTime() + " contextInitialized");
         try {
             loadProperties();
             loadPushMessages();
@@ -118,7 +118,7 @@ public class Application implements ServletContextListener {
 
     public static String toJson(Object o){
         if(sGsonVerbose){
-            System.out.println(String.format("2Json [%s]:%s", o.getClass().getName(), o));
+            System.out.println(String.format("%s 2Json [%s]:%s", getTime(), o.getClass().getName(), o));
         }
         return GSON.toJson(o);
     }
@@ -126,6 +126,7 @@ public class Application implements ServletContextListener {
     public static <T> T fromJson(String json, Class <? extends T> type){
         if(sGsonVerbose){
             System.out.println("------------FROM JSON----------------");
+            System.out.println(getTime());
             System.out.println(json);
         }
         T t = GSON.fromJson(json, type);
@@ -133,5 +134,9 @@ public class Application implements ServletContextListener {
             System.out.println("/------------FROM JSON----------------");
         }
         return t;
+    }
+    
+    private static String getTime(){
+        return "[" + DATEFORMAT.format(System.currentTimeMillis()) + "]";
     }
 }
