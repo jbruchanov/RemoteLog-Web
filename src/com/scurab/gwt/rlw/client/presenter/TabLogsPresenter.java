@@ -10,18 +10,19 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
 import com.scurab.gwt.rlw.client.components.DynamicTableWidget;
-import com.scurab.gwt.rlw.client.components.LogItemTableWidget;
+import com.scurab.gwt.rlw.client.components.LogItemsTableWidget;
 import com.scurab.gwt.rlw.client.components.DynamicTableWidget.OnActionCellEventListener;
 import com.scurab.gwt.rlw.client.dialog.FilterDialog;
 import com.scurab.gwt.rlw.client.dialog.FilterDialog.OnOkListener;
 import com.scurab.gwt.rlw.client.dialog.LogFilterDialog;
+import com.scurab.gwt.rlw.client.interfaces.IsSelectable;
 import com.scurab.gwt.rlw.client.presenter.TabDevicesPresenter.OnDeviceSelectionChangeListener;
 import com.scurab.gwt.rlw.shared.TableColumns;
 import com.scurab.gwt.rlw.shared.model.LogItem;
 
 public class TabLogsPresenter extends TabDataPresenter<LogItem> {
 
-    private LogItemTableWidget mLogTable;
+    private LogItemsTableWidget mLogTable;
     private LogFilterDialog mFilterDialog;
     private DataServiceAsync mDataService;
     private HandlerManager mEventBus;
@@ -63,7 +64,7 @@ public class TabLogsPresenter extends TabDataPresenter<LogItem> {
 
     @Override
     protected DynamicTableWidget onCreateTable() {
-        mLogTable = new LogItemTableWidget();
+        mLogTable = new LogItemsTableWidget();
         mLogTable.setDeviceButtonListener(new OnActionCellEventListener() {
             @Override
             public void onEvent(Delegate<HashMap<String, Object>> delegate, HashMap<String, Object> object) {
@@ -103,5 +104,5 @@ public class TabLogsPresenter extends TabDataPresenter<LogItem> {
     
     public void setDeviceButtonListener(OnDeviceSelectionChangeListener listener) {
         mListener = listener;
-    }
+    }      
 }

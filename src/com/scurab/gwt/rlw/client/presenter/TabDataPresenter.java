@@ -25,8 +25,9 @@ import com.scurab.gwt.rlw.client.components.DynamicTableWidget;
 import com.scurab.gwt.rlw.client.components.LazyPager;
 import com.scurab.gwt.rlw.client.dialog.FilterDialog;
 import com.scurab.gwt.rlw.client.interfaces.DownloadFinishListener;
+import com.scurab.gwt.rlw.client.interfaces.IsSelectable;
 
-public abstract class TabDataPresenter<T> extends TabBasePresenter {
+public abstract class TabDataPresenter<T> extends TabBasePresenter implements IsSelectable {
 
     private DynamicTableWidget mTable;
 
@@ -37,6 +38,8 @@ public abstract class TabDataPresenter<T> extends TabBasePresenter {
     private LazyPager.OnPageLoaderListener mBigLoadListener;
 
     private Timer mAutoReloadTimer;
+    
+    private boolean mIsSelected = false;
 
     public TabDataPresenter(DataServiceAsync dataService, HandlerManager eventBus, String appName, HTMLPanel tabPanel) {
         super(dataService, eventBus, appName, tabPanel);
@@ -297,5 +300,15 @@ public abstract class TabDataPresenter<T> extends TabBasePresenter {
 
     public HTMLPanel getContentPanel() {
         return mContentPanel;
+    }
+
+    @Override
+    public void setSelected(boolean selected) {
+        mIsSelected = selected;
+    }
+
+    @Override
+    public boolean isSelected() {
+        return mIsSelected;
     }
 }

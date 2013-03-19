@@ -12,12 +12,13 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
 import com.scurab.gwt.rlw.client.RemoteLogWeb;
+import com.scurab.gwt.rlw.client.interfaces.IsSelectable;
 import com.scurab.gwt.rlw.client.view.SettingsView;
 import com.scurab.gwt.rlw.shared.TableColumns;
 import com.scurab.gwt.rlw.shared.model.Device;
 import com.scurab.gwt.rlw.shared.model.Settings;
 
-public class TabSettingsPresenter extends TabBasePresenter {
+public class TabSettingsPresenter extends TabBasePresenter implements IsSelectable {
 
     private DataServiceAsync mDataService;
     private HandlerManager mEventBus;
@@ -27,6 +28,8 @@ public class TabSettingsPresenter extends TabBasePresenter {
     private SettingsView mDisplay;
     
     private Settings mSettings;
+    
+    private boolean mIsSelected;
     
     public TabSettingsPresenter(DataServiceAsync dataService, HandlerManager eventBus, String appName, HTMLPanel tabPanel) {
         super(dataService, eventBus, appName, tabPanel);
@@ -167,5 +170,15 @@ public class TabSettingsPresenter extends TabBasePresenter {
         }else{
             mDisplay.getTextArea().setText(null);
         }
+    }
+
+    @Override
+    public void setSelected(boolean selected) {
+        mIsSelected = selected;
+    }
+
+    @Override
+    public boolean isSelected() {
+        return mIsSelected;
     }
 }

@@ -7,9 +7,9 @@
 /*.classpath
 /*.project
 /war/remotelogweb
+/war/WEB-INF/classes/com
 remotelogweb
 ProjectLibs
-com
 /.idea/.name
 /.idea/compiler.xml
 /.idea/copyright/profiles_settings.xml

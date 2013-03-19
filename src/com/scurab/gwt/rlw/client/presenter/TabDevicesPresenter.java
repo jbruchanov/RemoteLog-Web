@@ -12,7 +12,8 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.scurab.gwt.rlw.client.DataServiceAsync;
-import com.scurab.gwt.rlw.client.components.DeviceTableWidget;
+import com.scurab.gwt.rlw.client.components.DevicesTableWidget;
+import com.scurab.gwt.rlw.client.components.DevicesTableWidget;
 import com.scurab.gwt.rlw.client.components.DynamicTableWidget;
 import com.scurab.gwt.rlw.client.components.DynamicTableWidget.OnActionCellEventListener;
 import com.scurab.gwt.rlw.client.dialog.DeviceFilterDialog;
@@ -23,7 +24,7 @@ import com.scurab.gwt.rlw.shared.model.Device;
 
 public class TabDevicesPresenter extends TabDataPresenter<Device> {
 
-    private DeviceTableWidget mDevicesTable;
+    private DevicesTableWidget mDevicesTable;
     private DeviceFilterDialog mFilterDialog;
     private DataServiceAsync mDataService;
     private HandlerManager mEventBus;
@@ -60,7 +61,7 @@ public class TabDevicesPresenter extends TabDataPresenter<Device> {
             HashMap<String, Object> result = new HashMap<String, Object>();
             result.put(TableColumns.DeviceID, d.getDeviceID());
             result.put("AppV_01", d.getAppVersion());
-            result.put("UUID_02", d.getDevUUID());
+            result.put("UUID_02", d.getDevUUID().toUpperCase());
             result.put("Owner_03", d.getOwner());
             result.put("Brand_04", d.getBrand());
             result.put("Model_05", d.getModel());
@@ -81,7 +82,7 @@ public class TabDevicesPresenter extends TabDataPresenter<Device> {
 
     @Override
     protected DynamicTableWidget onCreateTable() {
-        mDevicesTable = new DeviceTableWidget();
+        mDevicesTable = new DevicesTableWidget();
         mDevicesTable.getSelectionModel().addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
             @Override
             public void onSelectionChange(SelectionChangeEvent event) {

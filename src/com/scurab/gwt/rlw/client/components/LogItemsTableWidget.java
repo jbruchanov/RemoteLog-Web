@@ -15,17 +15,17 @@ import com.scurab.gwt.rlw.client.RemoteLogWeb;
 import com.scurab.gwt.rlw.client.components.DynamicTableWidget.OnActionCellEventListener;
 import com.scurab.gwt.rlw.shared.TableColumns;
 
-public class LogItemTableWidget extends DynamicTableWidget {
+public class LogItemsTableWidget extends DynamicTableWidget {
     
     private static final String TXT_DEVICE = RemoteLogWeb.WORDS.Device();
     
     private OnActionCellEventListener mListener;
     
-    public LogItemTableWidget() {
+    public LogItemsTableWidget() {
         super();
     }
 
-    public LogItemTableWidget(List<HashMap<String, Object>> data) {
+    public LogItemsTableWidget(List<HashMap<String, Object>> data) {
         super(data);
     }
 
@@ -40,7 +40,6 @@ public class LogItemTableWidget extends DynamicTableWidget {
     
     private void onCreateBlobColumn(List<HashMap<String, Object>> mData,
             CellTable<HashMap<String, Object>> cellTable, ListHandler<HashMap<String, Object>> sortHandler){
-     // password column
         Column<HashMap<String, Object>, HashMap<String, Object>> column = new Column<HashMap<String, Object>, HashMap<String, Object>>(
                 getBlobActionCell()) {
             @Override
@@ -51,7 +50,7 @@ public class LogItemTableWidget extends DynamicTableWidget {
             @Override
             public void render(Context context, HashMap<String, Object> object, SafeHtmlBuilder sb) {
                 Object o = object.get(TableColumns.LogBlobMime);
-                if (o != null && o.toString().length() > 0) {
+                if (o != null && o.toString().length() > 0) {                    
                     super.render(context, object, sb);
                 }
             }
@@ -61,7 +60,6 @@ public class LogItemTableWidget extends DynamicTableWidget {
     
     private void onDeviceButtonColumn(List<HashMap<String, Object>> mData,
             CellTable<HashMap<String, Object>> cellTable, ListHandler<HashMap<String, Object>> sortHandler){
-     // password column
         Column<HashMap<String, Object>, HashMap<String, Object>> column = new Column<HashMap<String, Object>, HashMap<String, Object>>(
                 getDeviceActionCell()) {
             @Override

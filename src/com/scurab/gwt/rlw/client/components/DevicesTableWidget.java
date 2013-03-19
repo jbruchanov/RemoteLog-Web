@@ -19,17 +19,17 @@ import com.google.gwt.view.client.SelectionModel;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.scurab.gwt.rlw.client.RemoteLogWeb;
 
-public class DeviceTableWidget extends DynamicTableWidget {
+public class DevicesTableWidget extends DynamicTableWidget {
 
     private SelectionModel<HashMap<String, Object>> mSelectionModel;
     
     private OnActionCellEventListener mListener;
     
-    public DeviceTableWidget() {
+    public DevicesTableWidget() {
         super();
     }
 
-    public DeviceTableWidget(List<HashMap<String, Object>> data) {
+    public DevicesTableWidget(List<HashMap<String, Object>> data) {
         super(data);
     }
 
@@ -99,5 +99,14 @@ public class DeviceTableWidget extends DynamicTableWidget {
 
     public void setActionCellListener(OnActionCellEventListener listener) {
         mListener = listener;
+    }
+    
+    @Override
+    protected Column<HashMap<String, Object>, String> onCreateColumn(String key, Object dataExample) {
+        Column<HashMap<String, Object>, String> column = super.onCreateColumn(key, dataExample);
+        if(key.toLowerCase().contains("uuid")){
+            column.setCellStyleNames("uuid");
+        }
+        return column;
     }
 }
