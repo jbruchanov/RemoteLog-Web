@@ -9,7 +9,7 @@
 		}
 	</ui:style>
 	<g:HTMLPanel>
-		<g:Grid width="" height="">
+		<g:Grid width="550px" height="">
 			<g:row>
 				<g:customCell>
 					<g:Label text="ID"/>
@@ -31,7 +31,7 @@
 					<g:Label text="UUID"/>
 				</g:customCell>
 				<g:customCell>
-					<g:TextBox ui:field="mUUID" width="150px"/>
+					<g:TextBox ui:field="mUUID" width="97%"/>
 				</g:customCell>
 			</g:row>
 			<g:row>
@@ -39,7 +39,7 @@
 					<g:Label text="{res.Owner}"/>
 				</g:customCell>
 				<g:customCell>
-					<g:TextBox width="150px" ui:field="mOwner"/>
+					<g:TextBox width="97%" ui:field="mOwner"/>
 				</g:customCell>
 			</g:row>
 			<g:row>
