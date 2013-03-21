@@ -41,6 +41,17 @@ public class Database {
             checkTables();
         }
     }
+    
+    public static void dispose(){
+        if(factory != null){
+            try{
+                factory.close();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            factory = null;
+        }
+    }
 
     /**
      * Check tables, if there is 0 tables, create them

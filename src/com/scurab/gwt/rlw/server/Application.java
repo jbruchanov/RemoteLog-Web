@@ -42,7 +42,28 @@ public class Application implements ServletContextListener {
     
     @Override
     public void contextDestroyed(ServletContextEvent arg0) {
+        onClean();
         System.out.println(getTime() + " contextDestroyed");
+    }
+    
+    private void onClean(){
+        if(APP_PROPS != null){
+            APP_PROPS.clear();
+        }
+        
+        if(CLIENT_PROPERTIES != null){
+            CLIENT_PROPERTIES.clear();
+        }
+        
+        PUSH_MESSAGES = null;
+        
+        if(SERVER_PUSH_KEYS != null){
+            SERVER_PUSH_KEYS.clear();
+            SERVER_PUSH_KEYS = null;
+        }
+        
+        //release resources for db
+        Database.dispose();
     }
 
     @Override
