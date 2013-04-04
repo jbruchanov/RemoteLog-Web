@@ -3,17 +3,19 @@
 	<Message name="Echo" param="false" platform="android"/>
 	<Message name="Notification" param="true" platform="android">
 	<![CDATA[
-		 {
-		 "Title":"", 
-		 "Message":""
-		 }
+{
+"Title":"", 
+"Message":""
+ }
 	]]>
 	</Message> paramExample="{&quot;Title&quot;:&quot;&quot;, &quot;Message&quot;:&quot;&quot;}" />
 	<Message name="Question" param="true" platform="android">
 	<![CDATA[
-		 {"Title":"", 
-		 "Message":"", 
-		 "Actions": ["Yes", "No", "Cancel"]}
+{
+"Title":"", 
+"Message":"", 
+"Actions": ["Yes", "No", "Cancel"]
+}
 	]]> 	
 	</Message>
 	<Message name="ReloadSettings" param="false" platform="android" />
@@ -22,14 +24,16 @@
 	<Message name="LastKnownLocation" param="false" platform="android|windowsphone"/>
 	<Message name="StartIntent" param="true" platform="android">
 	<![CDATA[
-	{"Target":"Activity", 
-	"Action":"", 
-	"Class":"", 
-	"Data":"", 
-	"Bundle": "", 
-	"Category": "", 
-	"Component.Package" : "", 
-	"Component.Class" : ""}
+{
+"Target":"Activity", 
+"Action":"", 
+"Class":"", 
+"Data":"", 
+"Bundle": "", 
+"Category": "", 
+"Component.Package" : "", 
+"Component.Class" : ""
+}
 	]]> 		
 	</Message>
 	
@@ -39,29 +43,29 @@
 	<!-- don't change the name, otherwise check WinPhoneSender.java -->
 	<Message name="ToastNotification" param="true" platform="WindowsPhone">
 	<![CDATA[
-	<?xml version="1.0" encoding="utf-8"?>
-    <wp:Notification xmlns:wp="WPNotification">
-       <wp:Toast>
-          <wp:Text1>string</wp:Text1>
-          <wp:Text2>string</wp:Text2>
-          <wp:Param>/MainPage.xaml?someParam=someID</wp:Param>
-       </wp:Toast>
-    </wp:Notification>
+<?xml version="1.0" encoding="utf-8"?>
+<wp:Notification xmlns:wp="WPNotification">
+   <wp:Toast>
+      <wp:Text1>string</wp:Text1>
+      <wp:Text2>string</wp:Text2>
+      <wp:Param>/MainPage.xaml?someParam=someID</wp:Param>
+   </wp:Toast>
+</wp:Notification>
 	]]>
 	</Message>
 	<Message name="TileNotification" param="true" platform="WindowsPhone">
 	<![CDATA[
-	<?xml version="1.0" encoding="utf-8"?>
-    <wp:Notification xmlns:wp="WPNotification">
-       <wp:Tile Id="/MainPage.xaml?someParam=someID">
-   		<wp:BackgroundImage>someURI<wp:BackgroundImage>
-   		<wp:Count>1</wp:Count>
-   		<wp:Title>someTitle</wp:Title>
-   		<wp:BackBackgroundImage>someURI</wp:BackBackgroundImage>
-   		<wp:BackContent>someContent</wp:BackContent>
-   		<wp:BackTitle>someTitle</wp:BackTitle>
- 	   </wp:Tile>
-    </wp:Notification>
+<?xml version="1.0" encoding="utf-8"?>
+<wp:Notification xmlns:wp="WPNotification">
+   <wp:Tile Id="/MainPage.xaml?someParam=someID">
+	<wp:BackgroundImage>someURI<wp:BackgroundImage>
+	<wp:Count>1</wp:Count>
+	<wp:Title>someTitle</wp:Title>
+	<wp:BackBackgroundImage>someURI</wp:BackBackgroundImage>
+	<wp:BackContent>someContent</wp:BackContent>
+	<wp:BackTitle>someTitle</wp:BackTitle>
+ </wp:Tile>
+</wp:Notification>
 	]]>
 	</Message>
 </Messages>

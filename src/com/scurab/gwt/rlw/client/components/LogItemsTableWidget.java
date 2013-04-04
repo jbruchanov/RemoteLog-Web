@@ -75,10 +75,7 @@ public class LogItemsTableWidget extends DynamicTableWidget {
                 new Delegate<HashMap<String, Object>>() {
             @Override
             public void execute(HashMap<String, Object> object) {
-                String url = "blobs/" + object.get(TableColumns.LogItemID);
-                if(RemoteLogWeb.isIE()){
-                    url = "/" + url;
-                }
+                String url = "/blobs/" + object.get(TableColumns.LogItemID);                
                 Window.open(url  , "_blank", null);
             }
         });

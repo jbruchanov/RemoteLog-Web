@@ -6,15 +6,11 @@
 			font-weight: bold;
 		}
 	</ui:style>
-	<g:HTMLPanel width="100%" height="100%">
-		<g:HorizontalPanel height="100%">
-			<g:VerticalPanel height="100%">
-				<g:HTMLPanel height="100%" ui:field="mDevicePanel"/>
-				<g:HTMLPanel height="100%" ui:field="mMessagesPanel"/>
-			</g:VerticalPanel>
-			<g:VerticalPanel height="100%">
-				<g:HTMLPanel height="100%" ui:field="mSettingsPanel" />
-			</g:VerticalPanel>
+	<g:HTMLPanel height="100%" width="100%">
+		<g:HorizontalPanel height="100%" >
+			<g:HTMLPanel height="100%" ui:field="mDevicePanel"/>
+			<g:HTMLPanel height="100%" ui:field="mMessagesPanel"/>
+			<g:HTMLPanel height="100%" ui:field="mSettingsPanel" />
 		</g:HorizontalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 
