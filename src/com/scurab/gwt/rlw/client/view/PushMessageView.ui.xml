@@ -19,7 +19,7 @@
 		}
 		
 	</ui:style>
-	<g:HTMLPanel width="98%">
+	<g:HTMLPanel width="94%">
 		<g:CaptionPanel captionText="{res.PushNotifiation}" width="100%" >
 			<g:Grid width="100%">
 			<g:row>
