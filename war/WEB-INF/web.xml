@@ -25,12 +25,12 @@
 		<servlet-name>regs</servlet-name>
 		<url-pattern>/regs</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet-mapping>
 		<servlet-name>regs</servlet-name>
 		<url-pattern>/regs/*</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>logs</servlet-name>
 		<servlet-class>com.scurab.gwt.rlw.server.data.web.LogItemsConnector
@@ -41,7 +41,7 @@
 		<servlet-name>logs</servlet-name>
 		<url-pattern>/logs</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>blobs</servlet-name>
 		<servlet-class>com.scurab.gwt.rlw.server.data.web.LogItemBlobsConnector
@@ -52,7 +52,7 @@
 		<servlet-name>blobs</servlet-name>
 		<url-pattern>/blobs/*</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>settings</servlet-name>
 		<servlet-class>com.scurab.gwt.rlw.server.data.web.SettingsConnector
@@ -73,4 +73,23 @@
 			com.scurab.gwt.rlw.server.Application
 		</listener-class>
 	</listener>
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Requires authentication</web-resource-name>
+			<url-pattern>/RemoteLogWeb.html</url-pattern>
+			<http-method>GET</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>rlw</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<login-config>
+		<auth-method>BASIC</auth-method>
+		<realm-name>Evaluation Area</realm-name>
+	</login-config>
+	<security-role>
+		<role-name>rlw</role-name>
+	</security-role>
+
 </web-app>
