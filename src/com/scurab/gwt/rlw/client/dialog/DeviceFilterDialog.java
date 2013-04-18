@@ -30,6 +30,7 @@ public class DeviceFilterDialog extends FilterDialog {
         insertValue(filters, SharedParams.DEVICE_BRAND, getListBoxValue(mFilterView.mBrand));
         insertValue(filters, SharedParams.DEVICE_MODEL, getListBoxValue(mFilterView.mModel));
         insertValue(filters, SharedParams.DEVICE_PLATFORM, getListBoxValue(mFilterView.mPlatform));
+        insertValue(filters, SharedParams.DEVICE_OSVERSION, getListBoxValue(mFilterView.mOSVersion));
         insertValue(filters, SharedParams.DEVICE_RESOLUTION, getListBoxValue(mFilterView.mResolution));
         insertValue(filters, SharedParams.DEVICE_CREATED, mFilterView.mCreated.getValue());
         insertValue(filters, SharedParams.DEVICE_UPDATED, mFilterView.mUpdated.getValue());

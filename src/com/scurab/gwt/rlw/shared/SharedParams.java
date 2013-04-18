@@ -14,6 +14,7 @@ public final class SharedParams {
     public static final String DEVICE_OWNER = "Owner";
     public static final String DEVICE_BRAND = "Brand";
     public static final String DEVICE_PLATFORM = "Platform";
+    public static final String DEVICE_OSVERSION = "Version";
     public static final String DEVICE_RESOLUTION = "Resolution";
     public static final String DEVICE_MODEL = "Model";
     public static final String DEVICE_CREATED = "Created";
