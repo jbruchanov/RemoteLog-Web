@@ -95,10 +95,7 @@ public class DeviceDetailPresenter extends TabBasePresenter {
     
     protected void openRawDetail(){
         if(mDevice != null){
-            String url = "regs/nice/" + mDevice.getDeviceID();
-            if(RemoteLogWeb.isIE()){
-                url = "/" + url;
-            }
+            String url = "/regs/nice/" + mDevice.getDeviceID();
             Window.open(url , "_blank", null);
         }
     }
