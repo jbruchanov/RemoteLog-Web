@@ -30,6 +30,7 @@ public class LogItemBlobsConnector extends DataConnector<Void> {
     private static final String IMAGE = "image";
     private static final String OCTET_STREAM = "application/octet-stream";
     private static final String APPLICATION_JSON = "application/json";
+    private static final String UTF8_ENCODING = "UTF-8";
     /**
      * 
      */
@@ -93,10 +94,11 @@ public class LogItemBlobsConnector extends DataConnector<Void> {
         if(fileName == null || fileName.length() == 0){
             fileName = FILE_NAME_NOT_DEFINED;
         }
-
-        if(mime.startsWith(IMAGE) 
-                || mime.startsWith(TEXT)
-                || mime.equals(APPLICATION_JSON)){
+        
+        if(mime.startsWith(TEXT) || mime.equals(APPLICATION_JSON)){
+            resp.setCharacterEncoding(UTF8_ENCODING);
+        }else if(mime.startsWith(IMAGE)){
+            //do nothing, just show it
         }else{
             resp.setHeader(CONTENT_DISPOSITION,String.format(ATTACHMENT_TEMPLATE, lib.getFileName()));
         }
