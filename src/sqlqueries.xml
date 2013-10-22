@@ -84,7 +84,7 @@
 	</Query>
 	<Query name="SELECT_APPS" type="SQL">
 	<![CDATA[
-		SELECT DISTINCT Application FROM LogItems ORDER BY Application;
+		SELECT DISTINCT App FROM Devices ORDER BY App;
 	]]>
 	</Query>
 	<!-- Keep Detail null for big selects to keep fast queries -->
