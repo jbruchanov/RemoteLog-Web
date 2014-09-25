@@ -10,7 +10,7 @@
 		  DeviceID int(11) NOT NULL AUTO_INCREMENT,
 		  Brand varchar(64) DEFAULT NULL,
 		  Description varchar(255) DEFAULT NULL,
-		  Detail varchar(4096) DEFAULT NULL,
+		  Detail varchar(16384) DEFAULT NULL,
 		  DevUUID varchar(255) NOT NULL,
 		  Model varchar(64) DEFAULT NULL,
 		  OSDescription varchar(255) DEFAULT NULL,
@@ -84,7 +84,7 @@
 	</Query>
 	<Query name="SELECT_APPS" type="SQL">
 	<![CDATA[
-		SELECT DISTINCT Application FROM LogItems ORDER BY Application;
+		SELECT DISTINCT App FROM Devices ORDER BY App;
 	]]>
 	</Query>
 	<!-- Keep Detail null for big selects to keep fast queries -->
@@ -133,47 +133,32 @@
 	</Query>
 	<Query name="SELECT_OSVERSIONS" type="SQL">
 	<![CDATA[
-		SELECT DISTINCT Version FROM LogItems INNER JOIN 
-		Devices ON Devices.DeviceID = LogItems.DeviceID 
-		ORDER BY Version;
+		SELECT DISTINCT Version FROM Devices ORDER BY Version;		
 	]]>
 	</Query>
 	<Query name="SELECT_OSVERSIONS_BY_APPNAME" type="SQL" parameters="Application">
 	<![CDATA[
-		SELECT DISTINCT Version FROM LogItems INNER JOIN 
-		Devices ON Devices.DeviceID = LogItems.DeviceID
-		WHERE Application = :Application 
-		ORDER BY Version; 
+		SELECT DISTINCT Version FROM Devices WHERE App = :Application ORDER BY Version;		
 	]]>
 	</Query>
 	<Query name="SELECT_BRANDS" type="SQL">
 	<![CDATA[
-		SELECT DISTINCT Brand FROM LogItems INNER JOIN 
-		Devices ON Devices.DeviceID = LogItems.DeviceID 
-		ORDER BY Brand;
+		SELECT DISTINCT Brand FROM Devices ORDER BY Brand;
 	]]>
 	</Query>
 	<Query name="SELECT_BRANDS_BY_APPNAME" type="SQL" parameters="Application">
 	<![CDATA[
-		SELECT DISTINCT Brand FROM LogItems INNER JOIN 
-		Devices ON Devices.DeviceID = LogItems.DeviceID
-		WHERE Application = :Application 
-		ORDER BY Brand; 
+		SELECT DISTINCT Brand FROM Devices WHERE App = :Application ORDER BY Brand;		
 	]]>
 	</Query>
 	<Query name="SELECT_MODELS" type="SQL">
 	<![CDATA[
-		SELECT DISTINCT Model FROM LogItems INNER JOIN 
-		Devices ON Devices.DeviceID = LogItems.DeviceID 
-		ORDER BY Model;
+		SELECT DISTINCT Model FROM Devices ORDER BY Model;		
 	]]>
 	</Query>
 	<Query name="SELECT_MODELS_BY_APPNAME" type="SQL" parameters="Application">
 	<![CDATA[
-		SELECT DISTINCT Model FROM LogItems INNER JOIN 
-		Devices ON Devices.DeviceID = LogItems.DeviceID
-		WHERE Application = :Application 
-		ORDER BY Model; 
+		SELECT DISTINCT Model FROM Devices WHERE App = :Application ORDER BY Model;				
 	]]>
 	</Query>
 	<Query name="SELECT_SOURCES" type="SQL">
@@ -193,18 +178,13 @@
 	</Query>
 	<Query name="SELECT_RESOLUTIONS" type="SQL">
 	<![CDATA[
-		SELECT DISTINCT Resolution FROM LogItems INNER JOIN 
-		Devices ON Devices.DeviceID = LogItems.DeviceID 
-		ORDER BY Resolution;
+		SELECT DISTINCT Resolution FROM Devices ORDER BY Resolution;		
 	]]>
 	</Query>
 	<Query name="SELECT_RESOLUTIONS_BY_APPNAME" type="SQL"
 		parameters="Application">
 	<![CDATA[
-		SELECT DISTINCT Resolution FROM LogItems INNER JOIN 
-		Devices ON Devices.DeviceID = LogItems.DeviceID
-		WHERE Application = :Application 
-		ORDER BY Resolution; 
+		SELECT DISTINCT Resolution FROM Devices WHERE App = :Application ORDER BY Resolution;		
 	]]>
 	</Query>
 	<Query name="SELECT_DATATYPES" type="SQL">
